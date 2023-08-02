@@ -50,6 +50,12 @@ public class SurviverAnimationMgr : MonoBehaviour
         return anim.HasState(0, Animator.StringToHash(animName));
     }
 
+    public bool IsAnimEnd(string animName, int layer = 0)
+    {
+        return (anim.GetCurrentAnimatorStateInfo(layer).IsName(animName) &&
+                anim.GetCurrentAnimatorStateInfo(layer).normalizedTime >= 1.0f);
+    }
+
     public void ResetLastState()
     {
         currentState = "";

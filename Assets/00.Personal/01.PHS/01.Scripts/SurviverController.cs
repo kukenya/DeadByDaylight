@@ -31,6 +31,17 @@ public class SurviverController : MonoBehaviour
     public bool lockCameraPosition = false;
     public bool lockPlayerRotation = false;
 
+    // 애니메이션 상태
+    public enum State
+    {
+        StandIdle,
+        StandingToWalk,
+        StandWalk,
+        StandWalkToIdleRT,
+    }
+
+    public State state = State.StandIdle;
+
     // 카메라 저장 변수들
     private float cinemachineTargetYaw;
     private float cinemachineTargetPitch;
@@ -53,7 +64,7 @@ public class SurviverController : MonoBehaviour
     private float animationBlend;
 
     // 애니메이션 매니저
-    SurviverAnimationMgr surviverAnimationMgr;
+    public SurviverAnimationMgr surviverAnimationMgr;
 
     // ET
     CharacterController controller;
@@ -67,7 +78,6 @@ public class SurviverController : MonoBehaviour
         mainCamera = Camera.main;
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         controller = GetComponent<CharacterController>();
-        surviverAnimationMgr = GetComponent<SurviverAnimationMgr>();
         animIDSpeed = Animator.StringToHash("Speed");
     }
 
@@ -76,9 +86,9 @@ public class SurviverController : MonoBehaviour
     {
         GroundedCheck();
         Move();
+        MoveAnimation();
     }
 
-    float rotation;
     public float rotationSpeed;
     private void Move()
     {
@@ -130,29 +140,44 @@ public class SurviverController : MonoBehaviour
         // 움직일때 정면을 부드럽게 넘겨준다.
         if (inputDirection != Vector3.zero)
         {
+            if (state == State.StandIdle)
+            {
+                surviverAnimationMgr.Play("StandingToStandWalk", 0);
+                state = State.StandingToWalk;
+            }
+
             targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                 mainCamera.transform.eulerAngles.y;
             float deltaAngle = Mathf.DeltaAngle(transform.eulerAngles.y, targetRotation);
-
-            if(deltaAngle > 1)
-            {
-                rotation += rotationSpeed * Time.deltaTime;
-            }
-            else if (deltaAngle < -1)
-            {
-                rotation -= rotationSpeed * Time.deltaTime;
-            }
-            else
-            {
-                rotation = Mathf.Lerp(rotation, deltaAngle, Time.deltaTime);
-            }
-            //float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothTime);
+            //print("1");
+            //if(deltaAngle > 1)
+            //{
+            //    print("2");
+            //    rotation += rotationSpeed * Time.deltaTime;
+            //}
+            //else if (deltaAngle < -1)
+            //{
+            //    rotation -= rotationSpeed * Time.deltaTime;
+            //}
+            //else
+            //{
+            //    rotation = Mathf.Lerp(rotation, deltaAngle, Time.deltaTime);
+            //}
+            Vector3 rotation = Vector3.MoveTowards(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, transform.eulerAngles.y + deltaAngle, 0), rotationSpeed * Time.deltaTime);
 
             // 얼굴을 카메라 포지션에 맞게 회전한다. (에임 카메라 아닐때만)
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            transform.rotation = Quaternion.Euler(rotation);
+        }
+        else
+        {
+            if (state == State.StandWalk || state == State.StandingToWalk)
+            {
+                state = State.StandWalkToIdleRT;
+                surviverAnimationMgr.Play("StandWalkToStandIdle_RT");
+            }
         }
 
-        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
         currentSpeed = speed;
 
@@ -162,6 +187,31 @@ public class SurviverController : MonoBehaviour
         controller.Move(targetDirection * (speed * Time.deltaTime) + new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 
         //playerAnimator.SetFloat(animIDSpeed, animationBlend);
+    }
+
+    void MoveAnimation()
+    {
+        switch (state)
+        {
+            case State.StandIdle:
+                surviverAnimationMgr.Play("StandIdle", 0);
+                break;
+            case State.StandingToWalk:
+                if (surviverAnimationMgr.IsAnimEnd("StandingToStandWalk"))
+                {
+                    state = State.StandWalk;
+                    surviverAnimationMgr.Play("StandWalk");
+                }
+                break;
+            case State.StandWalk:
+                break;
+            case State.StandWalkToIdleRT:
+                if (surviverAnimationMgr.IsAnimEnd("StandWalkToStandIdle_RT"))
+                {
+                    state = State.StandIdle;
+                }
+                break;
+        }
     }
 
     private void LateUpdate()
