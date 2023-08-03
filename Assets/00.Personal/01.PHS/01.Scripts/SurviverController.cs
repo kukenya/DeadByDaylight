@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening; //import
+using UnityEditor.SceneTemplate;
 
 public class SurviverController : MonoBehaviour
 {
@@ -35,9 +36,8 @@ public class SurviverController : MonoBehaviour
     public enum State
     {
         StandIdle,
-        StandingToWalk,
         StandWalk,
-        StandWalkToIdleRT,
+        StandRun,
     }
 
     public State state = State.StandIdle;
@@ -50,31 +50,31 @@ public class SurviverController : MonoBehaviour
     private float speed;
     private float targetSpeed;
     private float targetRotation = 0.0f;
-    private float rotationVelocity = 0;
-    private float startCameraVelocity = 0;
     private float verticalVelocity = 0;
+    private float moveVelocity = 0;
 
     // 플레이어 마우스 감도
     public float mouseSensitivity = 1f;
     public bool isSprint = false;
+    public bool isRotating = false;
+    public bool isCrouch = false;
     //private float terminalVelocity = 53.0f;
 
     // 애니메이션 스피드
     private int animIDSpeed;
-    private float animationBlend;
 
     // 애니메이션 매니저
     public SurviverAnimationMgr surviverAnimationMgr;
+    private string waitAnimState;
 
     // ET
     CharacterController controller;
     Camera mainCamera;
 
-    private float currentSpeed;
+    public Animator playerAnimator;
 
     void Start()
     {
-        startCameraVelocity = 0;
         mainCamera = Camera.main;
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         controller = GetComponent<CharacterController>();
@@ -84,9 +84,9 @@ public class SurviverController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //MoveAnimation();
         GroundedCheck();
         Move();
-        MoveAnimation();
     }
 
     public float rotationSpeed;
@@ -94,7 +94,11 @@ public class SurviverController : MonoBehaviour
     {
         // 최종 속력을 달리기 버튼을 눌렀을때와 안눌렀을때 나눈다.
         isSprint = Input.GetKey(KeyCode.LeftShift) ? true : false;
+        isCrouch = Input.GetKey(KeyCode.LeftControl) ? true : false;
         targetSpeed = isSprint ? sprintSpeed : walkSpeed;
+        targetSpeed = isRotating ? walkSpeed : targetSpeed;
+
+        playerAnimator.SetBool("IsCrouch", isCrouch);
 
         float inputHorizontal = Input.GetAxisRaw("Horizontal");
         float inputVertical = Input.GetAxisRaw("Vertical");
@@ -108,31 +112,13 @@ public class SurviverController : MonoBehaviour
         {
             targetSpeed = 0.0f;
         }
+        speed = Mathf.MoveTowards(speed, targetSpeed, Time.deltaTime * speedChangeRate);
+        //speed = Mathf.SmoothDamp(speed, targetSpeed, ref moveVelocity, speedChangeRate);
 
 
-        //현재 속도를 받아온다
-        // 이건 왜 안댐?
-        //float currentHorizontalSpeed = new Vector3(controller.velocity.x, 0.0f, controller.velocity.z).magnitude;
-
-        float speedOffset = 0.1f;
-
-        // 움직일때 가속과 가속헤제
-        if (currentSpeed < targetSpeed - speedOffset ||
-           currentSpeed > targetSpeed + speedOffset)
-        {
-            speed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedChangeRate);
-
-            // 소숫점 3자리수까지 자르기
-            speed = Mathf.Round(speed * 1000f) / 1000f;
-        }
-        else
-        {
-            speed = targetSpeed;
-        }
-
-        //애니메이션에 속도에 맞는 부드러움 주기
-        animationBlend = Mathf.Lerp(animationBlend, targetSpeed, Time.deltaTime * speedChangeRate);
-        if (animationBlend < 0.01f) animationBlend = 0f;
+        ////애니메이션에 속도에 맞는 부드러움 주기
+        //animationBlend = Mathf.Lerp(animationBlend, targetSpeed, Time.deltaTime * speedChangeRate);
+        //if (animationBlend < 0.01f) animationBlend = 0f;
 
         // 입력된 방향을 정규화 한다.
         Vector3 inputDirection = new Vector3(inputHorizontal, 0.0f, inputVertical).normalized;
@@ -140,12 +126,6 @@ public class SurviverController : MonoBehaviour
         // 움직일때 정면을 부드럽게 넘겨준다.
         if (inputDirection != Vector3.zero)
         {
-            if (state == State.StandIdle)
-            {
-                surviverAnimationMgr.Play("StandingToStandWalk", 0);
-                state = State.StandingToWalk;
-            }
-
             targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                 mainCamera.transform.eulerAngles.y;
             float deltaAngle = Mathf.DeltaAngle(transform.eulerAngles.y, targetRotation);
@@ -164,52 +144,40 @@ public class SurviverController : MonoBehaviour
             //    rotation = Mathf.Lerp(rotation, deltaAngle, Time.deltaTime);
             //}
             Vector3 rotation = Vector3.MoveTowards(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, transform.eulerAngles.y + deltaAngle, 0), rotationSpeed * Time.deltaTime);
+            isRotating = rotation == new Vector3(0, transform.eulerAngles.y + deltaAngle, 0) ? false : true;
+            playerAnimator.SetBool("IsRotation", isRotating);
 
             // 얼굴을 카메라 포지션에 맞게 회전한다. (에임 카메라 아닐때만)
             transform.rotation = Quaternion.Euler(rotation);
         }
-        else
-        {
-            if (state == State.StandWalk || state == State.StandingToWalk)
-            {
-                state = State.StandWalkToIdleRT;
-                surviverAnimationMgr.Play("StandWalkToStandIdle_RT");
-            }
-        }
 
-            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-
-        currentSpeed = speed;
+        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
         verticalVelocity = Grounded ? 0f : -2f;
 
         // 최종적으로 플레이어를 움직인다.
         controller.Move(targetDirection * (speed * Time.deltaTime) + new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 
-        //playerAnimator.SetFloat(animIDSpeed, animationBlend);
+        playerAnimator.SetFloat(animIDSpeed, speed);
     }
 
     void MoveAnimation()
     {
         switch (state)
         {
+            // 기본 상태
             case State.StandIdle:
-                surviverAnimationMgr.Play("StandIdle", 0);
+                surviverAnimationMgr.Play("StandIdle");
                 break;
-            case State.StandingToWalk:
-                if (surviverAnimationMgr.IsAnimEnd("StandingToStandWalk"))
-                {
-                    state = State.StandWalk;
-                    surviverAnimationMgr.Play("StandWalk");
-                }
-                break;
+
+            // 걷기 상태
             case State.StandWalk:
+                surviverAnimationMgr.Play("StandingToStandWalk");
                 break;
-            case State.StandWalkToIdleRT:
-                if (surviverAnimationMgr.IsAnimEnd("StandWalkToStandIdle_RT"))
-                {
-                    state = State.StandIdle;
-                }
+
+            // 달리기
+            case State.StandRun:
+                surviverAnimationMgr.Play("StandRun");
                 break;
         }
     }
@@ -256,5 +224,22 @@ public class SurviverController : MonoBehaviour
         if (angle < -360f) angle += 360f;
         if (angle > 360f) angle -= 360f;
         return Mathf.Clamp(angle, min, max);
+    }
+
+    bool WaitAnim()
+    {
+        if(waitAnimState == null)
+        {
+            return true;
+        }
+        else if(waitAnimState != null)
+        {
+            if (surviverAnimationMgr.IsAnimEnd(waitAnimState))
+            {
+                waitAnimState = null;
+                return true;
+            }
+        }
+        return false;
     }
 }

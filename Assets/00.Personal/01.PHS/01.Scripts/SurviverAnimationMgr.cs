@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SurviverAnimationMgr : MonoBehaviour
 {
+    public static SurviverAnimationMgr instance;
+
+    public void Awake()
+    {
+        instance = this;
+    }
+
     public Animator anim;
 
     string currentState;
@@ -13,7 +20,7 @@ public class SurviverAnimationMgr : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void Play(string state, float time = 0.25f, bool overplay = false)
+    public void Play(string state, float time = 0.1f, bool overplay = false)
     {
         if (state == currentState) return;
 
