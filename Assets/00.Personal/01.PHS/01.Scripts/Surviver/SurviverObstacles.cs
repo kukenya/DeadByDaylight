@@ -99,7 +99,6 @@ public class SurviverObstacles : MonoBehaviour
         while (true)
         {
             currentTime += Time.deltaTime;
-            print(currentTime);
             if (currentTime > a)
             {
                 controller.Move(transform.forward * 4.0f * Time.deltaTime);

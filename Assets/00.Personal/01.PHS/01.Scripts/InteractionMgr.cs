@@ -4,54 +4,22 @@ using UnityEngine;
 
 public class InteractionMgr : MonoBehaviour
 {
-    public enum Interaction
+    public enum Type
     {
-        None,
-        Obstacles,
+        Window,
+        Pallet,
+        ExitLever,
     }
 
-    public Interaction interaction;
-
-    ObstaclesMgr obstacle;
+    public Type interaction;
 
     private void Start()
     {
         switch (interaction)
         {
-            case Interaction.Obstacles:
+            case Type.Window:
                 obstacle = GetComponent<ObstaclesMgr>();
                 break;
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.GetComponent<SurviverInteractionUI>();
-            switch (interaction)
-            {
-                case Interaction.None:
-                    break;
-                case Interaction.Obstacles:
-                    other.GetComponent<SurviverObstacles>().Obstacle = obstacle.jumpPos;
-                    break;
-            }
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-
-        }
-    }
-
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        
     }
 }
