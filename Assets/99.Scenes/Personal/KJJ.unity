@@ -2979,34 +2979,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 371111484683631383, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1378668677743583643, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 1378668677743583643, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.119
-      objectReference: {fileID: 0}
-    - target: {fileID: 1378668678602341542, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 1378668678602341542, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2379775673025977069, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504736712777407447, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8541965241638183737, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
       propertyPath: m_RootOrder
       value: 11
