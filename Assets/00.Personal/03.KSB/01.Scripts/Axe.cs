@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class Axe : MonoBehaviour
 {
-    Rigidbody axeRigidbody;
-    float power = 5;
- 
-    
-    // 태어날 때 Rigidbody 에 힘을 받아 앞방향으로 날아가고 싶다.
+    Rigidbody smallAxeRigidbody;      // 한손도끼 Rigidbody 컴포넌트
     private void Start()
     {
-        axeRigidbody = GetComponent<Rigidbody>();
-        axeRigidbody.AddForce(Vector3.forward * power, ForceMode.Impulse);
-
-        // transform.position += transform.forward * AnnaMove.instance.axeSpeed * Time.deltaTime;
+        // 리지드바디의 chargingForce 로 던진다.
+        Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
+        smallAxeRigidbody.AddForce(transform.forward * AnnaMove.instance.chargingForce, ForceMode.Impulse);
     }
 
+    private void Update()
+    {
+        // 날아갈 때 X축으로 회전한다.
+        transform.Rotate(new Vector3(600 * Time.deltaTime, 0, 0));
+    }
 
     // 토구가 던진 도끼가 플레이어에게 닿으면 플레이어의 체력을 감소시킨다.
     private void OnCollisionEnter(Collision collision)
     {
+        Destroy(gameObject);
         if (collision.gameObject.name.Contains("Player"))
         {
-            // HP--;
-        }
-        else
-        {
-            Destroy(gameObject);
+            print("dlfkahjfksjdahflk");
         }
     }
 }
