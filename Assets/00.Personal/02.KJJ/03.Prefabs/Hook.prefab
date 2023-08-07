@@ -182,7 +182,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4268984114224995059}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.4201975, y: -0.00000023841858, z: 25.010525}
+  m_LocalPosition: {x: -12.4201975, y: 0, z: 25.010525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -363,6 +363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2494542999515226832}
   - component: {fileID: 4138944461183987682}
+  - component: {fileID: 6308841026763318597}
   m_Layer: 0
   m_Name: SK_HookHillBilly.mo
   m_TagString: Untagged
@@ -446,6 +447,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00012000813, y: 0.0038694525, z: -0.017049182}
     m_Extent: {x: 0.0034546119, y: 0.01097262, z: 0.017236095}
   m_DirtyAABB: 0
+--- !u!64 &6308841026763318597
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009205036508890831}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4702677774244301649, guid: 5d0f24f2a263e884bbb5a32cd46f7129, type: 3}
 --- !u!1 &7823020620795926133
 GameObject:
   m_ObjectHideFlags: 0

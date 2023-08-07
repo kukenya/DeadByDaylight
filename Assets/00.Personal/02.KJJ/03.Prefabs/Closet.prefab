@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8218494251601556686}
   - component: {fileID: 1272074197195840633}
+  - component: {fileID: 1723144263557442996}
   m_Layer: 0
   m_Name: SK_Closet01_REF.mo
   m_TagString: Untagged
@@ -91,6 +92,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000006570481, y: -0.00036279112, z: -0.012109268}
     m_Extent: {x: 0.0053338315, y: 0.0044508623, z: 0.012113217}
   m_DirtyAABB: 0
+--- !u!64 &1723144263557442996
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998697058547827239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3365214762802403983, guid: 7e27e3d57f2b56445accb94cee52c4a9, type: 3}
 --- !u!1 &1695896115689241694
 GameObject:
   m_ObjectHideFlags: 0

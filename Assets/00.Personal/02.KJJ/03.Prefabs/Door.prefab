@@ -243,7 +243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2487976257338476783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.915844, y: 0.00000023841858, z: 25.05613}
+  m_LocalPosition: {x: -12.915844, y: 0, z: 25.05613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -619,6 +619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3005972137888824982}
   - component: {fileID: 3466468028713791872}
+  - component: {fileID: 7710748825939280293}
   m_Layer: 0
   m_Name: SK_Ind_ExitDoors01_REF.mo
   m_TagString: Untagged
@@ -708,6 +709,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.037158128, y: -0.0055616517, z: -0.024803918}
     m_Extent: {x: 0.003659632, y: 0.032801762, z: 0.024370689}
   m_DirtyAABB: 0
+--- !u!64 &7710748825939280293
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663441975047869645}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4195071058247040640, guid: b440490f968fe374d8c139fe10b53cf5, type: 3}
 --- !u!1 &7672275732134054370
 GameObject:
   m_ObjectHideFlags: 0
