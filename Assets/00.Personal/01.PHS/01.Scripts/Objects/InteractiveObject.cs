@@ -14,8 +14,7 @@ public class InteractiveObject : MonoBehaviour
 
     public Type interaction;
 
-    Window window;
-    Pallet pallet;
+    PalletChild palletChild;
     SurviverObstacles obstacles;
 
     public bool interactive = false;
@@ -26,10 +25,9 @@ public class InteractiveObject : MonoBehaviour
         switch (interaction)
         {
             case Type.Window:
-                window = GetComponent<Window>();
                 break;
             case Type.Pallet:
-                pallet = GetComponent<Pallet>();
+                palletChild = GetComponent<PalletChild>();
                 break;
         }
     }
@@ -42,7 +40,7 @@ public class InteractiveObject : MonoBehaviour
                 obstacles.StartJumpWindow(transform);
                 break;
             case Type.Pallet:
-                obstacles.StartJumpPallet(transform);
+                palletChild.Interact();
                 break;
         }
     }

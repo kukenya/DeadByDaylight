@@ -47,13 +47,20 @@ public class SurviverObstacles : MonoBehaviour
         surviverAutoMove.OnAutoMove(targetTrans, JumpPallet);
     }
 
+    public void StartPullDownPallet(Transform targetTrans)
+    {
+        surviverAutoMove.OnAutoMove(targetTrans, PullDownPallet);
+    }
+
     [Header("창문 점프 각도")]
     public float fastJumpAngle = 50f;
     public float midJumpAngle = 90f;
 
     void JumpWindow(float targetAngle)
     {
-        if(surviverController.Sprint == false)
+        controller.enabled = false;
+
+        if (surviverController.Sprint == false)
         {
             surviverAnimation.Play("WindowIn");
             StartCoroutine(WaitAnimEnd("WindowJump"));
@@ -83,9 +90,10 @@ public class SurviverObstacles : MonoBehaviour
         }
     }
 
-    void DownPannel()
+    void PullDownPallet()
     {
-
+        surviverAnimation.Play("PullDownPalletRT");
+        StartCoroutine(WaitAnimEnd("PullDownPalletRT"));
     }
 
     public float a;
@@ -99,12 +107,13 @@ public class SurviverObstacles : MonoBehaviour
             currentTime += Time.deltaTime;
             if (currentTime > a)
             {
-                controller.Move(transform.forward * 4.0f * Time.deltaTime);
+                transform.position += transform.forward * 4.0f * Time.deltaTime;
             }
             if (surviverAnimation.IsAnimEnd("WindowFast")) break;
             yield return null;
         }
         surviverController.banMove = false;
+        controller.enabled = true;
         surviverAnimation.AnimationChange();
     }
 
@@ -117,6 +126,7 @@ public class SurviverObstacles : MonoBehaviour
             yield return null;
         }
         surviverController.banMove = false;
+        controller.enabled = true;
         surviverAnimation.AnimationChange();
     }
 

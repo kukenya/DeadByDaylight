@@ -44,7 +44,6 @@ public class SurviverController : MonoBehaviour
     private float verticalVelocity = 0;
     private float moveVelocity = 0;
     private float deltaAngle = 0;
-    private Vector3 surviverVelocity = Vector3.zero;
 
     // �÷��̾� ���콺 ����
     public float mouseSensitivity = 1f;
