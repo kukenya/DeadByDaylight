@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class SurviverAutoMove : MonoBehaviour
         {
             Vector3 moveDirection = (targetTrans.position - transform.position).normalized;
 
-            if (Vector3.Distance(transform.position, targetTrans.position) > autoMoveStopDist)
+            if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
             {
                 controller.Move(moveDirection * autoMoveSpeed * Time.deltaTime);
             }
@@ -63,7 +64,7 @@ public class SurviverAutoMove : MonoBehaviour
         {
             Vector3 moveDirection = (targetTrans.position - transform.position).normalized;
 
-            if (Vector3.Distance(transform.position, targetTrans.position) > autoMoveStopDist)
+            if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
             {
                 controller.Move(moveDirection * autoMoveSpeed * Time.deltaTime);
             }
@@ -75,6 +76,6 @@ public class SurviverAutoMove : MonoBehaviour
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetTrans.eulerAngles.y, transform.eulerAngles.z);
             yield return null;
         }
-        action?.Invoke;
+        action?.Invoke();
     }
 }
