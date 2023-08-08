@@ -3,7 +3,22 @@ guid: 135fdffbd69059f4781a1b75fb935fc1
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Concrete_Trim_A
+    second: {fileID: 2100000, guid: 2d3620562519eb14fa39729e60c34567, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_ConcreteWall02_B
+    second: {fileID: 2100000, guid: 43fbf00f997b78a4693cddeb5071637a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_Bricks_Plaster_A
+    second: {fileID: 2100000, guid: dcbb64b6ac5c6cb40bf542b889db455f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

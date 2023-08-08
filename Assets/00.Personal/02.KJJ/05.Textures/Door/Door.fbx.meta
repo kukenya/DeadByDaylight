@@ -3,7 +3,17 @@ guid: b440490f968fe374d8c139fe10b53cf5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_ExitDoor01
+    second: {fileID: 2100000, guid: d3dd2b628795b644481732ac1e0db0d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_Lever_Gears_A
+    second: {fileID: 2100000, guid: 596daa0255e10f744924b8e5ba2319ea, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

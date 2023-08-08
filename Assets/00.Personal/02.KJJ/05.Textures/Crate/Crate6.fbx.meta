@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MI_Crate01
-    second: {fileID: 2100000, guid: af89488f673fb1a42a86aa7d60c51cc9, type: 2}
+    second: {fileID: 2100000, guid: 0d2f4417ee5cdcb4cad22a4209c00dfb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

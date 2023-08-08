@@ -3,7 +3,32 @@ guid: 374518f709c9ff3468ddef56a0a5f18e
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Com_Concrete_A_Dmg_01
+    second: {fileID: 2100000, guid: 564e8acc80106024fada2208104e05b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_ConcreteWall02_C
+    second: {fileID: 2100000, guid: bda3799c0d651b245abfd770202b8210, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_Bricks_Plaster_C
+    second: {fileID: 2100000, guid: 6ddd43ec94f96a6409994d44129f944a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_Cracks_A
+    second: {fileID: 2100000, guid: 05a3bff082efb854a8754a83be153318, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_IronMetal_A_2
+    second: {fileID: 2100000, guid: ea7ca830ef2869641beb2e05ef36f166, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
