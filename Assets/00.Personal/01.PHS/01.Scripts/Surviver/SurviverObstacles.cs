@@ -1,16 +1,18 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.EventSystems;
-using static SurviverAnimation;
 
 public class SurviverObstacles : MonoBehaviour
 {
-    public float possibleAngle = 120f;
+    public static SurviverObstacles instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public float possibleAngle = 120f;
     public float autoMoverStopDistance = 0.2f;
     public float autoMoverSpeed = 4.0f;
     public Transform currentObstacleTrans;
@@ -20,48 +22,29 @@ public class SurviverObstacles : MonoBehaviour
     SurviverAnimation surviverAnimation;
     CharacterController controller;
     SurviverController surviverController;
+    SurviverAutoMove surviverAutoMove;
 
     private void Start()
     {
         surviverAnimation = SurviverAnimation.instance;
         controller = GetComponent<CharacterController>();
         surviverController = GetComponent<SurviverController>();
+        surviverAutoMove = GetComponent<SurviverAutoMove>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartJumpWindow(Transform targetTrans)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Vector3 targetDir = targetTrans.position - transform.position;
+        float targetAngle = Vector3.Angle(transform.forward, new Vector3(targetDir.x, 0, targetDir.z));
+        if (targetAngle < midJumpAngle)
         {
-            Vector3 targetDir = currentObstacleTrans.position - transform.position;
-            float targetAngle = Vector3.Angle(transform.forward, new Vector3(targetDir.x, 0, targetDir.z));
-            if(targetAngle < midJumpAngle)
-            {
-                StartCoroutine(AutoMove(targetAngle));
-            }
+            surviverAutoMove.OnAutoMove(targetTrans, JumpWindow, targetAngle);
         }
     }
 
-    IEnumerator AutoMove(float targetAngle)
+    public void StartJumpPallet(Transform targetTrans)
     {
-        surviverController.banMove = true;
-        while (true)
-        {
-            Vector3 moveDirection = (currentObstacleTrans.position - transform.position).normalized;
-
-            if (Vector3.Distance(transform.position, currentObstacleTrans.position) > autoMoverStopDistance)
-            {
-                controller.Move(moveDirection * autoMoverSpeed * Time.deltaTime);
-            }
-            else
-            {
-                break;
-            }
-
-            transform.rotation = Quaternion.Euler(transform.rotation.x, Mathf.MoveTowardsAngle(transform.rotation.y, currentObstacleTrans.rotation.y, Time.deltaTime), transform.rotation.z);
-            yield return null;
-        }
-        JumpWindow(targetAngle);
+        surviverAutoMove.OnAutoMove(targetTrans, JumpPallet);
     }
 
     [Header("창문 점프 각도")]
@@ -90,6 +73,21 @@ public class SurviverObstacles : MonoBehaviour
         
     }
 
+    void JumpPallet()
+    {
+        if (surviverController.Sprint == false)
+        {
+            surviverAnimation.Play("WindowIn");
+            StartCoroutine(WaitAnimEnd("WindowJump"));
+            return;
+        }
+    }
+
+    void DownPannel()
+    {
+
+    }
+
     public float a;
 
     IEnumerator WaitAnimFast()
@@ -99,7 +97,6 @@ public class SurviverObstacles : MonoBehaviour
         while (true)
         {
             currentTime += Time.deltaTime;
-            print(currentTime);
             if (currentTime > a)
             {
                 controller.Move(transform.forward * 4.0f * Time.deltaTime);
@@ -123,13 +120,34 @@ public class SurviverObstacles : MonoBehaviour
         surviverAnimation.AnimationChange();
     }
 
-    void JumpPannel()
-    {
+    
 
-    }
 
-    void DownPannel()
-    {
 
-    }
+
+
+
+
+
+    //IEnumerator AutoMove(float targetAngle)
+    //{
+    //    surviverController.banMove = true;
+    //    while (true)
+    //    {
+    //        Vector3 moveDirection = (currentObstacleTrans.position - transform.position).normalized;
+
+    //        if (Vector3.Distance(transform.position, currentObstacleTrans.position) > autoMoverStopDistance)
+    //        {
+    //            controller.Move(moveDirection * autoMoverSpeed * Time.deltaTime);
+    //        }
+    //        else
+    //        {
+    //            break;
+    //        }
+
+    //        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, currentObstacleTrans.eulerAngles.y, transform.eulerAngles.z);
+    //        yield return null;
+    //    }
+
+    //}
 }
