@@ -1,9 +1,18 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/00.Personal/01.PHS/05.FBX/DestroyPallet.fbx.meta
 guid: db7856b12a3fc444ebe3dbc9ba5ee1e1
+========
+guid: 41626b01cb63f4f4f8087ab6bf783b94
+>>>>>>>> KJJ_Prototype0801:Assets/00.Personal/02.KJJ/05.Textures/Barrel/Barrel.fbx.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Barrel_01
+    second: {fileID: 2100000, guid: 2c952114281323d45a8a1d7b89abbb69, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
