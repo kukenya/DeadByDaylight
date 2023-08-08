@@ -3879,85 +3879,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.00000009925887, y: -0.10403757, z: -0.000000048693025, w: 0.9945734}
-        inSlope: {x: -0.000000030258548, y: -0.41969025, z: 0.00000004738294, w: -0.047640324}
-        outSlope: {x: -0.000000030258548, y: -0.41969025, z: 0.00000004738294, w: -0.047640324}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.16666667
-        value: {x: 0.000000096092144, y: -0.14712964, z: -0.000000043794028, w: 0.9891172}
-        inSlope: {x: 0.000000008852736, y: 0.117192134, z: -0.0000000134593545, w: 0.01710677}
-        outSlope: {x: 0.000000008852736, y: 0.117192134, z: -0.0000000134593545, w: 0.01710677}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.2916667
-        value: {x: 0.00000009606667, y: -0.14746551, z: -0.000000043755396, w: 0.9890672}
-        inSlope: {x: -0.000000018519245, y: -0.24317066, z: 0.000000028012833, w: -0.036910057}
-        outSlope: {x: -0.000000018519245, y: -0.24317066, z: 0.000000028012833, w: -0.036910057}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.5416667
-        value: {x: 0.00000008927861, y: -0.23172696, z: -0.000000033838642, w: 0.9727809}
-        inSlope: {x: -0.000000010547547, y: -0.124148846, z: 0.000000014920325, w: -0.02914451}
-        outSlope: {x: -0.000000010547547, y: -0.124148846, z: 0.000000014920325, w: -0.02914451}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.5833334
-        value: {x: 0.000000089109115, y: -0.23371084, z: -0.000000033599683, w: 0.9723062}
-        inSlope: {x: 0.000000034077267, y: 0.40870398, z: -0.000000048752774, w: 0.08985695}
-        outSlope: {x: 0.000000034077267, y: 0.40870398, z: -0.000000048752774, w: 0.08985695}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.6666667
-        value: {x: 0.00000009655068, y: -0.14105657, z: -0.000000044491387, w: 0.99000156}
-        inSlope: {x: 0.00000008123861, y: 1.0613112, z: -0.00000012249434, w: 0.16497652}
-        outSlope: {x: 0.00000008123861, y: 1.0613112, z: -0.00000012249434, w: 0.16497652}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.8333334
-        value: {x: 0.000000100382955, y: -0.088045835, z: -0.000000050482136, w: 0.99611646}
-        inSlope: {x: -0.0000000045176916, y: -0.06482056, z: 0.000000007230106, w: -0.005890852}
-        outSlope: {x: -0.0000000045176916, y: -0.06482056, z: 0.000000007230106, w: -0.005890852}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      - serializedVersion: 3
-        time: 0.9166667
-        value: {x: 0.00000009925887, y: -0.10403757, z: -0.000000048693025, w: 0.9945734}
-        inSlope: {x: -0.000000018349217, y: -0.26002038, z: 0.000000029131073, w: -0.02576779}
-        outSlope: {x: -0.000000018349217, y: -0.26002038, z: 0.000000029131073, w: -0.02576779}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
         value: {x: 0.04046755, y: -0.09109776, z: -0.3036287, w: 0.9475617}
         inSlope: {x: 0.2131404, y: -0.41090083, z: 0.046143293, w: -0.038610935}
         outSlope: {x: 0.2131404, y: -0.41090083, z: 0.046143293, w: -0.038610935}
@@ -4834,6 +4755,85 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: BE_DSkeleton_REF.ao/joint_Char/joint_Hand_LT_02_IK
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.00000009925887, y: -0.10403756, z: -0.000000048693018, w: 0.99457335}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0.00000061578476, y: -0.41936338, z: 0.000001164338, w: -0.0436306}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.16666667
+        value: {x: 0.00000009925887, y: -0.10403756, z: -0.000000048693018, w: 0.99457335}
+        inSlope: {x: 0.0000006823342, y: 0.11792779, z: 0.0000010969359, w: 0.0121593475}
+        outSlope: {x: 0.0000006818936, y: 0.11670588, z: 0.0000010965663, w: 0.012397764}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.2916667
+        value: {x: 0.000000096066685, y: -0.14746551, z: -0.000000043755396, w: 0.9890672}
+        inSlope: {x: 0.00000086373564, y: -0.24402139, z: 0.000001541167, w: -0.03623962}
+        outSlope: {x: 0.0000008635084, y: -0.24366379, z: 0.0000015412525, w: -0.036239624}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.5416667
+        value: {x: 0.00000008927861, y: -0.23172696, z: -0.00000003383865, w: 0.9727809}
+        inSlope: {x: 0.0000004854144, y: -0.1245141, z: 0.00000078463813, w: -0.029563904}
+        outSlope: {x: 0.00000048345305, y: -0.12481207, z: 0.00000078162503, w: -0.030040726}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.5833334
+        value: {x: 0.00000008910912, y: -0.23371083, z: -0.000000033599683, w: 0.97230613}
+        inSlope: {x: 0.000002885541, y: 0.40554982, z: 0.000004612756, w: 0.097274736}
+        outSlope: {x: 0.0000028852874, y: 0.4082323, z: 0.0000046102864, w: 0.09799006}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.6666667
+        value: {x: 0.000000096550686, y: -0.14105655, z: -0.000000044491387, w: 0.99000156}
+        inSlope: {x: 0.00000121716, y: 1.0634067, z: 0.0000021643705, w: 0.15163425}
+        outSlope: {x: 0.0000012195475, y: 1.0613503, z: 0.0000021682715, w: 0.15091899}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.8333333
+        value: {x: 0.00000010038296, y: -0.08804583, z: -0.000000050482136, w: 0.9961164}
+        inSlope: {x: 0.0000005818067, y: -0.06473066, z: 0.0000011223025, w: -0.0057220473}
+        outSlope: {x: 0.0000005815079, y: -0.06517765, z: 0.0000011217475, w: -0.005722043}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.9166667
+        value: {x: 0.00000009925887, y: -0.10403756, z: -0.000000048693018, w: 0.99457335}
+        inSlope: {x: 0.0000012038578, y: -0.25981653, z: 0.0000022717177, w: -0.027179705}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
   m_CompressedRotationCurves: []
   m_EulerCurves: []
   m_PositionCurves:
@@ -9752,13 +9752,6 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1526062035
-      attribute: 2
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
       path: 2606032437
       attribute: 2
       script: {fileID: 0}
@@ -9809,6 +9802,13 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 137358373
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1526062035
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -27423,334 +27423,6 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
     path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ElbowRT_01/joint_HandRoll01RT_02
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.00000009925887
-        inSlope: -0.000000030258548
-        outSlope: -0.000000030258548
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.16666667
-        value: 0.000000096092144
-        inSlope: 0.000000008852736
-        outSlope: 0.000000008852736
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.2916667
-        value: 0.00000009606667
-        inSlope: -0.000000018519245
-        outSlope: -0.000000018519245
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5416667
-        value: 0.00000008927861
-        inSlope: -0.000000010547547
-        outSlope: -0.000000010547547
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5833334
-        value: 0.000000089109115
-        inSlope: 0.000000034077267
-        outSlope: 0.000000034077267
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 0.00000009655068
-        inSlope: 0.00000008123861
-        outSlope: 0.00000008123861
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.8333334
-        value: 0.000000100382955
-        inSlope: -0.0000000045176916
-        outSlope: -0.0000000045176916
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.9166667
-        value: 0.00000009925887
-        inSlope: -0.000000018349217
-        outSlope: -0.000000018349217
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.x
-    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -0.10403757
-        inSlope: -0.41969025
-        outSlope: -0.41969025
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.16666667
-        value: -0.14712964
-        inSlope: 0.117192134
-        outSlope: 0.117192134
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.2916667
-        value: -0.14746551
-        inSlope: -0.24317066
-        outSlope: -0.24317066
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5416667
-        value: -0.23172696
-        inSlope: -0.124148846
-        outSlope: -0.124148846
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5833334
-        value: -0.23371084
-        inSlope: 0.40870398
-        outSlope: 0.40870398
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.6666667
-        value: -0.14105657
-        inSlope: 1.0613112
-        outSlope: 1.0613112
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.8333334
-        value: -0.088045835
-        inSlope: -0.06482056
-        outSlope: -0.06482056
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.9166667
-        value: -0.10403757
-        inSlope: -0.26002038
-        outSlope: -0.26002038
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.y
-    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -0.000000048693025
-        inSlope: 0.00000004738294
-        outSlope: 0.00000004738294
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.16666667
-        value: -0.000000043794028
-        inSlope: -0.0000000134593545
-        outSlope: -0.0000000134593545
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.2916667
-        value: -0.000000043755396
-        inSlope: 0.000000028012833
-        outSlope: 0.000000028012833
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5416667
-        value: -0.000000033838642
-        inSlope: 0.000000014920325
-        outSlope: 0.000000014920325
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5833334
-        value: -0.000000033599683
-        inSlope: -0.000000048752774
-        outSlope: -0.000000048752774
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.6666667
-        value: -0.000000044491387
-        inSlope: -0.00000012249434
-        outSlope: -0.00000012249434
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.8333334
-        value: -0.000000050482136
-        inSlope: 0.000000007230106
-        outSlope: 0.000000007230106
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.9166667
-        value: -0.000000048693025
-        inSlope: 0.000000029131073
-        outSlope: 0.000000029131073
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.z
-    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.9945734
-        inSlope: -0.047640324
-        outSlope: -0.047640324
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.16666667
-        value: 0.9891172
-        inSlope: 0.01710677
-        outSlope: 0.01710677
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.2916667
-        value: 0.9890672
-        inSlope: -0.036910057
-        outSlope: -0.036910057
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5416667
-        value: 0.9727809
-        inSlope: -0.02914451
-        outSlope: -0.02914451
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5833334
-        value: 0.9723062
-        inSlope: 0.08985695
-        outSlope: 0.08985695
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 0.99000156
-        inSlope: 0.16497652
-        outSlope: 0.16497652
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.8333334
-        value: 0.99611646
-        inSlope: -0.005890852
-        outSlope: -0.005890852
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.9166667
-        value: 0.9945734
-        inSlope: -0.02576779
-        outSlope: -0.02576779
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.w
-    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -46871,6 +46543,334 @@ AnimationClip:
     path: BE_DSkeleton_REF.ao/joint_Char/joint_Hand_RT_02_IK
     classID: 4
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00000009925887
+        inSlope: 0
+        outSlope: 0.00000061578476
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.16666667
+        value: 0.00000009925887
+        inSlope: 0.0000006823342
+        outSlope: 0.0000006818936
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2916667
+        value: 0.000000096066685
+        inSlope: 0.00000086373564
+        outSlope: 0.0000008635084
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5416667
+        value: 0.00000008927861
+        inSlope: 0.0000004854144
+        outSlope: 0.00000048345305
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5833334
+        value: 0.00000008910912
+        inSlope: 0.000002885541
+        outSlope: 0.0000028852874
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0.000000096550686
+        inSlope: 0.00000121716
+        outSlope: 0.0000012195475
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: 0.00000010038296
+        inSlope: 0.0000005818067
+        outSlope: 0.0000005815079
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9166667
+        value: 0.00000009925887
+        inSlope: 0.0000012038578
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.10403756
+        inSlope: 0
+        outSlope: -0.41936338
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.16666667
+        value: -0.10403756
+        inSlope: 0.11792779
+        outSlope: 0.11670588
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2916667
+        value: -0.14746551
+        inSlope: -0.24402139
+        outSlope: -0.24366379
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5416667
+        value: -0.23172696
+        inSlope: -0.1245141
+        outSlope: -0.12481207
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5833334
+        value: -0.23371083
+        inSlope: 0.40554982
+        outSlope: 0.4082323
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: -0.14105655
+        inSlope: 1.0634067
+        outSlope: 1.0613503
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: -0.08804583
+        inSlope: -0.06473066
+        outSlope: -0.06517765
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9166667
+        value: -0.10403756
+        inSlope: -0.25981653
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.000000048693018
+        inSlope: 0
+        outSlope: 0.000001164338
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.16666667
+        value: -0.000000048693018
+        inSlope: 0.0000010969359
+        outSlope: 0.0000010965663
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2916667
+        value: -0.000000043755396
+        inSlope: 0.000001541167
+        outSlope: 0.0000015412525
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5416667
+        value: -0.00000003383865
+        inSlope: 0.00000078463813
+        outSlope: 0.00000078162503
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5833334
+        value: -0.000000033599683
+        inSlope: 0.000004612756
+        outSlope: 0.0000046102864
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: -0.000000044491387
+        inSlope: 0.0000021643705
+        outSlope: 0.0000021682715
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: -0.000000050482136
+        inSlope: 0.0000011223025
+        outSlope: 0.0000011217475
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9166667
+        value: -0.000000048693018
+        inSlope: 0.0000022717177
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.99457335
+        inSlope: 0
+        outSlope: -0.0436306
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.16666667
+        value: 0.99457335
+        inSlope: 0.0121593475
+        outSlope: 0.012397764
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2916667
+        value: 0.9890672
+        inSlope: -0.03623962
+        outSlope: -0.036239624
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5416667
+        value: 0.9727809
+        inSlope: -0.029563904
+        outSlope: -0.030040726
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5833334
+        value: 0.97230613
+        inSlope: 0.097274736
+        outSlope: 0.09799006
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0.99000156
+        inSlope: 0.15163425
+        outSlope: 0.15091899
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8333333
+        value: 0.9961164
+        inSlope: -0.0057220473
+        outSlope: -0.005722043
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9166667
+        value: 0.99457335
+        inSlope: -0.027179705
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: BE_DSkeleton_REF.ao/joint_Char/joint_Pelvis_01/joint_TorsoA_01/joint_TorsoB_01/joint_TorsoC_01/joint_ClavicleRT_01/joint_ShoulderRT_01/joint_ShoulderRollRT_02
+    classID: 4
+    script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
       serializedVersion: 2
@@ -59075,9 +59075,9 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: 0.000010153155
+        value: 0.000010731995
         inSlope: 0.00009190141
-        outSlope: 0.0001225352
+        outSlope: 0.00009190141
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59086,7 +59086,7 @@ AnimationClip:
         time: 0.2916667
         value: 0.000010148685
         inSlope: 0.00012264248
-        outSlope: 0.00006132125
+        outSlope: 0.00012264248
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59095,7 +59095,7 @@ AnimationClip:
         time: 0.5416667
         value: 0.000009053557
         inSlope: 0.00007446279
-        outSlope: 0.00044677654
+        outSlope: 0.00007446279
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59104,7 +59104,7 @@ AnimationClip:
         time: 0.5833334
         value: 0.000009028523
         inSlope: 0.00044857894
-        outSlope: 0.00022428963
+        outSlope: 0.00044857894
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59113,16 +59113,16 @@ AnimationClip:
         time: 0.6666667
         value: 0.000010234116
         inSlope: 0.00018088825
-        outSlope: 0.0000904441
+        outSlope: 0.00018088825
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.8333334
+        time: 0.8333333
         value: 0.000010949037
         inSlope: 0.00007757553
-        outSlope: 0.00015515112
+        outSlope: 0.00007757553
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59157,9 +59157,9 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: -16.921244
+        value: -11.943438
         inSlope: 13.571583
-        outSlope: 13.571638
+        outSlope: 13.571583
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59168,7 +59168,7 @@ AnimationClip:
         time: 0.2916667
         value: -16.960154
         inSlope: -28.18446
-        outSlope: -28.182014
+        outSlope: -28.18446
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59177,7 +59177,7 @@ AnimationClip:
         time: 0.5416667
         value: -26.797531
         inSlope: -14.6119995
-        outSlope: -14.612908
+        outSlope: -14.6119995
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59186,7 +59186,7 @@ AnimationClip:
         time: 0.5833334
         value: -27.031282
         inSlope: 47.948845
-        outSlope: 47.952106
+        outSlope: 47.948845
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59195,16 +59195,16 @@ AnimationClip:
         time: 0.6666667
         value: -16.217978
         inSlope: 122.98504
-        outSlope: 122.82971
+        outSlope: 122.98504
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.8333334
+        time: 0.8333333
         value: -10.102389
         inSlope: -7.4585657
-        outSlope: -7.458517
+        outSlope: -7.4585657
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59239,9 +59239,9 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.16666667
-        value: -0.000006583907
+        value: -0.000006732876
         inSlope: 0.00011851033
-        outSlope: 0.00015801376
+        outSlope: 0.00011851033
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59250,7 +59250,7 @@ AnimationClip:
         time: 0.2916667
         value: -0.000006582545
         inSlope: 0.00015798108
-        outSlope: 0.000078990546
+        outSlope: 0.00015798108
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59259,7 +59259,7 @@ AnimationClip:
         time: 0.5416667
         value: -0.0000061427772
         inSlope: 0.00007371332
-        outSlope: 0.00044227974
+        outSlope: 0.00007371332
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59268,7 +59268,7 @@ AnimationClip:
         time: 0.5833334
         value: -0.0000061300684
         inSlope: 0.0004413647
-        outSlope: 0.00022068252
+        outSlope: 0.0004413647
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -59277,16 +59277,16 @@ AnimationClip:
         time: 0.6666667
         value: -0.000006607996
         inSlope: 0.00023788791
-        outSlope: 0.00011894392
+        outSlope: 0.00023788791
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.8333334
+        time: 0.8333333
         value: -0.000006775155
         inSlope: 0.00012195277
-        outSlope: 0.00024390563
+        outSlope: 0.00012195277
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
