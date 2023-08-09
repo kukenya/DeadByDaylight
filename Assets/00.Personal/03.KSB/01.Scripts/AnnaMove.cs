@@ -84,6 +84,7 @@ public class AnnaMove : MonoBehaviour
 
     void Update()
     {
+        // 스위치
         switch (state)
         {
             case State.Idle: Idle(); break;
@@ -96,17 +97,18 @@ public class AnnaMove : MonoBehaviour
             case State.Stunned: break;
         }
 
-        // 도끼 충전
+        // 도끼 재충전
         if (Input.GetKeyDown(KeyCode.R))
         {
             anim.SetTrigger("Reload");
-
+            OffCC();
             currentAxeCount = maxAxeCount;
         }
 
         // 발전기 부수기
         if (Input.GetKeyDown(KeyCode.T))
         {
+            OffCC();
             anim.SetTrigger("DestroyGenerator");
         }
 
@@ -114,7 +116,6 @@ public class AnnaMove : MonoBehaviour
 
 
         // 스턴
-
         if (Input.GetKeyDown(KeyCode.G))
         {
             OffCC();
