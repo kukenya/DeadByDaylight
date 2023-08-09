@@ -27,7 +27,7 @@ public class AnnaMove : MonoBehaviour
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
     float normalSpeed = 4.4f;               // 기본 이동속도
-    float readySpeed = 3.08f;               // 차징 시 이동속도
+    float chargingSpeed = 3.08f;               // 차징 시 이동속도
     float delaySpeed = 3.74f;               // 경직 시 이동속도
 
     // 회전
@@ -47,7 +47,6 @@ public class AnnaMove : MonoBehaviour
     // 카운트
     float currentAxeCount;                  // 현재 가지고 있는 한손도끼 개수
     float maxAxeCount = 5;                  // 최대 소유 가능한 한손도끼 개수
-    float notMoveCurrentTime;
 
     // 한손 도끼
     public GameObject smallAxe;             // 한손도끼 GameObject
@@ -62,6 +61,12 @@ public class AnnaMove : MonoBehaviour
     bool isCharging;                        // 차징 중인가?
     bool isCanceled;                        // 차징을 취소했는가?
     bool isThrowing;                        // 손도끼를 던졌는가?
+    bool canCarry;                          // 생존자를 들 수 있는가?
+    bool isStunned;                         // 스턴 당했는가?
+
+    // 기타
+    public Light redlight;                  // 살인마 앞에 있는 조명
+    GameObject survivor;                    // 생존자 게임오브젝트
     #endregion
 
     #region Start & Update
@@ -72,13 +77,13 @@ public class AnnaMove : MonoBehaviour
         anim.SetLayerWeight(1, 0);                  // 애니메이션 레이어
         anim.SetLayerWeight(2, 0);                  // 애니메이션 레이어
         smallAxe.SetActive(false);                  // 왼손에 들고 있는 한손도끼 렌더러 비활성화
-        notMoveCurrentTime = 0f;
+        redlight.enabled = false;                   // 살인마 앞에 있는 조명을 끔
+        currentAxeCount = maxAxeCount;              // 시작할 때 도끼갯수 최대로 소지
+
     }
 
     void Update()
     {
-       print(currentSpeed);
-
         switch (state)
         {
             case State.Idle: Idle(); break;
@@ -89,6 +94,41 @@ public class AnnaMove : MonoBehaviour
             case State.Carry: UpdateCarry(); break;
             case State.CarryAttack: CarryAttack(); break;
             case State.Stunned: break;
+        }
+
+        // 도끼 충전
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            anim.SetTrigger("Reload");
+
+            currentAxeCount = maxAxeCount;
+        }
+
+        // 발전기 부수기
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            anim.SetTrigger("DestroyGenerator");
+        }
+
+        // 판자 부수기
+
+
+        // 스턴
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            OffCC();
+            if(state == State.Carry)
+            {
+                // 캐리 스턴 애니메이션을 실행
+                anim.SetTrigger("CarryStunned");
+            }
+            else
+            {
+                // 스턴 애니메이션을 실행
+                anim.SetTrigger("Stunned");
+                OffSmallAxe();
+            }
         }
     }
     #endregion
@@ -147,15 +187,19 @@ public class AnnaMove : MonoBehaviour
         Vector3 dir = dirH + dirV;
         dir.Normalize();
 
-        // 이동한다
-        if (isCharging == false)
+        // 만약 차징 중이라면
+        if (isCharging == true)
         {
+            // 차지속도(3.08)로 이동
+            currentSpeed = chargingSpeed;
+        }
+        else if(isCharging == false || state != State.CoolTime)
+        {
+            // 그 이외는 일반속도(4.4)로 이동
             currentSpeed = normalSpeed;
         }
-        else
-        {
-            currentSpeed = readySpeed;
-        }
+
+        // 이동한다
         cc.Move(dir * currentSpeed * Time.deltaTime);
         #endregion
 
@@ -163,22 +207,42 @@ public class AnnaMove : MonoBehaviour
         // 마우스 왼쪽 버튼을 누르면 일반공격을 한다.
         if (Input.GetButtonDown("Fire1") && isCharging == false)
         {
+            // 상태를 NormalAttack 로 바꿈
             state = State.NormalAttack;
+
+            // 일반공격 애니메이션 실행
             anim.SetTrigger("Attack");
+
             isNormalAttack = true;
+
+            // 멈춰있는 상태에서 때리면
+            //if (cc.velocity == Vector3.zero)
+            //{
+            //    // 그냥 때림
+            //    // 상태를 NormalAttack 로 바꿈
+            //    state = State.NormalAttack;
+            //}
+            // 움직이는 상태라면
+            //else
+            //{
+            //    앞으로 가면서 때림
+            //    transform.position = transform.position + transform.forward * 2;
+            //    
+            //    Vector3 attackPos = transform.position + transform.forward * 2;
+            //    transform.position = Vector3.Lerp(transform.position, attackPos, 0.8f);
+            //}
         }
 
         // 마우스 오른쪽 버튼을 누르면 한손도끼를 차징하기 시작한다.
-        if (Input.GetButton("Fire2") && state != State.NormalAttack && isCanceled == false)
+        if (Input.GetButton("Fire2") && state != State.NormalAttack && isCanceled == false && currentAxeCount != 0)
         {
-
             Charging();
             isCharging = true;                  // 차징 중에 마우스 왼쪽 버튼을 눌러도 일반공격을 못하도록
             anim.SetBool("Throwing", true);     // 왼손을 든 채로 돌아다닐 수 있다.
         }
 
         // 마우스 오른쪽 버튼을 떼면 도끼를 던진다.
-        if (isCanceled == false && Input.GetButtonUp("Fire2"))
+        if (isCanceled == false && Input.GetButtonUp("Fire2") && currentAxeCount != 0)
         {
             anim.SetTrigger("Throw");
             anim.SetBool("Throwing", false);
@@ -191,19 +255,37 @@ public class AnnaMove : MonoBehaviour
             isCanceled = true;
             anim.SetBool("Throwing", false);
             currentChargingTime = 0;
+            isCharging = false;
 
-            Invoke("DoCancel", 0.8f);
+            Invoke("DoCancel", 0.4f);
         }
         #endregion
 
         #region 생존자 들기
         // 만약 사정거리 안에 생존자가 쓰러져있다면
-        // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canCarry)
         {
-            // 생존자를 들어올린다.
-            anim.SetTrigger("Pickup");
-            cc.enabled = false;
+            // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                // 생존자를 들어올린다.
+                anim.SetTrigger("Pickup");
+                state = State.Carry;
+                canCarry = false;
+                
+                // 생존자의 몸을 내 팔의 자식으로 만들어서 들고 다닌다.
+            }
+        }
+        #endregion
+
+        #region 이동할 때 안할 때 레이어값 조정
+        if (cc.velocity == Vector3.zero)
+        {
+            anim.SetLayerWeight(3, 0.5f);
+        }
+        else
+        {
+            anim.SetLayerWeight(3, 0);
         }
         #endregion
     }
@@ -218,41 +300,7 @@ public class AnnaMove : MonoBehaviour
 
     #region 일반공격
     private void NormalAttack()
-    {
-        // 회전속도와 이동속도 줄어들게 한다.
-        #region 회전
-        // 회전값을 받아온다.
-        float mx = Input.GetAxis("Mouse X");
-        float my = Input.GetAxis("Mouse Y");
-
-        // 회전값을 누적
-        rotX += mx * 1 * Time.deltaTime;
-        rotY += my * 1 * Time.deltaTime;
-
-        // 회전값을 적용
-        transform.localEulerAngles = new Vector3(0, rotX, 0);
-        cam.localEulerAngles = new Vector3(-rotY, 0, 0);
-        #endregion
-
-        #region 이동
-        // 이동값 받아온다
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        // 이동값을 애니메이션과 연결
-        anim.SetFloat("h", h);
-        anim.SetFloat("v", v);
-
-        // 방향을 구한다
-        Vector3 dirH = transform.right * h;
-        Vector3 dirV = transform.forward * v;
-        Vector3 dir = dirH + dirV;
-        dir.Normalize();
-
-        // 이동한다
-        cc.Move(dir * 0.1f * Time.deltaTime);
-        #endregion
-
+    {    
         // 공격이 끝나면 상태를 Move 로 바꾼다. -> 애니메이션 이벤트
     }
     #endregion
@@ -300,13 +348,17 @@ public class AnnaMove : MonoBehaviour
         smallaxe.transform.position = throwingSpot.position;
         smallaxe.transform.forward = Camera.main.transform.forward;
 
+        // 도끼 갯수를 줄인다
+        currentAxeCount--;
+
         state = State.CoolTime;
-        isThrowing = true;
     }
 
     // 2초 쿨타임
     void CoolTime()
     {
+        isThrowing = true;
+
         #region 회전
         // 회전값을 받아온다.
         float mx = Input.GetAxis("Mouse X");
@@ -347,7 +399,7 @@ public class AnnaMove : MonoBehaviour
 
         // 이동한다
         currentSpeed = delaySpeed;
-        cc.Move(dir * 1 * Time.deltaTime);
+        cc.Move(dir * delaySpeed * Time.deltaTime);
         #endregion
 
         currentTime += Time.deltaTime;
@@ -356,11 +408,13 @@ public class AnnaMove : MonoBehaviour
             state = State.Move;
             isThrowing = false;
             isCharging = false;
+            currentTime = 0;
         }
     }
     #endregion
 
     #region 생존자 들기
+    // 이동
     private void UpdateCarry()
     {
         #region 회전
@@ -406,6 +460,7 @@ public class AnnaMove : MonoBehaviour
         cc.Move(dir * normalSpeed * Time.deltaTime);
         #endregion
 
+        #region 갈고리 걸기
         // 갈고리 근처에서 UI 가 떴을 때
         // 스페이스바를 계속 누르고 있으면 게이지가 찬다. -> 
         if (Input.GetKey(KeyCode.V))
@@ -416,20 +471,25 @@ public class AnnaMove : MonoBehaviour
         // 만약 게이지가 다 차기 전에 스페이스바에서 떨어지면 걸기가 캔슬된다.
 
         // 만약 게이지가 다 차면 생존자를 갈고리에 건다.
+        #endregion
 
+        #region 내려놓기
         // 생존자를 들고 있는 상태에서 스페이스바를 다시 누르면 내려놓는다. -> Vector3.zero
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Drop");
             cc.enabled = false;
         }
+        #endregion
 
+        #region 든 상태에서 공격
         // 생존자를 들고 있는 상태에서 마우스 왼쪽 버튼을 누르면 공격한다. -> Vector3.zero
         if (Input.GetButtonDown("Fire1"))
         {
             anim.SetTrigger("CarryAttack");
             state = State.CarryAttack;
         }
+        #endregion
 
         #region 이동할 때 안할 때 레이어값 조정
         if (cc.velocity == Vector3.zero)
@@ -442,17 +502,29 @@ public class AnnaMove : MonoBehaviour
         }
         #endregion
     }
-
+    // 갈고리
     public void DoHook()
     {
         currentTime += Time.deltaTime;
     }
-
+    // 공격
     public void CarryAttack()
     {
 
     }
     #endregion
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 6)
+        {
+            canCarry = true;
+
+            // survivor = other.gameObject.GetComponentInParent<GameObject>();
+
+            // survivor
+        }
+    }
 
     #region Events
     public void OnCC()
@@ -465,12 +537,15 @@ public class AnnaMove : MonoBehaviour
         cc.enabled = false;
 
     }
+
     void OnMyReset()            // State 를 Move 로 초기화하는 함수
     {
         state = State.Move;
         anim.SetBool("Throwing", false);
         isCharging = false;
         isNormalAttack = false;
+        isStunned = false;
+        OnCC();
     }
 
     public void Throwing()      // State 를 ThrowingAttack 로 바꾸는 함수
@@ -481,12 +556,6 @@ public class AnnaMove : MonoBehaviour
     public void OnCoolTime()    // State 를 CoolTime 으로 바꾸는 함수
     {
         state = State.CoolTime;
-    }
-
-    void OnMyCarry()            // State 를 Carry 로 바꾸는 함수
-    {
-        // 생존자 들기 상태로 바꾼다.
-        state = State.Carry;
     }
 
     public void OnSmallAxe()    // 도끼 활성화
