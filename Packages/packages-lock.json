@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "ca.andydbc.unity-texture-packer": {
-      "version": "file:../Assets/unity-texture-packer-master",
+      "version": "file:../LocalPakage/unity-texture-packer-master",
       "depth": 0,
       "source": "local",
       "dependencies": {}
