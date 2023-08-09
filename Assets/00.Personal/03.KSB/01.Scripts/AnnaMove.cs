@@ -27,7 +27,7 @@ public class AnnaMove : MonoBehaviour
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
     float normalSpeed = 4.4f;               // 기본 이동속도
-    float chargingSpeed = 3.08f;               // 차징 시 이동속도
+    float chargingSpeed = 3.08f;            // 차징 시 이동속도
     float delaySpeed = 3.74f;               // 경직 시 이동속도
 
     // 회전
@@ -65,8 +65,8 @@ public class AnnaMove : MonoBehaviour
     bool isStunned;                         // 스턴 당했는가?
 
     // 기타
-    public Light redlight;                  // 살인마 앞에 있는 조명
     GameObject survivor;                    // 생존자 게임오브젝트
+    // public Light redlight;               // 살인마 앞에 있는 조명
     #endregion
 
     #region Start & Update
@@ -77,9 +77,9 @@ public class AnnaMove : MonoBehaviour
         anim.SetLayerWeight(1, 0);                  // 애니메이션 레이어
         anim.SetLayerWeight(2, 0);                  // 애니메이션 레이어
         smallAxe.SetActive(false);                  // 왼손에 들고 있는 한손도끼 렌더러 비활성화
-        redlight.enabled = false;                   // 살인마 앞에 있는 조명을 끔
         currentAxeCount = maxAxeCount;              // 시작할 때 도끼갯수 최대로 소지
 
+        // redlight.enabled = false;                // 살인마 앞에 있는 조명을 끔
     }
 
     void Update()
@@ -119,7 +119,7 @@ public class AnnaMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             OffCC();
-            if(state == State.Carry)
+            if (state == State.Carry)
             {
                 // 캐리 스턴 애니메이션을 실행
                 anim.SetTrigger("CarryStunned");
@@ -163,13 +163,13 @@ public class AnnaMove : MonoBehaviour
         transform.eulerAngles = new Vector3(0, rotX, 0);
         cam.eulerAngles = new Vector3(-rotY, rotX, 0);
 
-        if (rotY >= 36)
+        if (rotY >= 30)
         {
-            rotY = 36;
+            rotY = 30;
         }
-        if (rotY <= -36)
+        if (rotY <= -30)
         {
-            rotY = -36;
+            rotY = -30;
         }
         #endregion
 
@@ -194,7 +194,7 @@ public class AnnaMove : MonoBehaviour
             // 차지속도(3.08)로 이동
             currentSpeed = chargingSpeed;
         }
-        else if(isCharging == false || state != State.CoolTime)
+        else if (isCharging == false || state != State.CoolTime)
         {
             // 그 이외는 일반속도(4.4)로 이동
             currentSpeed = normalSpeed;
@@ -273,7 +273,7 @@ public class AnnaMove : MonoBehaviour
                 anim.SetTrigger("Pickup");
                 state = State.Carry;
                 canCarry = false;
-                
+
                 // 생존자의 몸을 내 팔의 자식으로 만들어서 들고 다닌다.
             }
         }
@@ -301,7 +301,7 @@ public class AnnaMove : MonoBehaviour
 
     #region 일반공격
     private void NormalAttack()
-    {    
+    {
         // 공격이 끝나면 상태를 Move 로 바꾼다. -> 애니메이션 이벤트
     }
     #endregion
@@ -366,20 +366,20 @@ public class AnnaMove : MonoBehaviour
         float my = Input.GetAxis("Mouse Y");
 
         // 회전값을 누적
-        rotX += mx * 50 * Time.deltaTime;
-        rotY += my * 50 * Time.deltaTime;
+        rotX += mx * rotSpeed * Time.deltaTime;
+        rotY += my * rotSpeed * Time.deltaTime;
 
         // 회전값을 적용
         transform.eulerAngles = new Vector3(0, rotX, 0);
         cam.eulerAngles = new Vector3(-rotY, rotX, 0);
 
-        if (rotY >= 20)
+        if (rotY >= 30)
         {
-            rotY = 20;
+            rotY = 30;
         }
-        if (rotY <= -20)
+        if (rotY <= -30)
         {
-            rotY = -20;
+            rotY = -30;
         }
         #endregion
 
@@ -431,13 +431,13 @@ public class AnnaMove : MonoBehaviour
         transform.eulerAngles = new Vector3(0, rotX, 0);
         cam.eulerAngles = new Vector3(-rotY, rotX, 0);
 
-        if (rotY >= 36)
+        if (rotY >= 30)
         {
-            rotY = 36;
+            rotY = 30;
         }
-        if (rotY <= -36)
+        if (rotY <= -30)
         {
-            rotY = -36;
+            rotY = -30;
         }
         #endregion
 
