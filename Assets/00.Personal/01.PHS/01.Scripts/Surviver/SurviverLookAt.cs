@@ -20,6 +20,7 @@ public class SurviverLookAt : MonoBehaviour
             }
             else
             {
+                anim.SetLayerWeight(1, 0);
                 isLookAt = value;
             }
         } 

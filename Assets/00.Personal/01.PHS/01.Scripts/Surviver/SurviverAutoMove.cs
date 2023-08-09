@@ -23,57 +23,67 @@ public class SurviverAutoMove : MonoBehaviour
 
     }
 
+    Coroutine cor;
+
+    public void StopCoroutine()
+    {
+        if(cor != null) StopCoroutine(cor);
+    }
+
     public void OnAutoMove(Transform targetTrans, System.Action<float> action, float targetAngle)
     {
         this.targetTrans = targetTrans;
         StartCoroutine(AutoMoveCor(action, targetAngle));
     }
 
-    public void OnAutoMove(Transform targetTrans, System.Action action)
+    public void OnAutoMove(Transform targetTrans, System.Action action, bool reverse = false)
     {
         this.targetTrans = targetTrans;
-        StartCoroutine(AutoMoveCor(action));
+        cor = StartCoroutine(AutoMoveCor(action, reverse));
     }
 
     IEnumerator AutoMoveCor(System.Action<float> action, float targetAngle)
     {
-        surviverController.banMove = true;
+        controller.enabled = false;
+        surviverController.BanMove = true;
         while (true)
         {
-            Vector3 moveDirection = (targetTrans.position - transform.position).normalized;
-
+            Vector3 moveDirection = (new Vector3(targetTrans.position.x, 0, targetTrans.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetTrans.eulerAngles.y, transform.eulerAngles.z);
             if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
             {
-                controller.Move(moveDirection * autoMoveSpeed * Time.deltaTime);
+                transform.position += moveDirection * autoMoveSpeed * Time.deltaTime;
             }
             else
             {
                 break;
             }
 
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetTrans.eulerAngles.y, transform.eulerAngles.z);
+           
             yield return null;
         }
         action?.Invoke(targetAngle);
     }
 
-    IEnumerator AutoMoveCor(System.Action action)
+    IEnumerator AutoMoveCor(System.Action action, bool reverse)
     {
-        surviverController.banMove = true;
+        controller.enabled = false;
+        surviverController.BanMove = true;
         while (true)
         {
-            Vector3 moveDirection = (targetTrans.position - transform.position).normalized;
+            Vector3 moveDirection = (new Vector3(targetTrans.position.x, 0, targetTrans.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
+            float targetAngle = reverse == false ? targetTrans.eulerAngles.y : -targetTrans.eulerAngles.y;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
 
             if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
             {
-                controller.Move(moveDirection * autoMoveSpeed * Time.deltaTime);
+                transform.position += moveDirection * autoMoveSpeed * Time.deltaTime;
             }
             else
             {
                 break;
             }
-
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetTrans.eulerAngles.y, transform.eulerAngles.z);
+            
             yield return null;
         }
         action?.Invoke();

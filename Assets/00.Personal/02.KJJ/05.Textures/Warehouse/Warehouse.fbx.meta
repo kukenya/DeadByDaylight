@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: fa9bdae670d4bc5468453eddb650c45d
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Concrete_Trim_A
+    second: {fileID: 2100000, guid: 2f771fa7e9141eb4f9b70fe57ad390b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Debris_Warehouse
+    second: {fileID: 2100000, guid: 1365a8a11d2ca92478ac0d93d8540c7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_DirtTerrain
+    second: {fileID: 2100000, guid: b1488b09b2e100b43bf43327324f045d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Eng_trim_driftwood_light01
+    second: {fileID: 2100000, guid: 7e833e339973f9a4fb7c85738d33455c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Eng_trim_driftwood_light01.001
+    second: {fileID: 2100000, guid: 7e833e339973f9a4fb7c85738d33455c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_ConcreteWall02
+    second: {fileID: 2100000, guid: ab4ebbc823e1066429ecbf226d2a58e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_TrimMetal01
+    second: {fileID: 2100000, guid: fe8044987fb36cd478b86f880e0b1a4b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_TrimMetal02
+    second: {fileID: 2100000, guid: 50ed6b6a40332f14395bd3e4435af3ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Foundry_TrimMetal03
+    second: {fileID: 2100000, guid: 1645db1d4d822774aac0e2893015bf81, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Hos_ConcreteBroken01
+    second: {fileID: 2100000, guid: ee099cf4196feaa4ab6cd0d61e81f165, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_Bricks_Plaster_A
+    second: {fileID: 2100000, guid: 903a23069ba6d23458dd191ec750fb05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_CorrugatedMetal01
+    second: {fileID: 2100000, guid: 13c90272451a45949b202f7a01c1ae38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_FloorTiles01
+    second: {fileID: 2100000, guid: bc1661e266764414ab5a0d089efe9219, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_MetalGrill01
+    second: {fileID: 2100000, guid: b6439a974c93fad4499be02dd744c9b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_MetalGrill02
+    second: {fileID: 2100000, guid: c6913fc22c76e324b82ff86d7bcedd5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_StoreHouseFloor
+    second: {fileID: 2100000, guid: 665fa46724c571349a449b9d2f78221e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_TrimMetalDiamondPlate01
+    second: {fileID: 2100000, guid: 5143cd723539a6d44b936bfc23e6c9d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_TrimMetalDiamondPlate02
+    second: {fileID: 2100000, guid: 7be35592325a06c41a0f9808d1c4336c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_WoodDark01
+    second: {fileID: 2100000, guid: b90058b1412dbc54eb7e8a42176335be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_Ind_driftwood_01
+    second: {fileID: 2100000, guid: a91c3347087a06145a05baf451b8c4d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_ModularSmallPipes
+    second: {fileID: 2100000, guid: d6debef50237d7f4bad178a6083ce2b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_ST_Warehouse01_Entrance_02
+    second: {fileID: 2100000, guid: 0265a25a477881147b501bbc554cf8a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_ST_Warehouse_ConcreteTile_01
+    second: {fileID: 2100000, guid: f9abaa995948c2e4abedca64d6cc6972, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_WAL_concreteWallB02
+    second: {fileID: 2100000, guid: e63b77b7ef01d0747bbd5bc33ae1e04f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_trim_driftwood_Dark02
+    second: {fileID: 2100000, guid: 42ce516d6253bee46a8bc49dc8623323, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_trim_driftwood_Dark03
+    second: {fileID: 2100000, guid: 89f6bdf2ca578fa458d7fd6f6ade2554, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

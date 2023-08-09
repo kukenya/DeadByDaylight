@@ -5,16 +5,8 @@ using UnityEngine;
 
 public class SurviverAnimation : MonoBehaviour
 {
-    public static SurviverAnimation instance;
-
-    public void Awake()
-    {
-        instance = this;
-    }
-
     public Animator anim;
     SurviverController controller;
-
     string currentState;
 
     public enum MoveState
@@ -63,6 +55,7 @@ public class SurviverAnimation : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
     }
 
@@ -147,7 +140,7 @@ public class SurviverAnimation : MonoBehaviour
 
     public void PlayStandToCrawl()
     {
-        controller.banMove = true;
+        controller.BanMove = true;
         Play("HitBack");
         StartCoroutine(CheckAnimEnd("HitBack"));
     }
@@ -161,7 +154,7 @@ public class SurviverAnimation : MonoBehaviour
         }
         Play("CrawlMove");
         Pose = PoseState.Crawl;
-        controller.banMove = false;
+        controller.BanMove = false;
     }
 
     public void Play(string state, float time = 0.1f, bool overplay = false)

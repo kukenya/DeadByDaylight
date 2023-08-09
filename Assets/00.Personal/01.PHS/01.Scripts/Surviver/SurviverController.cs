@@ -72,7 +72,7 @@ public class SurviverController : MonoBehaviour
     {
         mainCamera = Camera.main;
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
-        surviverAnimation = SurviverAnimation.instance;
+        surviverAnimation = GetComponent<SurviverAnimation>();
     }
 
     // Update is called once per frame
@@ -85,7 +85,20 @@ public class SurviverController : MonoBehaviour
     public float rotationSpeed;
     public float currentSpeed;
 
-    public bool banMove = false;
+    bool banMove = false;
+
+    public bool BanMove { get { return banMove; } set {
+            banMove = value; 
+            if (value == false)
+            {
+                controller.enabled = true;
+                surviverAnimation.AnimationChange();
+            }
+            else
+            {
+                controller.enabled = false;
+            }
+        } }
     private void Move()
     {
         if(banMove) 

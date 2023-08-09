@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SurviverUI : MonoBehaviour
 {
+    public static SurviverUI instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public float uiAlpha = 0.3f;
 
     [Header("ม๘วเนู")]
@@ -36,6 +44,25 @@ public class SurviverUI : MonoBehaviour
         for(int i = 0; i < colors.Length; i++)
         {
             colors[i].a = uiAlpha;
+        }
+
+        prograssBar.color = colors[0];
+        prograssText.color = colors[1];
+        prograssBG.color = colors[2];
+    }
+
+    public void OnProgressUI()
+    {
+        Color[] colors = new Color[3];
+
+        colors[0] = prograssBar.color;
+        colors[1] = prograssText.color;
+        colors[2] = prograssBG.color;
+
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i].a = 1;
         }
 
         prograssBar.color = colors[0];
