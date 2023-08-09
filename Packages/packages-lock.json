@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "ca.andydbc.unity-texture-packer": {
-      "version": "file:C:/Users/user/Downloads/unity-texture-packer-master/unity-texture-packer-master",
+      "version": "file:../Assets/unity-texture-packer-master",
       "depth": 0,
       "source": "local",
       "dependencies": {}
@@ -150,17 +150,6 @@
       "source": "builtin",
       "dependencies": {
         "com.unity.render-pipelines.core": "12.1.11"
-      }
-    },
-    "com.unity.render-pipelines.universal": {
-      "version": "12.1.11",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1",
-        "com.unity.burst": "1.8.4",
-        "com.unity.render-pipelines.core": "12.1.11",
-        "com.unity.shadergraph": "12.1.11"
       }
     },
     "com.unity.searcher": {

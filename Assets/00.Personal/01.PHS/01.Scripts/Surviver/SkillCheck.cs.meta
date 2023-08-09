@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d03d9bbfce5b9e4438d5f258fedff776
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - skillCheck: {instanceID: 0}
+  - pointer: {instanceID: 0}
+  - skillCheckSound: {instanceID: 0}
+  - startSound: {fileID: 8300000, guid: b32f9bbd679e8624fbe6b42d3d0f1e38, type: 3}
+  - normalCheckSound: {fileID: 8300000, guid: 534c1fb409dfe0f449928d6ca6acab80, type: 3}
+  - hardCheckSound: {fileID: 8300000, guid: c0bb542a2fda8af4ebf601b29964ca23, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
