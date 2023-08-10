@@ -50,7 +50,7 @@ public class SurviverController : MonoBehaviour
 
     bool isMoving = false;
     bool isSprint = false;
-    bool isRotating = false;
+    //bool isRotating = false;
     bool isCrouching = false;
     bool isCrawl = false;
     public bool isHit = false;
@@ -169,8 +169,7 @@ public class SurviverController : MonoBehaviour
                 mainCamera.transform.eulerAngles.y;
 
             Vector3 rotation = Vector3.MoveTowards(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, transform.eulerAngles.y + deltaAngle, 0), rotationSpeed * Time.deltaTime);
-            isRotating = rotation == new Vector3(0, transform.eulerAngles.y + deltaAngle, 0) ? false : true;
-            playerAnimator.SetBool("IsRotation", isRotating);
+            //isRotating = rotation == new Vector3(0, transform.eulerAngles.y + deltaAngle, 0) ? false : true;
 
             // ���� ī�޶� �����ǿ� �°� ȸ���Ѵ�. (���� ī�޶� �ƴҶ���)
             transform.rotation = Quaternion.Euler(rotation);

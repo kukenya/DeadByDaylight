@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
+    public bool repaierd = false;
     public Transform[] animPos;
     Transform compareTrans;
     float prograss = 0;
@@ -44,9 +45,21 @@ public class Generator : MonoBehaviour
         UpdateAnim();
     }
 
+    void SkillCheckFail()
+    {
+        Prograss += failValue;
+        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+        interaction.GeneratorFail();
+    }
+
     void GenRepair()
     {
         if (repairing == false) return;
+        if(Prograss >= maxPrograssTime)
+        {
+            repaierd = true;
+            interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+        }
 
         Prograss += Time.deltaTime;
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
@@ -73,7 +86,7 @@ public class Generator : MonoBehaviour
         switch (value)
         {
             case 0:
-                Prograss += failValue;
+                SkillCheckFail();
                 break;
             case 1:
                 Prograss += normalValue;
@@ -86,6 +99,8 @@ public class Generator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (repaierd) return;
+
         interaction = other.GetComponent<SurvivorInteraction>();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
 
@@ -96,12 +111,16 @@ public class Generator : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (repaierd) return;
+
         System.Array.Sort(animPos, TransformListSortComparer);
         interaction.Position = animPos[0];
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (repaierd) return;
+
         ui.UnFocusProgressUI();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
     }

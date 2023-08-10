@@ -50,6 +50,20 @@ public class SurvivorInteraction : MonoBehaviour
         UpdateInteractionInput();
     }
 
+    public void EndInteract(InteractiveType type)
+    {
+        switch (type)
+        {
+            case InteractiveType.Generator:
+                OffRepairGen();
+                break;
+            case InteractiveType.ExitLever:
+                DeActivateExit();
+                break;
+        }
+        Type = InteractiveType.None;
+    }
+
     public void ChangeInteract(InteractiveType type, MonoBehaviour interact = null, Transform animationPos = null)
     {
         switch (type)
@@ -320,5 +334,22 @@ public class SurvivorInteraction : MonoBehaviour
         controller.enabled = true;
         surviverLookAt.LookAt = true;
         exit.OffSwitch();
+    }
+
+    public void GeneratorFail()
+    {
+         StartCoroutine(GeneratorFailCor());    }
+
+    IEnumerator GeneratorFailCor()
+    {
+        surviverAnimation.Play("Generator_Fail_FT", 0.1f, true);
+        generator.Repair = false;
+        while (true)
+        {
+            if (surviverAnimation.IsAnimEnd("Generator_Fail_FT")) break;
+            yield return null;
+        }
+        generator.Repair = true;
+        surviverAnimation.Play("Generator_Idle_FT");
     }
 }

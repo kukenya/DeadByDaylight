@@ -21,7 +21,6 @@ public class SurviverAnimation : MonoBehaviour
         Standing,
         Crouching,
         Crawl,
-        ObjectInteraction
     }
 
     public enum ObjectInteractState
@@ -72,15 +71,7 @@ public class SurviverAnimation : MonoBehaviour
             case PoseState.Crawl:
                 Crawling();
                 break;
-            case PoseState.ObjectInteraction:
-                ObjectInteract();
-                break;
         }
-    }
-
-    void ObjectInteract()
-    {
-        
     }
 
     void Standing()
