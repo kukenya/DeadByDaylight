@@ -14,7 +14,7 @@ public class SkillCheck : MonoBehaviour
     }
 
     public GameObject skillCheck;
-    public Image pointer;
+    public GameObject pointer;
 
     public float pointerRotationTime = 1f;
 
@@ -129,7 +129,7 @@ public class SkillCheck : MonoBehaviour
         {
             currentTime += Time.deltaTime;
             checkAngle = Mathf.Lerp(0, 360, currentTime / pointerRotationTime);
-            pointer.gameObject.transform.eulerAngles = new Vector3 (0, 0, -checkAngle);
+            pointer.transform.eulerAngles = new Vector3 (0, 0, -checkAngle);
 
             yield return null;
             if(currentTime >= pointerRotationTime) break;

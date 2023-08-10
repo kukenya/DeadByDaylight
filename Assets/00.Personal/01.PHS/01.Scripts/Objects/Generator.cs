@@ -31,6 +31,12 @@ public class Generator : MonoBehaviour
 
     float animationChangeTime;
 
+    [Header("스파크 파티클")]
+    public ParticleSystem spark;
+    public Transform[] sparkParticlePos;
+
+    public AudioSource failAudio;
+
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
@@ -49,6 +55,9 @@ public class Generator : MonoBehaviour
     {
         Prograss += failValue;
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+        anim.CrossFadeInFixedTime("Fail", 0.25f);
+        Instantiate(spark, sparkParticlePos[0].position, sparkParticlePos[0].rotation);
+        failAudio.Play();
         interaction.GeneratorFail();
     }
 
@@ -69,11 +78,7 @@ public class Generator : MonoBehaviour
     void UpdateAnim()
     {
         if (repairing == false) return;
-
-        anim.SetLayerWeight(1, Mathf.Clamp(Prograss / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(2, Mathf.Clamp((Prograss - animationChangeTime) / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(3, Mathf.Clamp((Prograss - animationChangeTime * 2) / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(4, Mathf.Clamp((Prograss - animationChangeTime * 3) / animationChangeTime, 0, 1));
+        anim.SetFloat("Prograss", Prograss / maxPrograssTime);
     }
 
     [Header("스킬 체크 상승 하락 수치")]
