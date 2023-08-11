@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1904471492007036815}
   - component: {fileID: 3297146397911877674}
   - component: {fileID: 731032742131662048}
+  - component: {fileID: 8090143403185768217}
   m_Layer: 0
   m_Name: BreakableWall
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8090143403185768217
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235633468713491765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7202990895846592755, guid: 91ce176c4fe45584a8f8da0f9b595f03, type: 3}
