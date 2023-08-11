@@ -1553,6 +1553,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5231537226038602361}
     m_Modifications:
+    - target: {fileID: 1829535529, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 835.04486
+      objectReference: {fileID: 0}
     - target: {fileID: 146267287833344192, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Name
       value: Barrel
@@ -1600,6 +1604,18 @@ PrefabInstance:
     - target: {fileID: 670040179949478522, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065863924015631710, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 10493.483
+      objectReference: {fileID: 0}
+    - target: {fileID: 4823832033369873894, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 40000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982025726483106322, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 6422.2417
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
