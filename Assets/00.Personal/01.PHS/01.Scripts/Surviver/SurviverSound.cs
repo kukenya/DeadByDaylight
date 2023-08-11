@@ -12,6 +12,18 @@ public class SurviverSound : MonoBehaviour
     public AudioSource windowSource;
     public AudioClip[] jumpWindowSounds;
 
+    public AudioSource[] footStep;
+
+    public void PlayFootStepLT()
+    {
+        footStep[0].Play();
+    }
+
+    public void PlayFootStepRT()
+    {
+        footStep[1].Play();
+    }
+
 
     public void PlayInjSound()
     {
@@ -25,11 +37,9 @@ public class SurviverSound : MonoBehaviour
         audioSource.Play();
     }
 
-
-
     public void PlayWindow()
     {
         windowSource.clip = jumpWindowSounds[Random.Range(0, jumpWindowSounds.Length)];
-        audioSource.Play();
+        windowSource.Play();
     }
 }

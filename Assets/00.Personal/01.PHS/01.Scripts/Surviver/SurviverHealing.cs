@@ -8,6 +8,12 @@ public class SurviverHealing : MonoBehaviour
     SurviverAnimation surviverAnimation;
     public float healingGauge = 0;
 
+    private void Start()
+    {
+        surviverController = GetComponent<SurviverController>();
+        surviverAnimation = GetComponent<SurviverAnimation>();
+    }
+
     public void OnSelfHeal()
     {
         surviverController.BanMove = true;

@@ -56,7 +56,9 @@ public class Generator : MonoBehaviour
         Prograss += failValue;
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
         anim.CrossFadeInFixedTime("Fail", 0.25f);
-        Instantiate(spark, sparkParticlePos[0].position, sparkParticlePos[0].rotation);
+
+        Transform sparkTrans = animPos[0].GetChild(0).transform;
+        Instantiate(spark, sparkTrans.position, sparkTrans.rotation);
         failAudio.Play();
         interaction.GeneratorFail();
     }
@@ -67,6 +69,8 @@ public class Generator : MonoBehaviour
         if(Prograss >= maxPrograssTime)
         {
             repaierd = true;
+            WorldSound.Instacne.PlayGeneratorClear();
+            ui.UnFocusProgressUI();
             interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
         }
 
@@ -110,7 +114,7 @@ public class Generator : MonoBehaviour
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
 
         compareTrans = other.transform;
-        ui.FocusProgressUI();
+        ui.FocusProgressUI("¼ö¸®");
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
     }
 

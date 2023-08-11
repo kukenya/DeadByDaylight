@@ -77,6 +77,7 @@ public class SurviverHealth : MonoBehaviour
 
     void ChangeDown()
     {
+        surviverLookAt.LookAt = false;
         state = HealthState.Down;
         controller.Crawl = true;
         surviverLookAt.isLookAt = false;

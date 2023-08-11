@@ -80,7 +80,7 @@ public class Exit : MonoBehaviour
     {
         if (state == State.Open) return;
 
-        ui.FocusProgressUI();
+        ui.FocusProgressUI("√‚±∏");
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
         interaction = other.GetComponent<SurvivorInteraction>();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.ExitLever, this, animPos);

@@ -14,6 +14,7 @@ public class SkillCheck : MonoBehaviour
     }
 
     public GameObject skillCheck;
+    public GameObject[] skillCheckRange;
     public GameObject pointer;
 
     public float pointerRotationTime = 1f;
@@ -80,6 +81,19 @@ public class SkillCheck : MonoBehaviour
     public void StartSKillCheck()
     {
         if (skillCheckCor != null) return;
+        for(int i = 0; i < skillCheckRange.Length; i++)
+        {
+            skillCheckRange[i].SetActive(false);
+        }
+
+        GameObject obj = skillCheckRange[Random.Range(0, skillCheckRange.Length)];
+        obj.SetActive(true);
+        SkillCheckRange range = obj.GetComponent<SkillCheckRange>();
+
+        minCheckAngle = range.normalCheckStartPos;
+        maxCheckAngle = range.normalCheckEndPos;
+        minHardCheckAngle = range.hardCheckStartPos;
+        maxHardCheckAngle = range.hardCheckEndPos;
 
         skillCheck.SetActive(true);
         skillCheckCor = StartCoroutine(PointerRotation());

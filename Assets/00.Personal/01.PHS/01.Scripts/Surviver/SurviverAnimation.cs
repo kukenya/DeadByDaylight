@@ -56,6 +56,7 @@ public class SurviverAnimation : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
+        AnimationChange();
     }
 
     public void AnimationChange()

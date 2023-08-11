@@ -49,6 +49,7 @@ public class SurviverController : MonoBehaviour
     public float mouseSensitivity = 1f;
 
     bool isMoving = false;
+    public bool Moving { get { return isMoving; } set { isMoving = value; } }
     bool isSprint = false;
     //bool isRotating = false;
     bool isCrouching = false;
@@ -73,13 +74,20 @@ public class SurviverController : MonoBehaviour
         mainCamera = Camera.main;
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         surviverAnimation = GetComponent<SurviverAnimation>();
+        //this.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         GroundedCheck();
+        CameraStopCheck();
         Move();
+    }
+
+    void CameraStopCheck()
+    {
+        Moving = mainCamera.velocity == Vector3.zero ? false : true;
     }
 
     public float rotationSpeed;

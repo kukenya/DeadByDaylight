@@ -9,6 +9,8 @@ public class Window : MonoBehaviour
 
     SurvivorInteraction interaction;
 
+    //publci
+
     private void OnTriggerEnter(Collider other)
     {
         SurviverUI.instance.FocusSpaceBarUI();
@@ -26,6 +28,11 @@ public class Window : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other)
+    {
+        OnTriggerExitMethod();
+    }
+
+    public void OnTriggerExitMethod()
     {
         SurviverUI.instance.UnFocusSpaceBarUI();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
