@@ -167,7 +167,7 @@ MonoBehaviour:
     m_Value: 1000
   cloudThickness:
     m_OverrideState: 1
-    m_Value: 8000
+    m_Value: 100
   fadeInMode:
     m_OverrideState: 1
     m_Value: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b24b200358312b4fa1004e2431c2f1f, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
     m_Value: {x: 0.34342343, y: 1, z: 0.88920677, w: 0.08639308}
