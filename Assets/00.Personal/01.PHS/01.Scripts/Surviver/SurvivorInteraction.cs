@@ -15,6 +15,7 @@ public class SurvivorInteraction : MonoBehaviour
         SelfHeal,
     }
 
+    [SerializeField]
     InteractiveType interactiveType;
 
     public InteractiveType Type { get { return interactiveType; } set {
