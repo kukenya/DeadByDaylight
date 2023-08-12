@@ -15,6 +15,7 @@ public class SurvivorInteraction : MonoBehaviour
         SelfHeal,
     }
 
+    [SerializeField]
     InteractiveType interactiveType;
 
     public InteractiveType Type { get { return interactiveType; } set {
@@ -32,6 +33,7 @@ public class SurvivorInteraction : MonoBehaviour
     SurviverController surviverController;
     SurviverAutoMove surviverAutoMove;
     SurviverLookAt surviverLookAt;
+    SurviverUI ui;
 
     public bool activate = false;
 
@@ -43,11 +45,45 @@ public class SurvivorInteraction : MonoBehaviour
         surviverController = GetComponent<SurviverController>();
         surviverAutoMove = GetComponent<SurviverAutoMove>();
         surviverLookAt = GetComponent<SurviverLookAt>();
+        surviverHealing = GetComponent<SurviverHealing>();
+        ui = SurviverUI.instance;
     }
 
     public void Update()
     {
         UpdateInteractionInput();
+        CancelInteract();
+    }
+
+    public void CancelInteract()
+    {
+        switch (interactiveType)
+        {
+            case InteractiveType.None:
+                break;
+            case InteractiveType.Window:
+                if(Vector3.Distance(transform.position, window.transform.position) > window.GetComponent<SphereCollider>().radius + 0.2f)
+                {
+                    interactiveType = InteractiveType.None;
+                    window.OnTriggerExitMethod();
+                    window = null;
+                }
+                break;
+        }
+    }
+
+    public void EndInteract(InteractiveType type)
+    {
+        switch (type)
+        {
+            case InteractiveType.Generator:
+                OffRepairGen();
+                break;
+            case InteractiveType.ExitLever:
+                DeActivateExit();
+                break;
+        }
+        Type = InteractiveType.None;
     }
 
     public void ChangeInteract(InteractiveType type, MonoBehaviour interact = null, Transform animationPos = null)
@@ -92,8 +128,15 @@ public class SurvivorInteraction : MonoBehaviour
             case InteractiveType.None:
                 if (health.state == SurviverHealth.HealthState.Injured)
                 {
-                    interactiveType = InteractiveType.SelfHeal;
+                    print(surviverController.Moving);
+                    
+                    if(surviverController.Moving == false)
+                    {
+                        interactiveType = InteractiveType.SelfHeal;
+                        ui.FocusProgressUI("치료");
+                    }
                 }
+                
                 break;
             case InteractiveType.Window:
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -130,13 +173,20 @@ public class SurvivorInteraction : MonoBehaviour
                 }
                 break;
             case InteractiveType.SelfHeal:
+                if (surviverController.Moving)
+                {
+                    interactiveType = InteractiveType.None;
+                    ui.UnFocusProgressUI();
+                }
                 if (Input.GetMouseButtonDown(0))
                 {
+                    ui.OnProgressUI();
                     surviverHealing.OnSelfHeal();
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
-
+                    ui.FocusProgressUI("치료");
+                    surviverHealing.OffSelfHeal();
                 }
                 break;
         }
@@ -320,5 +370,22 @@ public class SurvivorInteraction : MonoBehaviour
         controller.enabled = true;
         surviverLookAt.LookAt = true;
         exit.OffSwitch();
+    }
+
+    public void GeneratorFail()
+    {
+         StartCoroutine(GeneratorFailCor());    }
+
+    IEnumerator GeneratorFailCor()
+    {
+        surviverAnimation.Play("Generator_Fail_FT", 0.1f, true);
+        generator.Repair = false;
+        while (true)
+        {
+            if (surviverAnimation.IsAnimEnd("Generator_Fail_FT")) break;
+            yield return null;
+        }
+        generator.Repair = true;
+        surviverAnimation.Play("Generator_Idle_FT");
     }
 }

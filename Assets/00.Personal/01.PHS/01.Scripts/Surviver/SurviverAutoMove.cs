@@ -18,11 +18,6 @@ public class SurviverAutoMove : MonoBehaviour
         controller = GetComponent<CharacterController>();
     }
 
-    private void Update()
-    {
-
-    }
-
     Coroutine cor;
 
     public void StopCoroutine()
@@ -48,18 +43,15 @@ public class SurviverAutoMove : MonoBehaviour
         surviverController.BanMove = true;
         while (true)
         {
-            Vector3 moveDirection = (new Vector3(targetTrans.position.x, 0, targetTrans.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetTrans.eulerAngles.y, transform.eulerAngles.z);
-            if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
-            {
-                transform.position += moveDirection * autoMoveSpeed * Time.deltaTime;
-            }
-            else
-            {
-                break;
-            }
+            if (Vector3.Distance(
+                new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
+                new Vector3(transform.position.x, 0, transform.position.z)) < autoMoveStopDist) break;
 
-           
+            transform.position = Vector3.MoveTowards(
+                   transform.position,
+                   new Vector3(targetTrans.position.x, transform.position.y, targetTrans.position.z),
+                   Time.deltaTime * autoMoveSpeed);
             yield return null;
         }
         action?.Invoke(targetAngle);
@@ -71,19 +63,17 @@ public class SurviverAutoMove : MonoBehaviour
         surviverController.BanMove = true;
         while (true)
         {
-            Vector3 moveDirection = (new Vector3(targetTrans.position.x, 0, targetTrans.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
             float targetAngle = reverse == false ? targetTrans.eulerAngles.y : -targetTrans.eulerAngles.y;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+            if (Vector3.Distance(
+                new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
+                new Vector3(transform.position.x, 0, transform.position.z)) < autoMoveStopDist) break;
 
-            if (Vector3.Distance(new Vector3(targetTrans.position.x, 0, targetTrans.position.z), new Vector3(transform.position.x, 0, transform.position.z)) > autoMoveStopDist)
-            {
-                transform.position += moveDirection * autoMoveSpeed * Time.deltaTime;
-            }
-            else
-            {
-                break;
-            }
-            
+            transform.position = Vector3.MoveTowards(
+                   transform.position,
+                   new Vector3(targetTrans.position.x, transform.position.y, targetTrans.position.z),
+                   Time.deltaTime * autoMoveSpeed);
+
             yield return null;
         }
         action?.Invoke();

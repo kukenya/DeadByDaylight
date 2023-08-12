@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Exit : MonoBehaviour
@@ -62,6 +63,13 @@ public class Exit : MonoBehaviour
     public void ExitActivate()
     {
         if (activate == false) return;
+        if (prograss >= maxPrograssTime)
+        {
+            Play("Opening");
+            state = State.Open;
+            ui.UnFocusProgressUI();
+            interaction.EndInteract(SurvivorInteraction.InteractiveType.ExitLever);
+        }
 
         ui.OnProgressUI();
         Prograss += Time.deltaTime;
@@ -70,7 +78,9 @@ public class Exit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ui.FocusProgressUI();
+        if (state == State.Open) return;
+
+        ui.FocusProgressUI("√‚±∏");
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
         interaction = other.GetComponent<SurvivorInteraction>();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.ExitLever, this, animPos);
@@ -78,6 +88,8 @@ public class Exit : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (state == State.Open) return;
+
         ui.UnFocusProgressUI();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
     }

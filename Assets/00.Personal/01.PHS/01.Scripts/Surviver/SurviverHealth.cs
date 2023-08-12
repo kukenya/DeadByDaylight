@@ -13,10 +13,16 @@ public class SurviverHealth : MonoBehaviour
     {
         Healthy,
         Injured,
-        Down
+        Down,
+        Carrying,
+        Hook,
     }
 
     public HealthState state = HealthState.Healthy;
+
+    // 플레이어 갈고리 걸린 횟수 관련 변수
+    [Range(0, 2)]
+    public int hook = 0;
 
     private void Start()
     {
@@ -31,6 +37,9 @@ public class SurviverHealth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             NormalHit();
+        }else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeCarring();
         }
     }
 
@@ -68,10 +77,18 @@ public class SurviverHealth : MonoBehaviour
 
     void ChangeDown()
     {
+        surviverLookAt.LookAt = false;
         state = HealthState.Down;
         controller.Crawl = true;
         surviverLookAt.isLookAt = false;
         surviverSound.PlayDownSound();
         surviverAnimation.PlayStandToCrawl();
+    }
+
+    void ChangeCarring()
+    {
+        controller.BanMove = true;
+        state = HealthState.Carrying;
+        surviverAnimation.Play("PickUp_IN");
     }
 }

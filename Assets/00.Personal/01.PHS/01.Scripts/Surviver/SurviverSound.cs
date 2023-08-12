@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class SurviverSound : MonoBehaviour
 {
-    SurviverAnimation surviverAnimation;
-
     public AudioSource audioSource;
 
     public AudioClip[] injSound;
     public AudioClip[] downSound;
 
-    void Start()
+    public AudioSource windowSource;
+    public AudioClip[] jumpWindowSounds;
+
+    public AudioSource[] footStep;
+
+    public void PlayFootStepLT()
     {
-        surviverAnimation = GetComponent<SurviverAnimation>();
+        footStep[0].Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayFootStepRT()
     {
-        
+        footStep[1].Play();
     }
+
 
     public void PlayInjSound()
     {
@@ -32,5 +35,11 @@ public class SurviverSound : MonoBehaviour
     {
         audioSource.clip = downSound[Random.Range(0, downSound.Length)];
         audioSource.Play();
+    }
+
+    public void PlayWindow()
+    {
+        windowSource.clip = jumpWindowSounds[Random.Range(0, jumpWindowSounds.Length)];
+        windowSource.Play();
     }
 }

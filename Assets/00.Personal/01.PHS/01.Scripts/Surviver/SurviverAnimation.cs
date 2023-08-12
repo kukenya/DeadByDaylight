@@ -21,7 +21,6 @@ public class SurviverAnimation : MonoBehaviour
         Standing,
         Crouching,
         Crawl,
-        ObjectInteraction
     }
 
     public enum ObjectInteractState
@@ -57,6 +56,7 @@ public class SurviverAnimation : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
+        AnimationChange();
     }
 
     public void AnimationChange()
@@ -72,15 +72,7 @@ public class SurviverAnimation : MonoBehaviour
             case PoseState.Crawl:
                 Crawling();
                 break;
-            case PoseState.ObjectInteraction:
-                ObjectInteract();
-                break;
         }
-    }
-
-    void ObjectInteract()
-    {
-        
     }
 
     void Standing()

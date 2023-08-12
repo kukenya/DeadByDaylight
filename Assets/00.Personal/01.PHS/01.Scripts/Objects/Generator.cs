@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
+    public bool repaierd = false;
     public Transform[] animPos;
     Transform compareTrans;
     float prograss = 0;
@@ -30,6 +31,12 @@ public class Generator : MonoBehaviour
 
     float animationChangeTime;
 
+    [Header("스파크 파티클")]
+    public ParticleSystem spark;
+    public Transform[] sparkParticlePos;
+
+    public AudioSource failAudio;
+
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
@@ -44,9 +51,28 @@ public class Generator : MonoBehaviour
         UpdateAnim();
     }
 
+    void SkillCheckFail()
+    {
+        Prograss += failValue;
+        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+        anim.CrossFadeInFixedTime("Fail", 0.25f);
+
+        Transform sparkTrans = animPos[0].GetChild(0).transform;
+        Instantiate(spark, sparkTrans.position, sparkTrans.rotation);
+        failAudio.Play();
+        interaction.GeneratorFail();
+    }
+
     void GenRepair()
     {
         if (repairing == false) return;
+        if(Prograss >= maxPrograssTime)
+        {
+            repaierd = true;
+            WorldSound.Instacne.PlayGeneratorClear();
+            ui.UnFocusProgressUI();
+            interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+        }
 
         Prograss += Time.deltaTime;
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
@@ -56,11 +82,7 @@ public class Generator : MonoBehaviour
     void UpdateAnim()
     {
         if (repairing == false) return;
-
-        anim.SetLayerWeight(1, Mathf.Clamp(Prograss / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(2, Mathf.Clamp((Prograss - animationChangeTime) / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(3, Mathf.Clamp((Prograss - animationChangeTime * 2) / animationChangeTime, 0, 1));
-        anim.SetLayerWeight(4, Mathf.Clamp((Prograss - animationChangeTime * 3) / animationChangeTime, 0, 1));
+        anim.SetFloat("Prograss", Prograss / maxPrograssTime);
     }
 
     [Header("스킬 체크 상승 하락 수치")]
@@ -73,7 +95,7 @@ public class Generator : MonoBehaviour
         switch (value)
         {
             case 0:
-                Prograss += failValue;
+                SkillCheckFail();
                 break;
             case 1:
                 Prograss += normalValue;
@@ -86,22 +108,28 @@ public class Generator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (repaierd) return;
+
         interaction = other.GetComponent<SurvivorInteraction>();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
 
         compareTrans = other.transform;
-        ui.FocusProgressUI();
+        ui.FocusProgressUI("수리");
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (repaierd) return;
+
         System.Array.Sort(animPos, TransformListSortComparer);
         interaction.Position = animPos[0];
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (repaierd) return;
+
         ui.UnFocusProgressUI();
         interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
     }
