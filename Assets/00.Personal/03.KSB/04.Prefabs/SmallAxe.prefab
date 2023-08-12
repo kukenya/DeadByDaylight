@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806882736}
   - component: {fileID: 7554007386573351502}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2083757118073446499}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: joint_Char_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2083757118601862908}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: joint_Char
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2083757119227289658}
   - component: {fileID: 2083757119227289659}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: BE_SW01_REF.mo (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2083757119590868201}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: BE_SW01_REF.ao (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 2083757119902384736}
   - component: {fileID: 3078985070935818531}
   - component: {fileID: 4775826644987352834}
-  m_Layer: 21
+  m_Layer: 22
   m_Name: SmallAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
