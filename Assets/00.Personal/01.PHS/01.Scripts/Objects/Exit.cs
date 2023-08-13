@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,7 +21,7 @@ public class Exit : MonoBehaviour
     public float maxPrograssTime = 10;
 
     SurviverUI ui;
-    SurvivorInteraction interaction;
+    public SurvivorInteraction interaction;
 
 
     public void OnSwitch()
@@ -67,30 +68,34 @@ public class Exit : MonoBehaviour
         {
             Play("Opening");
             state = State.Open;
-            ui.UnFocusProgressUI();
             interaction.EndInteract(SurvivorInteraction.InteractiveType.ExitLever);
+            gameObject.layer = 0;
         }
 
-        ui.OnProgressUI();
         Prograss += Time.deltaTime;
         ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public Transform GetAnimationPos(Vector3 position)
     {
-        if (state == State.Open) return;
-
-        ui.FocusProgressUI("출구");
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
-        interaction = other.GetComponent<SurvivorInteraction>();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.ExitLever, this, animPos);
+        return animPos;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (state == State.Open) return;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (state == State.Open) return;
 
-        ui.UnFocusProgressUI();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
-    }
+    //    ui.FocusProgressUI("출구");
+    //    ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+    //    interaction = other.GetComponent<SurvivorInteraction>();
+    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.ExitLever, this, animPos);
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (state == State.Open) return;
+
+    //    ui.UnFocusProgressUI();
+    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
+    //}
 }

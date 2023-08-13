@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,6 @@ public class Generator : MonoBehaviour
 {
     public bool repaierd = false;
     public Transform[] animPos;
-    Transform compareTrans;
     float prograss = 0;
 
     public float Prograss { get { return  prograss; } set {
@@ -25,11 +25,9 @@ public class Generator : MonoBehaviour
     }
 
     SurviverUI ui;
-    SurvivorInteraction interaction;
+    public SurvivorInteraction interaction;
     SkillCheck skillCheck;
     Animator anim;
-
-    float animationChangeTime;
 
     [Header("스파크 파티클")]
     public ParticleSystem spark;
@@ -40,7 +38,6 @@ public class Generator : MonoBehaviour
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
-        animationChangeTime = maxPrograssTime / 4;
         ui = SurviverUI.instance;
         skillCheck = SkillCheck.Instance;
     }
@@ -54,7 +51,6 @@ public class Generator : MonoBehaviour
     void SkillCheckFail()
     {
         Prograss += failValue;
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
         anim.CrossFadeInFixedTime("Fail", 0.25f);
 
         Transform sparkTrans = animPos[0].GetChild(0).transform;
@@ -70,13 +66,10 @@ public class Generator : MonoBehaviour
         {
             repaierd = true;
             WorldSound.Instacne.PlayGeneratorClear();
-            ui.UnFocusProgressUI();
             interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            gameObject.layer = 0;
         }
-
         Prograss += Time.deltaTime;
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
-        ui.OnProgressUI();
     }
 
     void UpdateAnim()
@@ -106,40 +99,48 @@ public class Generator : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (repaierd) return;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (repaierd) return;
 
-        interaction = other.GetComponent<SurvivorInteraction>();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
+    //    interaction = other.GetComponent<SurvivorInteraction>();
+    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
 
-        compareTrans = other.transform;
-        ui.FocusProgressUI("수리");
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
-    }
+    //    compareTrans = other.transform;
+    //    ui.FocusProgressUI("수리");
+    //    ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+    //}
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (repaierd) return;
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (repaierd) return;
 
-        System.Array.Sort(animPos, TransformListSortComparer);
-        interaction.Position = animPos[0];
-    }
+    //    System.Array.Sort(animPos, TransformListSortComparer);
+    //    interaction.Position = animPos[0];
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (repaierd) return;
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (repaierd) return;
 
-        ui.UnFocusProgressUI();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
-    }
+    //    ui.UnFocusProgressUI();
+    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
+    //}
 
 
+    Vector3 playerPos;
 
 
     int TransformListSortComparer(Transform A, Transform B)
     {
-        return Vector3.Distance(new Vector3(compareTrans.position.x, 0, compareTrans.position.z), new Vector3(A.transform.position.x, 0, A.transform.position.z))
-                .CompareTo(Vector3.Distance(new Vector3(compareTrans.position.x, 0, compareTrans.position.z), new Vector3(B.transform.position.x, 0, B.transform.position.z)));
+        return Vector3.Distance(new Vector3(playerPos.x, 0, playerPos.z), new Vector3(A.transform.position.x, 0, A.transform.position.z))
+                .CompareTo(Vector3.Distance(new Vector3(playerPos.x, 0, playerPos.z), new Vector3(B.transform.position.x, 0, B.transform.position.z)));
+    }
+
+    public Transform GetAnimationPos(Vector3 position)
+    {
+        playerPos = position;
+        System.Array.Sort(animPos, TransformListSortComparer);
+        return animPos[0];
     }
 }

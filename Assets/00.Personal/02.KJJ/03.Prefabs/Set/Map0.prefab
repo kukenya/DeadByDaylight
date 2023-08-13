@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7755262852164038691, guid: bc28fd072c69cc740a0d2d772bfbcfce, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc28fd072c69cc740a0d2d772bfbcfce, type: 3}
 --- !u!4 &523329166210451378 stripped
@@ -190,6 +194,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4332620124979640513}
     m_Modifications:
+    - target: {fileID: -6485873124202014689, guid: ef29a89f3f8648e429d0c4134cd56049, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3468836187176737213, guid: ef29a89f3f8648e429d0c4134cd56049, type: 3}
       propertyPath: m_Name
       value: Fence4
@@ -376,6 +384,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4332620124979640513}
     m_Modifications:
+    - target: {fileID: -2519172231024348967, guid: 580cc4b1dd3dbac41bf482848e4d38e2, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2626556498321467672, guid: 580cc4b1dd3dbac41bf482848e4d38e2, type: 3}
       propertyPath: m_Name
       value: Fence3
@@ -438,6 +450,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4332620124979640513}
     m_Modifications:
+    - target: {fileID: 4668543546632496623, guid: d42bc9d1f958a444d973527c5af6180b, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6189088970604934627, guid: d42bc9d1f958a444d973527c5af6180b, type: 3}
       propertyPath: m_Name
       value: Fence9
@@ -872,6 +888,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4332620124979640513}
     m_Modifications:
+    - target: {fileID: -7560861636385215452, guid: 2caaab0600c8a5f4ca704214d2ab1f92, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1343616098913677158, guid: 2caaab0600c8a5f4ca704214d2ab1f92, type: 3}
       propertyPath: m_Name
       value: Fence5

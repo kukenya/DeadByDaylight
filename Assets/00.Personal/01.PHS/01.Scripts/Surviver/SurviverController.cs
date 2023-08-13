@@ -59,6 +59,9 @@ public class SurviverController : MonoBehaviour
     public bool Sprint { get { return isSprint; } set { isSprint = value; } }
     public bool Crawl { get { return isCrawl; }  set { isCrawl = value; } }
 
+    public float sprintTime;
+    public float maxSprintTime = 1;
+
     // �ִϸ��̼� �Ŵ���
     SurviverAnimation surviverAnimation;
     private string waitAnimState;
@@ -117,6 +120,8 @@ public class SurviverController : MonoBehaviour
         // ���� �ӷ��� �޸��� ��ư�� ���������� �ȴ������� ������.
         isSprint = Input.GetKey(KeyCode.LeftShift) ? true : false;
         isCrouching = Input.GetKey(KeyCode.LeftControl) ? true : false;
+
+        sprintTime = Mathf.Clamp(isSprint ? sprintTime + Time.deltaTime : 0, 0, maxSprintTime);
 
         if (surviverAnimation.Pose != SurviverAnimation.PoseState.Crawl)
         {

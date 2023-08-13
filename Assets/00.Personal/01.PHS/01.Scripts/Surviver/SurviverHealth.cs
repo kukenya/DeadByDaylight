@@ -18,7 +18,13 @@ public class SurviverHealth : MonoBehaviour
         Hook,
     }
 
-    public HealthState state = HealthState.Healthy;
+    HealthState state = HealthState.Healthy;
+
+    public HealthState State { get { return state; } set { 
+            state = value;
+            surviverAnimation.Injuerd = false;
+            surviverAnimation.AnimationChange();
+        } }
 
     // 플레이어 갈고리 걸린 횟수 관련 변수
     [Range(0, 2)]

@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1102 &-8633847095068680692
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JumpPalletFastRT
+  m_Speed: 1.18
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: d9eafbd6ea6ffe94e895300811244f24, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-8587938450384042152
 AnimatorState:
   serializedVersion: 6
@@ -7,8 +33,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JumpPalletFast
-  m_Speed: 1
+  m_Name: JumpPalletFastLT
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -145,7 +171,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WindowIn
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1959227292556896420}
@@ -172,7 +198,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PullDownPalletRT
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -252,7 +278,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InjuerdStandIdle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -304,7 +330,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InjuerdStandSprint
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -316,7 +342,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -6026078057213149341, guid: 31613b5102a546e44a4938be7f229796, type: 3}
+  m_Motion: {fileID: 7400000, guid: 0927b50119833ff469af103ed1405945, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -377,7 +403,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HitBack
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -403,7 +429,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WindowMid
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -526,7 +552,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Healing_Self
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -614,7 +640,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Generator_Fail_FT
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -640,7 +666,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CrouchWalk
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -709,8 +735,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JumpPallet
-  m_Speed: 1
+  m_Name: JumpPalletLT
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -827,7 +853,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Carry_Idle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -853,7 +879,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 1|F_UnlockExitIdle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -927,7 +953,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PickUp_IN
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1099111802514412326}
@@ -954,7 +980,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Generator_Idle_FT
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1006,7 +1032,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InjuerdStandWalk
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1018,7 +1044,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3393821833774505129, guid: 31613b5102a546e44a4938be7f229796, type: 3}
+  m_Motion: {fileID: 7400000, guid: e0c8ff755b3b62c43bcc272a57799359, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1032,7 +1058,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CrawlMove
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1104,7 +1130,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StandSprint
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1130,7 +1156,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InjuerdCrouchIdle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1156,7 +1182,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WindowJump
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1182,7 +1208,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InjuerdCrouchWalk
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1194,7 +1220,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1963444926575183064, guid: 31613b5102a546e44a4938be7f229796, type: 3}
+  m_Motion: {fileID: 7400000, guid: 8b8c759c0ade1ec4fa6933026ee0e8d7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1208,7 +1234,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CrouchIdle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1260,7 +1286,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PickUp
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6760539923323933939}
@@ -1309,7 +1335,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: UnlockExit
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6367040847961666382}
@@ -1384,7 +1410,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WindowFast
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1410,7 +1436,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StandIdle
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1462,7 +1488,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StandWalk
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1506,10 +1532,16 @@ AnimatorStateMachine:
     m_Position: {x: 520, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -261867058397228848}
-    m_Position: {x: 520, y: 250, z: 0}
+    m_Position: {x: 520, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7134603024874292930}
     m_Position: {x: 280, y: 200, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8578493015733585228}
+    m_Position: {x: 520, y: 350, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8633847095068680692}
+    m_Position: {x: 520, y: 250, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1528,7 +1560,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HitFoward
-  m_Speed: 1
+  m_Speed: 1.18
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1541,6 +1573,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -5316291922206325711, guid: 31613b5102a546e44a4938be7f229796, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &8578493015733585228
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JumpPalletRT
+  m_Speed: 1.18
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 6848b82be9039094bb3d20ddf777bf38, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
