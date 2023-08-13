@@ -10,8 +10,7 @@ public class Axe : MonoBehaviour
         // 리지드바디의 chargingForce 로 던진다.
         Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
         smallAxeRigidbody.AddForce(transform.forward * AnnaMove.instance.chargingForce, ForceMode.Impulse);
-
-        StartCoroutine("FlyingSound");
+        // StartCoroutine("FlyingSound");
     }
 
     private void Update()
@@ -27,16 +26,15 @@ public class Axe : MonoBehaviour
     }
 
     // 토구가 던진 도끼가 플레이어에게 닿으면 플레이어의 체력을 감소시킨다.
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        StopCoroutine("FlyingSound");
 
-        if (collision.gameObject.name.Contains("Surviver"))
+        if (other.gameObject.name.Contains("Surviver"))
         {
             SoundManager.instance.PlayHitSounds(3);
         }
-        else if (collision.gameObject.name.Contains("Pallet"))
+        else if (other.gameObject.name.Contains("Pallet"))
         {
             SoundManager.instance.PlayHitSounds(0);
         }

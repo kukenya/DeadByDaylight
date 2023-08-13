@@ -136145,7 +136145,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 4
     messageOptions: 0
-  - time: 2.25
+  - time: 2.4166667
     functionName: PlayDestroy
     data: 
     objectReferenceParameter: {fileID: 0}

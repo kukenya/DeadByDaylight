@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ChaseorLullaby : MonoBehaviour
 {
+    public static ChaseorLullaby instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // 사운드
     public AudioSource lullaby;             // 자장가
     public AudioSource chase;               // 추적
@@ -13,8 +19,8 @@ public class ChaseorLullaby : MonoBehaviour
 
     private void Start()
     {
-        lullaby.PlayDelayed(4);
-        //lullaby.volume = 0.1f;
+        lullaby.PlayDelayed(3);
+        // lullaby.volume = 0.1f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,15 +43,21 @@ public class ChaseorLullaby : MonoBehaviour
         }
     }
 
-    void PlayChaseBG()
+    public void PlayChaseBG()
     {
+        //isChasing = true;
+        //isLullaby = false;
+
         lullaby.Stop();
         chase.Play();
         //chase.volume = 0.1f;
     }
 
-    void PlayLullaby()
+    public void PlayLullaby()
     {
+        //isChasing = false;
+        //isLullaby = true;
+
         lullaby.Play();
         //lullaby.volume = 0.1f;
         chase.Stop();

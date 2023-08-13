@@ -14,8 +14,11 @@ public class SoundManager : MonoBehaviour
     public AudioSource destroySource;   // 오디오 소스
     public AudioClip[] destroyClips;    // 클립들
 
-    public AudioClip[] smallAxeSounds;
-    public AudioClip[] bigAxeSounds;
+    // 공격 사운드
+    public AudioSource smallAxeSource;  // 오디오 소스
+    public AudioClip[] smallAxeSounds;  // 클립들
+
+    public AudioSource hitAudioSource;
     public AudioClip[] hitSounds;
 
     public void PlaySmallAxeSounds(int index)
@@ -23,14 +26,10 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(smallAxeSounds[index], Camera.main.transform.position);
     }
 
-    public void PlayBigAxeSounds(int index)
-    {
-        AudioSource.PlayClipAtPoint(bigAxeSounds[index], Camera.main.transform.position);
-    }
-
     public void PlayHitSounds(int index)
     {
-        AudioSource.PlayClipAtPoint(hitSounds[index], Camera.main.transform.position);
+        hitAudioSource.clip = hitSounds[index];
+        hitAudioSource.Play();
     }
 
     #region 판자

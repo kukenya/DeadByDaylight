@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class AnnaMove : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class AnnaMove : MonoBehaviour
     #region 변수
     Animator anim;                          // 애니메이터
     CharacterController cc;                 // 캐릭터 컨트롤러
+    public Camera cineCam;                  // 시네머신 카메라 
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -32,7 +35,7 @@ public class AnnaMove : MonoBehaviour
 
     // 중력
     public float yVelocity;
-    public float gravity = - 9.8f;
+    public float gravity = -9.8f;
 
 
     // 회전
@@ -65,38 +68,44 @@ public class AnnaMove : MonoBehaviour
     public float maxAxePower = 40;          // 한손도끼 던지는 힘 최대값
 
     // bool
-    bool isNormalAttack;                    // 일반공격 중인가?
-    bool isCharging;                        // 차징 중인가?
-    bool isCanceled;                        // 차징을 취소했는가?
-    bool isThrowing;                        // 손도끼를 던졌는가?
-    bool isStunned;                         // 스턴 당했는가?
-    public bool canCarry;                   // 생존자를 들 수 있는가?
-    public bool canDestroyGenerator;               // 발전기를 부술 수 있는가?
-    public bool canHook;                           // 갈고리에 걸 수 있는가?
-    public bool canReLoad;                         // 한 손 도끼를 재충전 할 수 있는가?
+    public bool isNormalAttack;                     // 일반공격 중인가?
+    bool isCharging;                                // 차징 중인가?
+    bool isCanceled;                                // 차징을 취소했는가?
+    bool isThrowing;                                // 손도끼를 던졌는가?
+    bool isStunned;                                 // 스턴 당했는가?
+    public bool canCarry;                           // 생존자를 들 수 있는가?
+    public bool canDestroyGenerator;                // 발전기를 부술 수 있는가?
+    public bool canHook;                            // 갈고리에 걸 수 있는가?
+    public bool canReLoad;                          // 한 손 도끼를 재충전 할 수 있는가?
     public bool canDestroyPallet;                   // 내려간 판자를 부술 수 있는가?
 
-    
+    // UI
+    public TextMeshProUGUI generatorCount;          // 발전기 갯수 UI
+    public TextMeshProUGUI axeCount;                // 도끼 갯수 UI
+
+
+
     // 기타
-    GameObject survivor;                    // 생존자 게임오브젝트
-    // public Transform leftArm;               // 왼팔
-    // public Light redlight;               // 살인마 앞에 있는 조명
-    public Transform groundCheck;           // 바닥 체크용 레이 쏠 장소
+    GameObject survivor;                        // 생존자 게임오브젝트
+    // public Transform leftArm;                // 왼팔
+    public Light redlight;                      // 살인마 앞에 있는 조명
     #endregion
 
     #region Start & Update
     void Start()
     {
-        anim = GetComponent<Animator>();            // 안나 Animator 컴포넌트
-        cc = GetComponent<CharacterController>();   // 안나 Rigidbody 컴포넌트
-        anim.SetLayerWeight(1, 0);                  // 던지는 애니메이션 레이어
-        anim.SetLayerWeight(2, 0);                  // 들기 애니메이션 레이어
-        anim.SetLayerWeight(3, 0);                  // 일반 애니메이션 레이어
-        smallAxe.SetActive(false);                  // 왼손에 들고 있는 한손도끼 렌더러 비활성화
-        currentAxeCount = maxAxeCount;              // 시작할 때 도끼갯수 최대로 소지
+        anim = GetComponent<Animator>();                // 안나 Animator 컴포넌트
+        cc = GetComponent<CharacterController>();       // 안나 Rigidbody 컴포넌트
+        anim.SetLayerWeight(1, 0);                      // 던지는 애니메이션 레이어
+        anim.SetLayerWeight(2, 0);                      // 들기 애니메이션 레이어
+        anim.SetLayerWeight(3, 0);                      // 일반 애니메이션 레이어
+        smallAxe.SetActive(false);                      // 왼손에 들고 있는 한손도끼 렌더러 비활성화
+        currentAxeCount = maxAxeCount;                  // 시작할 때 도끼갯수 최대로 소지
+        axeCount.text = Convert.ToString(maxAxeCount);  // UI 로 나타낸다
         // survivor = GameObject.Find("Survivor");
         bigAxeCollider.enabled = false;
-        // redlight.enabled = false;                // 살인마 앞에 있는 조명을 끔
+        // redlight.enabled = false;                    // 살인마 앞에 있는 조명을 끔
+        cineCam.depth = 5;                              // 시네머신 카메라 보이게 하기
     }
 
     void Update()
@@ -131,15 +140,18 @@ public class AnnaMove : MonoBehaviour
 
             // 회전값을 적용
             transform.eulerAngles = new Vector3(0, rotX, 0);
-            cam.eulerAngles = new Vector3(-rotY, rotX, 0);
+            if (cc.enabled == true)
+            {
+                cam.eulerAngles = new Vector3(-rotY, rotX, 0);
 
-            if (rotY >= 30)
-            {
-                rotY = 30;
-            }
-            if (rotY <= -30)
-            {
-                rotY = -30;
+                if (rotY >= 35)
+                {
+                    rotY = 35;
+                }
+                if (rotY <= -35)
+                {
+                    rotY = -35;
+                }
             }
         }
         #endregion
@@ -169,6 +181,10 @@ public class AnnaMove : MonoBehaviour
         {
             currentSpeed = delaySpeed;
         }
+        else if (state == State.NormalAttack)
+        {
+            currentSpeed = 6;
+        }
         else if (isCharging == false || state != State.CoolTime || isThrowing == false)
         {
             // 그 이외는 일반속도(4.4)로 이동
@@ -177,7 +193,7 @@ public class AnnaMove : MonoBehaviour
 
         if (cc.isGrounded == false)
         {
-            yVelocity += gravity;            
+            yVelocity += gravity;
         }
         else
         {
@@ -193,12 +209,21 @@ public class AnnaMove : MonoBehaviour
         #region 도끼 재충전
         if (Input.GetKeyDown(KeyCode.Space) && canReLoad && currentAxeCount < maxAxeCount)
         {
-            OffCC();
-            anim.SetTrigger("Reload");
-            currentAxeCount = maxAxeCount;
+            OffCC();                                                        // 움직임 멈춤
+            anim.SetTrigger("Reload");                                      // 도끼를 집어드는 애니메이션 실행
+                                                                            // 캐비넷 열리고 닫히는 애니메이션 실행
+            currentAxeCount = maxAxeCount;                                  // 도끼 최대 소지 갯수를 최대로 채운다
+            axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
         }
+        #endregion
 
-        // 그냥 열기 -> 할지 말지
+        #region 캐비넷 확인
+        // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
+        // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
+            // 그냥 열었다가 닫는다
+        // 만약 안에 사람이 있다면
+            // 그 사람을 들어버린다
+            // 상태를 Carry 로 바꾼다
         #endregion
 
         #region 발전기 부수기
@@ -207,14 +232,12 @@ public class AnnaMove : MonoBehaviour
             // 스페이스 바를 계속 누르고 있으면 발전기를 부순다.
             if (Input.GetKey(KeyCode.Space))
             {
-
                 cc.enabled = false;
                 anim.SetBool("DestroyG", true);
             }
             // 중간에 스페이스 바에서 손을 떼면 취소된다.
             if (Input.GetKeyUp(KeyCode.Space))
             {
-
                 anim.SetTrigger("DestroyCancel");
                 anim.SetBool("DestroyG", false);
                 cc.enabled = true;
@@ -225,17 +248,11 @@ public class AnnaMove : MonoBehaviour
         #region 판자 부수기
         if (canDestroyPallet == true)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                cc.enabled = false;
-                anim.SetBool("DestroyP", true);
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                SoundManager.instance.StopDestroyPallets();
-                anim.SetTrigger("DestroyCancel");
-                anim.SetBool("DestroyP", false);
-                cc.enabled = true;
+                cc.enabled = false;             // 움직임 멈춤
+                anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
+                                                // 판자가 부서지는 애니메이션 실행
             }
         }
         #endregion
@@ -245,41 +262,25 @@ public class AnnaMove : MonoBehaviour
         {
             // 갈고리 근처에서 UI 가 떴을 때
             // 스페이스바를 계속 누르고 있으면 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                // 게이지가 찬다.
-                // 다 차면 UI 끔
-                anim.SetBool("Hook", true);
-                cc.enabled = false;
-            }
-            // 만약 게이지가 다 차기 전에 스페이스바에서 떨어지면 걸기가 캔슬된다.
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                anim.SetTrigger("HookCancel");
-                anim.SetBool("Hook", false);
-                cc.enabled = true;
-
-                // 게이지 초기화
-                // UI 끄기
+                cc.enabled = false;             // 움직임 멈춤
+                anim.SetBool("Hook", true);     // 생존자를 갈고리에 거는 애니메이션 실행
+                                                // 갈고리에 거는 UI 게이지가 찬다.
+                                                // 다 차면 UI 끔
             }
         }
         #endregion
 
-        // 스턴
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            // G 버튼 = 스턴 함수를 불렀다고 가정하고 
-            Stunned();
-        }
-
-        // 레이로 
+        #region Ray 로 상호작용 여부 확인하기
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
         RaycastHit hitinfo;
-
-        if (Physics.Raycast(ray, out hitinfo))
+        if (Physics.Raycast(ray, out hitinfo, 1f))
         {
-            //만약 이름에 "Generator"를 포함하고 있다면
+            print(hitinfo.collider.transform.name);
+
+            // Generator 발전기
             if (hitinfo.transform.name.Contains("Generator"))
             {
                 // 부술 수 있는 상태로 만든다.
@@ -289,8 +290,49 @@ public class AnnaMove : MonoBehaviour
             {
                 canDestroyGenerator = false;
             }
+
+            // Closet 캐비넷
+            if (hitinfo.transform.name.Contains("Closet"))
+            {
+                // 재충전 할 수 있는 상태로 만든다.
+                canReLoad = true;
+            }
+            else
+            {
+                canReLoad = false;
+            }
+
+            // Pallet 판자 
+            if (hitinfo.transform.name.Contains("Pallet"))
+            {
+                // 부술 수 있는 상태로 만든다.
+                canDestroyPallet = true;
+            }
+            else
+            {
+                canDestroyPallet = false;
+            }
         }
 
+        //if(Physics.Raycast(ray, out hitinfo, 3))
+        //{
+        //    if (hitinfo.transform.name.Contains("Surviver") && ChaseorLullaby.instance.isChasing == false)
+        //    {
+        //        ChaseorLullaby.instance.PlayChaseBG();
+        //    }
+        //    else if(hitinfo.transform.name.Contains("Surviver") && ChaseorLullaby.instance.isLullaby == false)
+        //    {
+        //        ChaseorLullaby.instance.PlayLullaby();
+        //    }
+        //}
+        #endregion
+
+        // 스턴
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            // G 버튼 = 스턴 함수를 불렀다고 가정하고 
+            Stunned();
+        }
     }
 
     // 스턴
@@ -322,6 +364,7 @@ public class AnnaMove : MonoBehaviour
         currentTime += Time.deltaTime;
         if (currentTime >= gameStartTime)
         {
+            cineCam.enabled = false;
             cc.enabled = true;
             state = State.Move;
             anim.SetBool("Move", true);
@@ -333,14 +376,12 @@ public class AnnaMove : MonoBehaviour
 
     bool playingthrowsound;
     private void UpdateMove()
-    {       
+    {
         #region  일반 공격
         // 마우스 왼쪽 버튼을 누르면 일반공격을 한다.
         if (Input.GetButtonDown("Fire1") && isCharging == false)
         {
-            SoundManager.instance.PlayBigAxeSounds(0);      // 때리는 입소리
-           
-            cc.enabled = false;                             // 이동불가
+            SoundManager.instance.PlayHitSounds(0);         // 때리는 입소리
 
             state = State.NormalAttack;                     // 상태를 NormalAttack 로 바꿈
 
@@ -365,11 +406,6 @@ public class AnnaMove : MonoBehaviour
             anim.SetTrigger("Throw");                       // 애니메이션 실행
             anim.SetBool("Throwing", false);                // 차징 애니메이션 취소
             currentChargingTime = 0;                        // 현재 차징 시간을 초기화
-            if(playingthrowsound == false)
-            {
-                SoundManager.instance.PlaySmallAxeSounds(3);    // 던지는 사운드 재생
-                playingthrowsound = true;
-            }
         }
 
         // 차징 중에 마우스 왼쪽 버튼을 누르면 공격을 취소한다.
@@ -420,7 +456,6 @@ public class AnnaMove : MonoBehaviour
     #region 일반공격
     private void NormalAttack()
     {
-        OnAxe();    // 도끼 콜라이더를 킴
         //anim.SetLayerWeight(3, 0f);
         // 공격이 끝나면 상태를 Move 로 바꾼다. -> 애니메이션 이벤트
     }
@@ -432,7 +467,7 @@ public class AnnaMove : MonoBehaviour
     // 도끼 차징
     void Charging()
     {
-        if(playingchargingsound == false)
+        if (playingchargingsound == false)
         {
             // 차징 사운드 재생
             SoundManager.instance.PlaySmallAxeSounds(0);
@@ -492,8 +527,9 @@ public class AnnaMove : MonoBehaviour
         GameObject smallaxe = Instantiate(smallAxeFactory);             // 한손도끼를 만든다.
         smallaxe.transform.position = throwingSpot.position;            // 만든 한손도끼의 위치를 왼손에 배
         smallaxe.transform.forward = Camera.main.transform.forward;     // 만든 한손도끼의 앞방향을 카메라의 앞방향으로 한다
-        
+
         currentAxeCount--;                                              // 도끼 갯수를 줄인다
+        axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
 
         state = State.CoolTime;                                         // 상태를 CoolTime 으로 바꾼다
     }
@@ -520,7 +556,7 @@ public class AnnaMove : MonoBehaviour
     #region 생존자 들기
     // 이동
     private void UpdateCarry()
-    {        
+    {
         #region 내려놓기
         if (Input.GetKeyDown(KeyCode.Space) && canCarry == false && canHook == false)
         {
@@ -574,17 +610,17 @@ public class AnnaMove : MonoBehaviour
             canCarry = true;
         }
 
-        // 갈고리
-        if (other.gameObject.layer == 22)
-        {
-            canHook = true;
-        }
+        //// 갈고리
+        //if (other.gameObject.layer == 22)
+        //{
+        //    canHook = true;
+        //}
 
-        // 발전기
-        if (other.transform.name.Contains("Generator"))
-        {
-            canDestroyGenerator = true;
-        }
+        //// 발전기
+        //if (other.transform.name.Contains("GeneratorCollider"))
+        //{
+        //    canDestroyGenerator = true;
+        //}
 
         // 캐비넷(도끼재충전)
         //if(other.gameObject.layer == 24)
@@ -592,11 +628,11 @@ public class AnnaMove : MonoBehaviour
         //    canReLoad = true;
         //}
 
-        // 내려간 판자
-        if (other.gameObject.name.Contains("Pallet"))
-        {
-            canDestroyPallet = true;
-        }
+        //// 내려간 판자
+        //if (other.gameObject.name.Contains("Pallet"))
+        //{
+        //    canDestroyPallet = true;
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -607,29 +643,29 @@ public class AnnaMove : MonoBehaviour
             canCarry = false;
         }
 
-        // 갈고리
-        if (other.gameObject.layer == 22)
-        {
-            canHook = false;
-        }
+        //// 갈고리
+        //if (other.gameObject.layer == 22)
+        //{
+        //    canHook = false;
+        //}
 
-        // 발전기
-        if (other.transform.name.Contains("Generator"))
-        {
-            canDestroyGenerator = false;
-        }
+        //// 발전기
+        //if (other.transform.name.Contains("GeneratorCollider"))
+        //{
+        //    canDestroyGenerator = false;
+        //}
 
-        // 캐비넷(도끼재충전)
-        if (other.gameObject.layer == 24)
-        {
-            canReLoad = false;
-        }
+        //// 캐비넷(도끼재충전)
+        //if (other.gameObject.layer == 24)
+        //{
+        //    canReLoad = false;
+        //}
 
-        // 내려간 판자
-        if (other.gameObject.name.Contains("Pallet"))
-        {
-            canDestroyPallet = false;
-        }
+        //// 내려간 판자
+        //if (other.gameObject.name.Contains("Pallet"))
+        //{
+        //    canDestroyPallet = false;
+        //}
     }
     #endregion
 
@@ -656,20 +692,20 @@ public class AnnaMove : MonoBehaviour
     void OnMyReset()            // State 를 Move 로 초기화하는 함수
     {
         state = State.Move;
-        
+
         OnCC();
         OffAxe();
-        
+
         anim.SetBool("Throwing", false);
-        anim.SetBool("Hook", false);
         anim.SetBool("DestroyG", false);
-        anim.SetBool("DestroyP", false);
-        
+
         isStunned = false;
         isCharging = false;
         isNormalAttack = false;
         playingthrowsound = false;
         canDestroyGenerator = false;
+        canDestroyPallet = false;
+        canReLoad = false;
     }
 
 
