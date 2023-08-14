@@ -7,6 +7,7 @@ public class SurviverAnimation : MonoBehaviour
 {
     public Animator anim;
     SurviverController controller;
+    SurviverHealing healing;
     string currentState;
 
     public enum MoveState
@@ -50,12 +51,13 @@ public class SurviverAnimation : MonoBehaviour
 
     bool isInjuerd = false;
 
-    public bool Injuerd { get { return isInjuerd; } set { isInjuerd = value; AnimationChange(); } }
+    public bool Injuerd { get { return isInjuerd; } set { if (isInjuerd == value) return; isInjuerd = value; AnimationChange(); healing.Prograss = 0; } }
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
+        healing = GetComponent<SurviverHealing>();
         AnimationChange();
     }
 

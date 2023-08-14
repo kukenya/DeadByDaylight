@@ -90,7 +90,7 @@ public class SurviverController : MonoBehaviour
 
     void CameraStopCheck()
     {
-        Moving = mainCamera.velocity == Vector3.zero ? false : true;
+        Moving = currentSpeed == 0 ? false : true;
     }
 
     public float rotationSpeed;
