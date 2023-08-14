@@ -1555,7 +1555,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1829535529, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Intensity
-      value: 835.04486
+      value: 0.7957747
       objectReference: {fileID: 0}
     - target: {fileID: 146267287833344192, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Name
@@ -1607,15 +1607,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1065863924015631710, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Intensity
-      value: 10493.483
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4823832033369873894, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Intensity
-      value: 40000
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7982025726483106322, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Intensity
-      value: 6422.2417
+      value: 4.8166814
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}

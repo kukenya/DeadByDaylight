@@ -45,7 +45,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.7921569, g: 0.50980395, b: 0.22745098, a: 1}
-  m_Intensity: 795.7747
+  m_Intensity: 3.9788735
   m_Range: 1.6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 10000
+  m_Intensity: 50
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -363,7 +363,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.85882354, g: 0.5647059, b: 0.27058825, a: 1}
-  m_Intensity: 296.78662
+  m_Intensity: 8.027802
   m_Range: 3.5
   m_SpotAngle: 179
   m_InnerSpotAngle: 1
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 1848.4923
+  m_Intensity: 50
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 50
