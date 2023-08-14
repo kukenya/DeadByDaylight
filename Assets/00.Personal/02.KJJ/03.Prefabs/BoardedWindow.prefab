@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7783565225934221223}
   - component: {fileID: 6605404890500653058}
   - component: {fileID: 8957637161096287432}
+  - component: {fileID: 5269686861860392129}
   m_Layer: 0
   m_Name: BoardedWindow
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5269686861860392129
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444195071094961437}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2022368650831208513, guid: f613a68daa93f7c48a5091fd5697e6ac, type: 3}
