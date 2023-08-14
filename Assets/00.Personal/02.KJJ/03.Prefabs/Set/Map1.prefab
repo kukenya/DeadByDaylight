@@ -1575,7 +1575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1829535529, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_Intensity
-      value: 11.021326
+      value: 0.7957747
       objectReference: {fileID: 0}
     - target: {fileID: 1829535529, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_AreaSize.x
@@ -1637,9 +1637,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4823832033369873894, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5543975424460172238, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982025726483106322, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
+      propertyPath: m_Intensity
+      value: 4.8166814
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3564a905bbcf8349ac4f4d9ab6546bc, type: 3}
@@ -1665,7 +1673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 138.49808
+  m_Intensity: 10
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
