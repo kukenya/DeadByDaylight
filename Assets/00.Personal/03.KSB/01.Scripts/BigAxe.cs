@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BigAxe : MonoBehaviour
 {
     public GameObject survivor;
-    public Image blood;
+    public Image bloodImage;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,16 +18,15 @@ public class BigAxe : MonoBehaviour
 
             //공통
             // 화면에 피 튀기기
-            // blood.alp
+            Color color = bloodImage.GetComponent<Image>().color;
+            color.a = 1;
             // 도끼에 맞는 소리 나기
             SoundManager.instance.PlayHitSounds(4);
 
             AnnaMove.instance.OffAxe();
+            // StartCoroutine("FadeOut");
         }
 
-
-
-        
         // 헛치면 미스 애니메이션 실행해야 되는데 모르겠다...
     }
 }
