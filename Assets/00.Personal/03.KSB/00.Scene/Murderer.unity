@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012901868, g: 0.0019964122, b: 0.0026881355, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012900657, g: 0.0019963554, b: 0.0026882323, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1561,15 +1561,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 362176978, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.05453837
+      value: 0.05453836
       objectReference: {fileID: 0}
     - target: {fileID: 362176978, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0071030394
+      value: 0.0071029705
       objectReference: {fileID: 0}
     - target: {fileID: 362176978, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0003879753
+      value: -0.00038797152
+      objectReference: {fileID: 0}
+    - target: {fileID: 362176981, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1031200277, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1585,27 +1589,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1783715783, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.026643876
+      value: 0.026643872
       objectReference: {fileID: 0}
     - target: {fileID: 1783715783, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.007111086
+      value: 0.0071110507
       objectReference: {fileID: 0}
     - target: {fileID: 1783715783, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00018953894
+      value: -0.00018953797
       objectReference: {fileID: 0}
     - target: {fileID: 1917000579, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.05453836
+      value: 0.054538358
       objectReference: {fileID: 0}
     - target: {fileID: 1917000579, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.007103022
+      value: 0.0071029873
       objectReference: {fileID: 0}
     - target: {fileID: 1917000579, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00038797443
+      value: -0.00038797257
       objectReference: {fileID: 0}
     - target: {fileID: 153152145493879455, guid: e931d8ed097c4a64483b089eb20c8f98, type: 3}
       propertyPath: survivor
@@ -3816,6 +3820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370eaaaa47185f14a83569c3c46a4988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prograssUI: 0
   uiAlpha: 0.3
   prograssBG: {fileID: 1374463239}
   prograssBar: {fileID: 1252038374}
@@ -9725,6 +9730,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8c490b2e9c9074782d9228c06cffe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleText: {fileID: 0}
+  subText: {fileID: 0}
+  lineImage: {fileID: 0}
+  textFadeTime: 0
+  textFadeOffset: 0
 --- !u!4 &808024825
 Transform:
   m_ObjectHideFlags: 0
@@ -10317,6 +10327,7 @@ MonoBehaviour:
   animPos: {fileID: 861623973}
   anim: {fileID: 1005589675}
   maxPrograssTime: 10
+  interaction: {fileID: 0}
   activate: 0
 --- !u!135 &898308333
 SphereCollider:
@@ -12225,7 +12236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186254978}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a3cebd7a177bb14082ae180f5fb5856, type: 3}
   m_Name: 
@@ -12251,6 +12262,8 @@ MonoBehaviour:
   lockPlayerRotation: 0
   mouseSensitivity: 1
   isHit: 0
+  sprintTime: 0
+  maxSprintTime: 1
   controller: {fileID: 1186254986}
   playerAnimator: {fileID: 1186254985}
   rotationSpeed: 380
@@ -12286,7 +12299,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1186254979}
-  state: 0
   hook: 0
 --- !u!114 &1186254984
 MonoBehaviour:
@@ -12377,6 +12389,7 @@ MonoBehaviour:
   footStep:
   - {fileID: 883738623}
   - {fileID: 1587094732}
+  sprintSound: []
 --- !u!114 &1186254992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12404,13 +12417,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveType: 0
+  pallet: {fileID: 0}
+  window: {fileID: 0}
+  generator: {fileID: 0}
+  exit: {fileID: 0}
   activate: 0
   possibleAngle: 120
   autoMoverStopDistance: 0.2
   autoMoverSpeed: 8
   currentObstacleTrans: {fileID: 0}
-  pallet: {fileID: 0}
-  window: {fileID: 0}
   fastJumpAngle: 50
   midJumpAngle: 90
   a: 0.48
@@ -12454,7 +12469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healingGauge: 0
+  interaction: {fileID: 0}
+  maxPrograssTime: 0
+  healing: 0
+  healed: 0
 --- !u!4 &1202827037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 616263245656108647, guid: f50b4436f8f00e8459946c816802d402, type: 3}
@@ -18829,6 +18847,8 @@ MonoBehaviour:
   startRotationAngle: 180
   rotationTime: 10
   surviverController: {fileID: 1186254979}
+  ease: 0
+  textEase: 0
 --- !u!4 &2100821795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4460203023778505445, guid: 535d4fe6644814c498b7f27b7d848d62, type: 3}

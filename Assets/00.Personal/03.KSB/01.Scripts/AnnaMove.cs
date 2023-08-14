@@ -313,7 +313,7 @@ public class AnnaMove : MonoBehaviour
             }
 
             // 쓰러진 생존자
-            if (hitinfo.transform.name.Contains("Surviver") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Down)
+            if (hitinfo.transform.name.Contains("Surviver") && survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
             {
                 canCarry = true;
             }
@@ -323,7 +323,7 @@ public class AnnaMove : MonoBehaviour
             }
 
             // 갈고리
-            if(hitinfo.transform.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Carrying)
+            if(hitinfo.transform.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Carrying)
             {
                 canHook = true;
             }

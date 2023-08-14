@@ -85,7 +85,7 @@ public class SurviverController : MonoBehaviour
     {
         GroundedCheck();
         CameraStopCheck();
-        // Move();
+        Move();
     }
 
     void CameraStopCheck()
@@ -109,7 +109,8 @@ public class SurviverController : MonoBehaviour
             {
                 controller.enabled = false;
             }
-        } }
+        }
+    }
     private void Move()
     {
         if(banMove) 

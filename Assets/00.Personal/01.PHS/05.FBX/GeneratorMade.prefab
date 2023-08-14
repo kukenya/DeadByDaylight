@@ -437,7 +437,7 @@ MonoBehaviour:
   - {fileID: 1738887696}
   - {fileID: 5491409}
   - {fileID: 1161420348}
-  maxPrograssTime: 80
+  maxPrograssTime: 40
   interaction: {fileID: 0}
   spark: {fileID: 4978226445598443398, guid: 7235f2f24cbe4de41965e7929dcd949d, type: 3}
   sparkParticlePos:
