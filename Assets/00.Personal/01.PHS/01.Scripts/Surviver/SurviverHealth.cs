@@ -49,7 +49,7 @@ public class SurviverHealth : MonoBehaviour
         }
     }
 
-    void NormalHit()
+    public void NormalHit()
     {
         if(state == HealthState.Healthy) {
             ChangeInjuerd();
@@ -91,7 +91,7 @@ public class SurviverHealth : MonoBehaviour
         surviverAnimation.PlayStandToCrawl();
     }
 
-    void ChangeCarring()
+    public void ChangeCarring()
     {
         controller.BanMove = true;
         state = HealthState.Carrying;

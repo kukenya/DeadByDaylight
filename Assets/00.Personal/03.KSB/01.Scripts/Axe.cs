@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Axe : MonoBehaviour
 {
-    Rigidbody smallAxeRigidbody;      // 한손도끼 Rigidbody 컴포넌트
+    Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
+    GameObject survivor;         // 생존자
+
     private void Start()
     {
+        survivor = GameObject.Find("Surviver");
+
         // 리지드바디의 chargingForce 로 던진다.
         Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
         smallAxeRigidbody.AddForce(transform.forward * AnnaMove.instance.chargingForce, ForceMode.Impulse);
+        // StartCoroutine("FlyingSound");
     }
 
     private void Update()
@@ -18,13 +23,26 @@ public class Axe : MonoBehaviour
         transform.Rotate(new Vector3(600 * Time.deltaTime, 0, 0));
     }
 
+    IEnumerator FlyingSound()
+    {
+        yield return null;
+        SoundManager.instance.PlaySmallAxeSounds(3);
+    }
+
     // 토구가 던진 도끼가 플레이어에게 닿으면 플레이어의 체력을 감소시킨다.
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        if (collision.gameObject.name.Contains("Player"))
+
+        if (other.gameObject.name.Contains("Surviver"))
         {
-            print("dlfkahjfksjdahflk");
+            SoundManager.instance.PlayHitSounds(3);
+            survivor.GetComponent<SurviverHealth>().NormalHit();
+
+        }
+        else if (other.gameObject.name.Contains("Pallet"))
+        {
+            SoundManager.instance.PlayHitSounds(0);
         }
     }
 }
