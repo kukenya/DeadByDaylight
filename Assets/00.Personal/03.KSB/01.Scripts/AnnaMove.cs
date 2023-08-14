@@ -460,8 +460,9 @@ public class AnnaMove : MonoBehaviour
                 // 생존자의 몸을 내 팔의 자식으로 만들어서 들고 다닌다.
                 survivor.transform.SetParent(leftArm);
                 
-                survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
-                survivor.transform.localRotation = new Quaternion(0,0,0,0);
+                // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
+                // survivor.transform.localPosition = new Vector3(0,0,0);
+                // survivor.transform.localRotation = new Quaternion(0,0,0,0);
             }
         }
         #endregion
