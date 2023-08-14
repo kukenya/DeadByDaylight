@@ -82,7 +82,7 @@ public class SurviverController : MonoBehaviour
     {
         GroundedCheck();
         CameraStopCheck();
-        Move();
+        // Move();
     }
 
     void CameraStopCheck()

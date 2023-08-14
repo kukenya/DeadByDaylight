@@ -297,7 +297,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362176977}
-  m_LocalRotation: {x: 0.054538373, y: 0.0071025905, z: -0.00038795086, w: 0.99848634}
+  m_LocalRotation: {x: 0.05453836, y: 0.0071029705, z: -0.00038797152, w: 0.99848634}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1192,7 +1192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031200275}
-  m_LocalRotation: {x: 0.082566, y: 0.0070889066, z: -0.0005873228, w: 0.9965602}
+  m_LocalRotation: {x: 0.08256602, y: 0.0070893206, z: -0.0005873574, w: 0.9965602}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1915,7 +1915,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783715781}
-  m_LocalRotation: {x: 0.026643876, y: 0.007110705, z: -0.00018952882, w: 0.9996197}
+  m_LocalRotation: {x: 0.026643876, y: 0.007111086, z: -0.00018953894, w: 0.9996197}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2000,7 +2000,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917000577}
-  m_LocalRotation: {x: 0.05453836, y: 0.0071026073, z: -0.00038795176, w: 0.99848634}
+  m_LocalRotation: {x: 0.054538358, y: 0.0071029873, z: -0.00038797257, w: 0.99848634}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2536,6 +2536,8 @@ MonoBehaviour:
   canDestroyPallet: 0
   generatorCount: {fileID: 0}
   axeCount: {fileID: 0}
+  survivor: {fileID: 0}
+  leftArm: {fileID: 503412822267233453}
   redlight: {fileID: 6076830703929816311}
 --- !u!114 &6648296248159742610
 MonoBehaviour:
@@ -6703,6 +6705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a50173893d189d428d5581c9aefeb56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  survivor: {fileID: 0}
 --- !u!1 &8122455343958146012
 GameObject:
   m_ObjectHideFlags: 0

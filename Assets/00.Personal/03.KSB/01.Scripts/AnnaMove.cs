@@ -86,8 +86,8 @@ public class AnnaMove : MonoBehaviour
 
 
     // 기타
-    GameObject survivor;                        // 생존자 게임오브젝트
-    // public Transform leftArm;                // 왼팔
+    public GameObject survivor;                 // 생존자 게임오브젝트
+    public Transform leftArm;                   // 왼팔
     public Light redlight;                      // 살인마 앞에 있는 조명
     #endregion
 
@@ -128,7 +128,7 @@ public class AnnaMove : MonoBehaviour
         #endregion
 
         #region 회전
-        if (state == State.Move || state == State.CoolTime || state == State.Carry && state == State.CarryAttack)
+        if (state == State.Move || state == State.CoolTime || state == State.Carry && state == State.CarryAttack && state == State.Carry)
         {
             // 회전값을 받아온다.
             float mx = Input.GetAxis("Mouse X");
@@ -312,6 +312,16 @@ public class AnnaMove : MonoBehaviour
             {
                 canDestroyPallet = false;
             }
+
+            // 쓰러진 생존자
+            if (hitinfo.transform.name.Contains("Surviver") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Down)
+            {
+                canCarry = true;
+            }
+            else if (hitinfo.transform.name.Contains("Surviver"))
+            {
+                canCarry = false;
+            }
         }
 
         //if(Physics.Raycast(ray, out hitinfo, 3))
@@ -430,12 +440,13 @@ public class AnnaMove : MonoBehaviour
             // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                survivor.GetComponent<SurviverHealth>().ChangeCarring();
                 anim.SetTrigger("Pickup");  // 생존자를 들어올린다.
                 state = State.Carry;        // 상태를 Carry 로 바꾼다.
                 canCarry = false;           // 들 수 있는 상태가 아님
 
                 // 생존자의 몸을 내 팔의 자식으로 만들어서 들고 다닌다.
-                // survivor.transform.SetParent(leftArm);
+                survivor.transform.SetParent(leftArm);
             }
         }
         #endregion
@@ -600,75 +611,7 @@ public class AnnaMove : MonoBehaviour
         }
     }
     #endregion
-
-    #region 트리거 확인
-    private void OnTriggerEnter(Collider other)
-    {
-        // 생존자
-        if (other.gameObject.layer == 6)
-        {
-            canCarry = true;
-        }
-
-        //// 갈고리
-        //if (other.gameObject.layer == 22)
-        //{
-        //    canHook = true;
-        //}
-
-        //// 발전기
-        //if (other.transform.name.Contains("GeneratorCollider"))
-        //{
-        //    canDestroyGenerator = true;
-        //}
-
-        // 캐비넷(도끼재충전)
-        //if(other.gameObject.layer == 24)
-        //{
-        //    canReLoad = true;
-        //}
-
-        //// 내려간 판자
-        //if (other.gameObject.name.Contains("Pallet"))
-        //{
-        //    canDestroyPallet = true;
-        //}
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // 생존자
-        if (other.gameObject.layer == 6)
-        {
-            canCarry = false;
-        }
-
-        //// 갈고리
-        //if (other.gameObject.layer == 22)
-        //{
-        //    canHook = false;
-        //}
-
-        //// 발전기
-        //if (other.transform.name.Contains("GeneratorCollider"))
-        //{
-        //    canDestroyGenerator = false;
-        //}
-
-        //// 캐비넷(도끼재충전)
-        //if (other.gameObject.layer == 24)
-        //{
-        //    canReLoad = false;
-        //}
-
-        //// 내려간 판자
-        //if (other.gameObject.name.Contains("Pallet"))
-        //{
-        //    canDestroyPallet = false;
-        //}
-    }
-    #endregion
-
+    
     #region Events
     public void OnCC()
     {

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Axe : MonoBehaviour
 {
-    Rigidbody smallAxeRigidbody;      // 한손도끼 Rigidbody 컴포넌트
+    Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
+    GameObject survivor;         // 생존자
+
     private void Start()
     {
+        survivor = GameObject.Find("Surviver");
+
         // 리지드바디의 chargingForce 로 던진다.
         Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
         smallAxeRigidbody.AddForce(transform.forward * AnnaMove.instance.chargingForce, ForceMode.Impulse);
@@ -33,6 +37,8 @@ public class Axe : MonoBehaviour
         if (other.gameObject.name.Contains("Surviver"))
         {
             SoundManager.instance.PlayHitSounds(3);
+            survivor.GetComponent<SurviverHealth>().NormalHit();
+
         }
         else if (other.gameObject.name.Contains("Pallet"))
         {
