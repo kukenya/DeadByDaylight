@@ -1,4 +1,6 @@
 using DG.Tweening;
+using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +14,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI subText;
     public Image lineImage;
+
+    public List<Transform> spawnPos;
+
+    public string survivorName;
 
     private void Awake()
     {
@@ -31,6 +37,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        for(int i  = 0; i < transform.childCount; i++) 
+        {
+            spawnPos.Add(transform.GetChild(i));
+        }
+
+        //RPC È£Ãâ ºóµµ
+        PhotonNetwork.SendRate = 30;
+
+        //OnPhotonSerializeView È£Ãâ ºóµµ
+        PhotonNetwork.SerializationRate = 30;
+
+        PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
+
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);
         titleText.DOFade(0, textFadeTime);
