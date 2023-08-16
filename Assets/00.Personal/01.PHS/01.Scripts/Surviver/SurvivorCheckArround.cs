@@ -57,6 +57,10 @@ public class SurvivorCheckArround : MonoBehaviourPun
             {
                 interaction.Type = SurvivorInteraction.InteractiveType.SelfHeal;
             }
+            else if(health.State == SurviverHealth.HealthState.Hook)
+            {
+                interaction.Type = SurvivorInteraction.InteractiveType.HookEscape;
+            }
             else
             {
                 interaction.Type = SurvivorInteraction.InteractiveType.None;

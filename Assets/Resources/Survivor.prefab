@@ -811,6 +811,7 @@ GameObject:
   - component: {fileID: 6445668696811590809}
   - component: {fileID: 6445668696811590806}
   - component: {fileID: 6664009196485085810}
+  - component: {fileID: 417837721527557893}
   m_Layer: 6
   m_Name: Survivor
   m_TagString: Untagged
@@ -908,7 +909,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 6445668696811590797}
+  rootCameraPosition: {fileID: 6445668696166776838}
   hook: 0
+  yOffset: 0.8
+  maxPrograssTime: 2
+  hookAnimationChangeRate: 2
 --- !u!95 &6445668696811590791
 Animator:
   serializedVersion: 5
@@ -1104,6 +1109,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6445668696811590797}
+  - {fileID: 417837721527557893}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1125,6 +1131,22 @@ MonoBehaviour:
   surviverController: {fileID: 6445668696811590797}
   ease: 4
   textEase: 0
+--- !u!114 &417837721527557893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445668696811590796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &6445668695339005747
 PrefabInstance:
   m_ObjectHideFlags: 0

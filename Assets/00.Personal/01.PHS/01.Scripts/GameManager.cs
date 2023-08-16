@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public string survivorName;
 
+    public bool multiplay = false;
+
     private void Awake()
     {
         if(Instance == null)
@@ -52,8 +54,11 @@ public class GameManager : MonoBehaviour
         //OnPhotonSerializeView »£√‚ ∫Ûµµ
         PhotonNetwork.SerializationRate = 60;
 
-        GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[Random.Range(0, spawnPos.Count)].position, Quaternion.identity);
-        survivorCamera1.Follow = survivor.transform.GetChild(0);
+        if (multiplay)
+        {
+            GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[Random.Range(0, spawnPos.Count)].position, Quaternion.identity);
+            survivorCamera1.Follow = survivor.transform.GetChild(0);
+        }
 
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);

@@ -206,11 +206,14 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            //회전 보정
-            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-            if (anim) return;
-            //위치 보정
-            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            ////회전 보정
+            //transform.rotation = receiveRot;
+            ////위치 보정
+            //transform.position = receivePos;
+            ////회전 보정
+            //transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+            ////위치 보정
+            //transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
         }
     }
 
@@ -297,7 +300,10 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
         else
         {
             //위치값을 받자.
-            receivePos = (Vector3)stream.ReceiveNext();
+            if(anim == false)
+            {
+                receivePos = (Vector3)stream.ReceiveNext();
+            }
             //회전값을 받자.
             receiveRot = (Quaternion)stream.ReceiveNext();
             //h 값 받자.

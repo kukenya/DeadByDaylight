@@ -15,6 +15,7 @@ public class SurvivorInteraction : MonoBehaviourPun
         Generator,
         ExitLever,
         SelfHeal,
+        HookEscape,
     }
 
     [SerializeField]
@@ -69,6 +70,7 @@ public class SurvivorInteraction : MonoBehaviourPun
     SurviverAutoMove surviverAutoMove;
     SurviverLookAt surviverLookAt;
     SurviverUI ui;
+    SurviverHealth health;
 
     public Pallet pallet;
     public Window window;
@@ -84,6 +86,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     private void Start()
     {
+        health = GetComponent<SurviverHealth>();
         surviverAnimation = GetComponent<SurviverAnimation>();
         controller = GetComponent<CharacterController>();
         surviverController = GetComponent<SurviverController>();
@@ -134,6 +137,10 @@ public class SurvivorInteraction : MonoBehaviourPun
                 if (surviverHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "자가 치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "자가 치료");
                 ui.prograssBar.fillAmount = surviverHealing.Prograss / surviverHealing.maxPrograssTime;
+                break;
+            case InteractiveType.HookEscape:
+                if (health.Escape) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "탈출");
+                else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "탈출");
                 break;
         }
     }
@@ -204,6 +211,16 @@ public class SurvivorInteraction : MonoBehaviourPun
                 else if (Input.GetMouseButtonUp(0))
                 {
                     surviverHealing.OffSelfHeal();
+                }
+                break;
+            case InteractiveType.HookEscape:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    health.Escape = true;
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    health.Escape = false;
                 }
                 break;
         }
