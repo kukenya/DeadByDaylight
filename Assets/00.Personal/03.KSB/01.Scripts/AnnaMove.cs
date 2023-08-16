@@ -23,9 +23,10 @@ public class AnnaMove : MonoBehaviour
     #endregion
 
     #region 변수
-    Animator anim;                          // 애니메이터
+    public Animator anim;                          // 애니메이터
     CharacterController cc;                 // 캐릭터 컨트롤러
     public Camera cineCam;                  // 시네머신 카메라 
+    public Transform neck;
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -34,8 +35,8 @@ public class AnnaMove : MonoBehaviour
     float delaySpeed = 3.74f;               // 경직 시 이동속도
 
     // 중력
-    public float yVelocity;
-    public float gravity = -9.8f;
+    public float yVelocity;                 // y 속도
+    public float gravity = -9.8f;           // 중력속도
 
 
     // 회전
@@ -78,11 +79,11 @@ public class AnnaMove : MonoBehaviour
     public bool canHook;                            // 갈고리에 걸 수 있는가?
     public bool canReLoad;                          // 한 손 도끼를 재충전 할 수 있는가?
     public bool canDestroyPallet;                   // 내려간 판자를 부술 수 있는가?
+    public bool canRotate;
 
     // UI
     public TextMeshProUGUI generatorCount;          // 발전기 갯수 UI
     public TextMeshProUGUI axeCount;                // 도끼 갯수 UI
-
 
 
     // 기타
@@ -90,24 +91,30 @@ public class AnnaMove : MonoBehaviour
     public Transform leftArm;                   // 왼팔
     public Light redlight;                      // 살인마 앞에 있는 조명
     public GameObject throwUI;                  // 도끼 던지기 UI
+
+    // 애니메이션 실행 위치
+    public Transform hookSpot;                         // 갈고리
+
+
     #endregion
 
     #region Start & Update
     void Start()
     {
-        anim = GetComponent<Animator>();                // 안나 Animator 컴포넌트
-        cc = GetComponent<CharacterController>();       // 안나 Rigidbody 컴포넌트
-        anim.SetLayerWeight(1, 0);                      // 던지는 애니메이션 레이어
-        anim.SetLayerWeight(2, 0);                      // 들기 애니메이션 레이어
-        anim.SetLayerWeight(3, 0);                      // 일반 애니메이션 레이어
-        smallAxe.SetActive(false);                      // 왼손에 들고 있는 한손도끼 렌더러 비활성화
-        currentAxeCount = maxAxeCount;                  // 시작할 때 도끼갯수 최대로 소지
-        axeCount.text = Convert.ToString(maxAxeCount);  // UI 로 나타낸다
-        // survivor = GameObject.Find("Survivor");
-        bigAxeCollider.enabled = false;
-        // redlight.enabled = false;                    // 살인마 앞에 있는 조명을 끔
-        cineCam.depth = 5;                              // 시네머신 카메라 보이게 하기
-        throwUI.SetActive(false);                        // 도끼 던지기  UI 비활성화
+        anim = GetComponent<Animator>();                    // 안나 Animator 컴포넌트
+        cc = GetComponent<CharacterController>();           // 안나 Rigidbody 컴포넌트
+
+        anim.SetLayerWeight(1, 0);                          // 던지는 애니메이션 레이어
+        anim.SetLayerWeight(2, 0);                          // 들기 애니메이션 레이어
+        anim.SetLayerWeight(3, 0);                          // 일반 애니메이션 레이어
+
+        throwUI.SetActive(false);                           // 도끼 던지기  UI 비활성화
+        smallAxe.SetActive(false);                          // 왼손에 들고 있는 한손도끼 렌더러 비활성화
+        currentAxeCount = maxAxeCount;                      // 시작할 때 도끼갯수 최대로 소지
+        axeCount.text = Convert.ToString(maxAxeCount);      // UI 로 나타낸다
+        bigAxeCollider.enabled = false;                     // 양손도끼 콜라이더를 꺼놓는다.
+
+        cineCam.depth = 5;                                  // 시네머신 카메라 보이게 한다.
     }
 
     void Update()
@@ -127,7 +134,7 @@ public class AnnaMove : MonoBehaviour
         #endregion
 
         #region 회전
-        if (state == State.Move || state == State.CoolTime || state == State.Carry && state == State.CarryAttack || state == State.Carry)
+        if (state != State.Idle)
         {
             // 회전값을 받아온다.
             float mx = Input.GetAxis("Mouse X");
@@ -138,19 +145,13 @@ public class AnnaMove : MonoBehaviour
             rotY += my * rotSpeed * Time.deltaTime;
 
             // 회전값을 적용
-            transform.eulerAngles = new Vector3(0, rotX, 0);
+            transform.eulerAngles = new Vector3(0, rotX, 0);        // Horizontal
+
             if (cc.enabled == true)
             {
-                transform.eulerAngles = new Vector3(-rotY, rotX, 0);
+                neck.eulerAngles = new Vector3(-rotY, rotX, 0);    // Vertical
 
-                if (rotY >= 35)
-                {
-                    rotY = 35;
-                }
-                if (rotY <= -35)
-                {
-                    rotY = -35;
-                }
+                rotY = Mathf.Clamp(rotY, -35, 35);
             }
         }
         #endregion
@@ -205,13 +206,22 @@ public class AnnaMove : MonoBehaviour
         cc.Move(velocity * Time.deltaTime);
         #endregion
 
+        // 상호작용을 할 때는 상호작용 애니메이션이 시작하는 위치로 이동을 해야한다.
+
         #region 도끼 재충전
-        if (Input.GetKeyDown(KeyCode.Space) && canReLoad && currentAxeCount < maxAxeCount)
+        // 도끼의 개수가 5보다 작고 재충전 가능한 상태일 때, 스페이스 바를 누르면
+        if (currentAxeCount < maxAxeCount && canReLoad && Input.GetKeyDown(KeyCode.Space))
         {
+            // 애니메이션 시작 장소로 이동한다.
+
             OffCC();                                                        // 움직임 멈춤
+
             anim.SetTrigger("Reload");                                      // 도끼를 집어드는 애니메이션 실행
-                                                                            // 캐비넷 열리고 닫히는 애니메이션 실행
+
+            // 캐비넷 열리고 닫히는 애니메이션 실행
+
             currentAxeCount = maxAxeCount;                                  // 도끼 최대 소지 갯수를 최대로 채운다
+
             axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
         }
         #endregion
@@ -219,10 +229,10 @@ public class AnnaMove : MonoBehaviour
         #region 캐비넷 확인
         // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
         // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
-            // 그냥 열었다가 닫는다
+        // 그냥 열었다가 닫는다
         // 만약 안에 사람이 있다면
-            // 그 사람을 들어버린다
-            // 상태를 Carry 로 바꾼다
+        // 그 사람을 들어버린다
+        // 상태를 Carry 로 바꾼다
         #endregion
 
         #region 발전기 부수기
@@ -259,94 +269,113 @@ public class AnnaMove : MonoBehaviour
         #region 갈고리 걸기
         if (state == State.Carry && canHook)
         {
-            // 갈고리 근처에서 UI 가 떴을 때
             // 스페이스바를 누르면 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                cc.enabled = false;             // 움직임 멈춤
-                anim.SetBool("Hook", true);     // 생존자를 갈고리에 거는 애니메이션 실행
-                                                // 갈고리에 거는 UI 게이지가 찬다.
-                                                // 다 차면 UI 끔
+                StartCoroutine("LerptoHook");
+
+                cc.enabled = false;                 // 움직임을 멈춘다.
+
+                anim.SetTrigger("Hook");            // 생존자를 갈고리에 거는 애니메이션 실행한다.
+
+                // 갈고리에 거는 UI 게이지가 찬다.
+
+                // 다 차면 UI 끈다.
+
+                survivor.transform.parent = null;   // 생존자와의 부모자식 관계를 끊는다.
             }
         }
         #endregion
 
-        #region Ray 로 상호작용 여부 확인하기
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-
-        RaycastHit hitinfo;
-        if (Physics.Raycast(ray, out hitinfo, 1f))
+        // UI 껐다켰다 하기
+        #region OverlapSphere & UI
+        canHook = false;
+        canReLoad = false;
+        canDestroyPallet = false;
+        canDestroyGenerator = false;
+        canCarry = false;
+        Collider[] hitcolliders = Physics.OverlapSphere(transform.position, 2);
+        // for 문 돌리기
+        for (int i = 0; i < hitcolliders.Length; i++)
         {
-            print(hitinfo.collider.transform.name);
+            print(hitcolliders[i].transform.gameObject.name);
+            // Surviver 생존자
+            if (hitcolliders[i].transform.gameObject.name.Contains("Surviver"))
+            {
+                // 상태가 Healthy 인 생존자가 1명 이상이라면 chase BG이 나오게 한다.
+
+
+                // 상태가 Down 이라면 canCarry 을 true 로 바꾼다.
+                if (survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Down)
+                {
+                    canCarry = true;
+                }
+            }
+            else
+            {
+                // 만약에 생존자가 없으면 Lullaby BG 이 나오게 한다.
+
+
+                // canCarry -> false
+
+            }
 
             // Generator 발전기
-            if (hitinfo.transform.name.Contains("Generator"))
+            if (hitcolliders[i].transform.gameObject.name.Contains("Generator"))
             {
-                // 부술 수 있는 상태로 만든다.
                 canDestroyGenerator = true;
+
+                // 만약 발전기의 수리 프로그래스가 0보다 크다면
+                // if(발전기 수리 프로그래스 > 0)
+                // {
+                // canDestroyGenerator 를 true 로
+                // }
             }
-            else
+
+            // Pallet 판자
+            if (hitcolliders[i].transform.gameObject.name.Contains("Pallet"))
             {
-                canDestroyGenerator = false;
+                // 만약 판자의 상태가 '내려감' 이라면
+                //if ()
+                //{
+                //    // canDestroyPallet 을 true 로
+                canDestroyPallet = true;
+                //}
             }
+            else { }
 
             // Closet 캐비넷
-            if (hitinfo.transform.name.Contains("Closet"))
+            if (hitcolliders[i].transform.gameObject.name.Contains("Closet"))
             {
-                // 재충전 할 수 있는 상태로 만든다.
-                canReLoad = true;
-            }
-            else
-            {
-                canReLoad = false;
+                // 만약 들고 있는 도끼의 개수가 최대개수라면
+                if (currentAxeCount == maxAxeCount)
+                {
+                    // 그냥 문 열기 -> [SPACE] 찾기 UI
+
+                    // 만약 생존자가 있으면 바로 들기 / 아니면 걍 문닫기
+
+                }
+
+                // 만약 들고 있는 도끼의 개수가 1~4 일때
+                else if (currentAxeCount > 0 && currentAxeCount < maxAxeCount)
+                {
+                    // canReload -> true & [SPACE] 찾기 + 손도끼 투척
+                    canReLoad = true;
+                }
             }
 
-            // Pallet 판자 
-            if (hitinfo.transform.name.Contains("Pallet"))
+            // Hook 갈고리 // 만약 내 상태가 Carry라면
+            if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Carrying)
             {
-                // 부술 수 있는 상태로 만든다.
-                canDestroyPallet = true;
-            }
-            else
-            {
-                canDestroyPallet = false;
-            }
-
-            // 쓰러진 생존자
-            if (hitinfo.transform.name.Contains("Surviver") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Down)
-            {
-                canCarry = true;
-            }
-            else
-            {
-                canCarry = false;
-            }
-
-            // 갈고리
-            if(hitinfo.transform.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Carrying)
-            {
+                // canHook -> true
                 canHook = true;
-            }
-            else
-            {
-                canHook = false;
+
+                // 갈고리 애니메이션 시작 장소  
             }
         }
-
-        //if(Physics.Raycast(ray, out hitinfo, 3))
-        //{
-        //    if (hitinfo.transform.name.Contains("Surviver") && ChaseorLullaby.instance.isChasing == false)
-        //    {
-        //        ChaseorLullaby.instance.PlayChaseBG();
-        //    }
-        //    else if(hitinfo.transform.name.Contains("Surviver") && ChaseorLullaby.instance.isLullaby == false)
-        //    {
-        //        ChaseorLullaby.instance.PlayLullaby();
-        //    }
-        //}
         #endregion
 
-        // 스턴
+        #region 스턴
         if (Input.GetKeyDown(KeyCode.G))
         {
             // G 버튼 = 스턴 함수를 불렀다고 가정하고 
@@ -373,6 +402,49 @@ public class AnnaMove : MonoBehaviour
             OffSmallAxe();
         }
     }
+    #endregion
+    #endregion
+
+    #region Lerp
+    // 갈고리
+    IEnumerator LerptoHook()
+    {
+        while (Vector3.Distance(transform.position, hookSpot.position) > 0.3f)
+        {
+            // Vector3 hookdir = hookSpot.position - transform.position;   // hookSpot 에서 나의 방향벡터
+            transform.position = Vector3.Lerp(transform.position, hookSpot.position, 0.1f);
+            transform.forward = hookSpot.forward;
+
+            if (Vector3.Distance(transform.position, hookSpot.position) <= 0.3f)
+            {
+                break;
+            }
+        }
+
+        yield return null;
+    }
+
+    // 생존자 들기
+    IEnumerator LerptoSurvivor()
+    {
+        while (Vector3.Distance(transform.position, survivor.transform.position) > 0.3f)
+        {
+            transform.position = Vector3.Lerp(transform.position, survivor.transform.position, 0.1f);
+
+            if (Vector3.Distance(transform.position, survivor.transform.position) <= 0.8f)
+            {
+                break;
+            }
+        }
+        yield return null;
+    }
+
+    // 발전기
+
+    // 판자
+
+    // 캐비넷
+
     #endregion
 
     #region 대기
@@ -452,14 +524,25 @@ public class AnnaMove : MonoBehaviour
             // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                survivor.GetComponent<SurviverHealth>().ChangeCarring();
-                anim.SetTrigger("Pickup");  // 생존자를 들어올린다.
-                state = State.Carry;        // 상태를 Carry 로 바꾼다.
-                canCarry = false;           // 들 수 있는 상태가 아님
-
-                // 생존자의 몸을 내 팔의 자식으로 만들어서 들고 다닌다.
-                survivor.transform.SetParent(leftArm);
+                survivor.GetComponent<SurviverHealth>().ChangeCarring();    // 생존자의 상태를 바꾸는 함수를 호출
                 
+                anim.SetTrigger("Pickup");                                  // 생존자를 들어올린다.
+                
+                state = State.Carry;                                        // 상태를 Carry 로 바꾼다.
+                
+                canCarry = false;                                           // 들 수 있는 상태가 아님
+
+                transform.forward = survivor.transform.forward;             // 내 앞방향을 생존자의 앞방향으로 설정한다.
+
+                StartCoroutine("LerptoSurvivor");                           // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
+
+                survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
+
+
+                // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
+                // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
+                survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
+                survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
                 // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
                 // survivor.transform.localPosition = new Vector3(0,0,0);
                 // survivor.transform.localRotation = new Quaternion(0,0,0,0);
@@ -543,7 +626,6 @@ public class AnnaMove : MonoBehaviour
         isCanceled = false;
         OffSmallAxe();
         throwUI.SetActive(true);
-
     }
 
     // 도끼 던짐
@@ -584,18 +666,19 @@ public class AnnaMove : MonoBehaviour
     }
     #endregion
 
-    #region 생존자 들기
+    #region 생존자 들기 / 든 상태에서 공격
     // 이동
     private void UpdateCarry()
     {
         throwUI.SetActive(false);
-
 
         #region 내려놓기
         if (Input.GetKeyDown(KeyCode.Space) && canCarry == false && canHook == false)
         {
             anim.SetTrigger("Drop");
             cc.enabled = false;
+            survivor.transform.parent = null;
+            survivor.GetComponent<SurviverHealth>().state = SurviverHealth.HealthState.Down;
         }
         #endregion
 
@@ -630,11 +713,10 @@ public class AnnaMove : MonoBehaviour
             OffAxe();
             state = State.Carry;
             currentTime = 0;
-
         }
     }
     #endregion
-    
+
     #region Events
     public void OnCC()
     {
@@ -644,6 +726,16 @@ public class AnnaMove : MonoBehaviour
     public void OffCC()
     {
         cc.enabled = false;
+    }
+
+    public void OnRotate()
+    {
+        canRotate = true;
+    }
+
+    public void OffRotate()
+    {
+        canRotate = false;
     }
 
     public void OnAxe()
