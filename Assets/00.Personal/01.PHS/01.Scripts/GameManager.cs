@@ -54,11 +54,8 @@ public class GameManager : MonoBehaviour
         //OnPhotonSerializeView »£√‚ ∫Ûµµ
         PhotonNetwork.SerializationRate = 60;
 
-        if (multiplay)
-        {
-            GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[Random.Range(0, spawnPos.Count)].position, Quaternion.identity);
-            survivorCamera1.Follow = survivor.transform.GetChild(0);
-        }
+        GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
+        survivorCamera1.Follow = survivor.transform.GetChild(0);
 
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);

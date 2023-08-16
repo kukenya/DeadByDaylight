@@ -1020,6 +1020,7 @@ MonoBehaviour:
   window: {fileID: 0}
   generator: {fileID: 0}
   exit: {fileID: 0}
+  camperHealing: {fileID: 0}
   activate: 0
   possibleAngle: 120
   autoMoverStopDistance: 0.2
@@ -1058,6 +1059,9 @@ MonoBehaviour:
   maxPrograssTime: 10
   healing: 0
   healed: 0
+  normalValue: 2
+  hardValue: 5
+  failValue: 5
 --- !u!114 &6445668696811590809
 MonoBehaviour:
   m_ObjectHideFlags: 0

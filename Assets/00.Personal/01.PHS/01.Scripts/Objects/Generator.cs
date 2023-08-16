@@ -24,7 +24,6 @@ public class Generator : MonoBehaviour
         } 
     }
 
-    SurviverUI ui;
     public SurvivorInteraction interaction;
     SkillCheck skillCheck;
     Animator anim;
@@ -38,7 +37,6 @@ public class Generator : MonoBehaviour
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
-        ui = SurviverUI.instance;
         skillCheck = SkillCheck.Instance;
     }
 
@@ -98,38 +96,7 @@ public class Generator : MonoBehaviour
                 break;
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (repaierd) return;
-
-    //    interaction = other.GetComponent<SurvivorInteraction>();
-    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
-
-    //    compareTrans = other.transform;
-    //    ui.FocusProgressUI("¼ö¸®");
-    //    ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
-    //}
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (repaierd) return;
-
-    //    System.Array.Sort(animPos, TransformListSortComparer);
-    //    interaction.Position = animPos[0];
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (repaierd) return;
-
-    //    ui.UnFocusProgressUI();
-    //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
-    //}
-
-
     Vector3 playerPos;
-
 
     int TransformListSortComparer(Transform A, Transform B)
     {

@@ -10,7 +10,8 @@ public class InteractiveObject : MonoBehaviour
         Window,
         Pallet,
         Generator,
-        Exit
+        Exit,
+        Survivor
     }
 
     public Type type = Type.Window;

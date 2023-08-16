@@ -12,17 +12,23 @@ public class SurviverLookAt : MonoBehaviourPun
     public bool LookAt { get { return isLookAt; }
         set
         {
-            if (value == true) 
-            {
-                anim.SetLayerWeight(1, 0);
-                isLookAt = value;
-            }
-            else
-            {
-                anim.SetLayerWeight(1, 0);
-                isLookAt = value;
-            }
+            SetLookAt(value);
         } 
+    }
+
+    [PunRPC]
+    void SetLookAt(bool value)
+    {
+        if (value == true)
+        {
+            anim.SetLayerWeight(1, 0);
+            isLookAt = value;
+        }
+        else
+        {
+            anim.SetLayerWeight(1, 0);
+            isLookAt = value;
+        }
     }
 
     string currentState = null;
@@ -87,6 +93,8 @@ public class SurviverLookAt : MonoBehaviourPun
         {
             angle = 360 - angle;
         }
+
+        if(anim == null) { return; }
         anim.SetLayerWeight(1, angle / 100);
     }
 
@@ -118,6 +126,7 @@ public class SurviverLookAt : MonoBehaviourPun
     [PunRPC]
     void AnimPlay(string state, float time)
     {
+        if(anim == null) { return; }
         anim.CrossFadeInFixedTime(state, time, 1);
     }
 

@@ -83,10 +83,6 @@ public class SurviverAnimation : MonoBehaviourPun
         anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
         healing = GetComponent<SurviverHealing>();
-        if(photonView.IsMine == false)
-        {
-            anim.applyRootMotion = false;
-        }
         AnimationChange();
     }
 
@@ -181,7 +177,7 @@ public class SurviverAnimation : MonoBehaviourPun
         controller.BanMove = false;
     }
 
-    public void Play(string state, float time = 0.1f, bool overplay = false)
+    public void Play(string state, float time = 0.1f, int layerIdx = 0, bool overplay = false)
     {
         if (state == currentState) return;
 
@@ -200,18 +196,16 @@ public class SurviverAnimation : MonoBehaviourPun
 
 
         anim.enabled = true;
-        photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, time);
-        anim.CrossFadeInFixedTime(state, time, 0);
-
+        photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, time, layerIdx);
 
         if (overplay) currentState = "";
         else currentState = state;
     }
 
     [PunRPC]
-    void PlayAnimationRPC(string state, float time)
+    void PlayAnimationRPC(string state, float time, int layerIdx)
     {
-        anim.CrossFadeInFixedTime(state, time, 0);
+        anim.CrossFadeInFixedTime(state, time, layerIdx);
     }
 
 

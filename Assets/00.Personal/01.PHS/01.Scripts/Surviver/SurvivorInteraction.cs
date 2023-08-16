@@ -16,6 +16,7 @@ public class SurvivorInteraction : MonoBehaviourPun
         ExitLever,
         SelfHeal,
         HookEscape,
+        HealCamper
     }
 
     [SerializeField]
@@ -63,7 +64,8 @@ public class SurvivorInteraction : MonoBehaviourPun
     [PunRPC]
     void SetController(bool value)
     {
-        controller.enabled = value; surviverController.anim = !value;
+        controller.enabled = value; 
+        //surviverController.anim = !value;
     }
 
     SurviverController surviverController;
@@ -76,11 +78,13 @@ public class SurvivorInteraction : MonoBehaviourPun
     public Window window;
     public Generator generator;
     public Exit exit;
+    public SurviverHealing camperHealing;
 
     public Pallet Pallet { get { return pallet; } set { if (pallet == value) return; pallet = value; Type = InteractiveType.Pallet; } }
     public Window Window { get { return window; } set { if (window == value) return; window = value; Type = InteractiveType.Window; } }
     public Generator Generator { get { return generator; } set { if (generator == value) return; generator = value; Type = InteractiveType.Generator; } }
     public Exit Exit { get { return exit; } set { if (exit == value) return; exit = value; Type = InteractiveType.ExitLever; } }
+    public SurviverHealing CamperHealing { get { return camperHealing; } set { if (camperHealing == value) return; camperHealing = value; Type = InteractiveType.HealCamper; } }
 
     public bool activate = false;
 
@@ -141,6 +145,10 @@ public class SurvivorInteraction : MonoBehaviourPun
             case InteractiveType.HookEscape:
                 if (health.Escape) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "Å»Ãâ");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "Å»Ãâ");
+                break;
+            case InteractiveType.HealCamper:
+                if (CamperHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "Ä¡·á");
+                else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "Ä¡·á");
                 break;
         }
     }
@@ -221,6 +229,16 @@ public class SurvivorInteraction : MonoBehaviourPun
                 else if (Input.GetMouseButtonUp(0))
                 {
                     health.Escape = false;
+                }
+                break;
+            case InteractiveType.HealCamper:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CamperHealing.OnFriendHeal(this);
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    CamperHealing.OffFriendHeal();
                 }
                 break;
         }
@@ -443,7 +461,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     IEnumerator GeneratorFailCor()
     {
-        surviverAnimation.Play("Generator_Fail_FT", 0.1f, true);
+        surviverAnimation.Play("Generator_Fail_FT", 0.1f, 0, true);
         generator.Repair = false;
         while (true)
         {

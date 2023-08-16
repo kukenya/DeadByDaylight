@@ -84,8 +84,10 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 case InteractiveObject.Type.Exit:
                     interaction.Exit = obj.exit;
                     break;
+                //case InteractiveObject.Type.Survivor:
+                  //  interaction.
             }
-        } 
+        }
     }
 
 

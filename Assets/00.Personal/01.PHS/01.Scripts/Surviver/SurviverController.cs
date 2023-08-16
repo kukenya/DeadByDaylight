@@ -206,10 +206,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            ////회전 보정
-            //transform.rotation = receiveRot;
-            ////위치 보정
-            //transform.position = receivePos;
+            
             ////회전 보정
             //transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
             ////위치 보정
@@ -240,6 +237,13 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     private void LateUpdate()
     {
         CameraRotation();
+        if (photonView.IsMine == false)
+        {
+            //회전 보정
+            transform.rotation = receiveRot;
+            //위치 보정
+            transform.position = receivePos;
+        }
     }
 
     public float cameraDistMultiply = 0.1f;

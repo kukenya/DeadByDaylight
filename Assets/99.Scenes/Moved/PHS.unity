@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012901002, g: 0.0019965647, b: 0.0026868014, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5052,6 +5052,7 @@ MonoBehaviour:
   priority: 0
   customPasses:
   - rid: 514885125810421761
+  - rid: 514885173528231936
   injectionPoint: 1
   m_TargetCamera: {fileID: 0}
   useTargetCamera: 0
@@ -5073,6 +5074,21 @@ MonoBehaviour:
           m_Bits: 256
         seeThroughMaterial: {fileID: 2100000, guid: c36551f778de7ac4cb9ae98ccbdb462b, type: 2}
         stencilShader: {fileID: 4800000, guid: cbfa2cf05d9f26743a3c8bfeffec3eea, type: 3}
+    - rid: 514885173528231936
+      type: {class: SeeThrough, ns: , asm: Assembly-CSharp}
+      data:
+        m_Name: Survivor
+        enabled: 1
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        seeThroughLayer:
+          serializedVersion: 2
+          m_Bits: 512
+        seeThroughMaterial: {fileID: 2100000, guid: 1db2b1ae9695adf409fff2708120821f, type: 2}
+        stencilShader: {fileID: 0}
 --- !u!4 &909428446 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9104707678328592533, guid: efcc15cddddc1ee499879e6acd861eaf, type: 3}
