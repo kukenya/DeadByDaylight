@@ -20,6 +20,7 @@ public class InteractiveObject : MonoBehaviour
     public Pallet pallet;
     public Generator generator;
     public Exit exit;
+    public SurviverHealing healing;
 
     private void Start()
     {
@@ -36,6 +37,9 @@ public class InteractiveObject : MonoBehaviour
                 break;
             case Type.Exit:
                 exit = GetComponent<Exit>();
+                break;
+            case Type.Survivor:
+                healing = GetComponentInParent<SurviverHealing>();
                 break;
         }
     }

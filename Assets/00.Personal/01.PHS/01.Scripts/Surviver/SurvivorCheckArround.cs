@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SurvivorCheckArround : MonoBehaviourPun
@@ -14,6 +15,7 @@ public class SurvivorCheckArround : MonoBehaviourPun
     public Pallet pallet;
     public Generator generator;
     public Exit exit;
+    public GameObject childCollider;
 
     SurvivorInteraction interaction;
     SurviverHealth health;
@@ -42,6 +44,18 @@ public class SurvivorCheckArround : MonoBehaviourPun
         {
             if (checkColliders[i] == null) continue;
 
+            if (checkColliders[i].gameObject == childCollider)
+            {
+                checkColliders[i] = null;
+                continue;
+            }
+
+            if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+            {
+                checkColliders[i] = null; 
+                continue;
+            }
+
             if (Physics.Raycast(transform.position, checkColliders[i].transform.position - transform.position, 3f, Physics.AllLayers) == false)
             {
                 checkColliders[i] = null;
@@ -51,7 +65,7 @@ public class SurvivorCheckArround : MonoBehaviourPun
         //checkColliders.Sort(ColliderListSortComparer);
         System.Array.Sort(checkColliders, ColliderListSortComparer);
 
-        if (checkColliders.Length == 0) 
+        if (checkColliders[0] == null) 
         {
             if(health.State == SurviverHealth.HealthState.Injured && controller.Moving == false)
             {
@@ -84,8 +98,9 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 case InteractiveObject.Type.Exit:
                     interaction.Exit = obj.exit;
                     break;
-                //case InteractiveObject.Type.Survivor:
-                  //  interaction.
+                case InteractiveObject.Type.Survivor:            
+                    interaction.CamperHealing = obj.healing;
+                    break;
             }
         }
     }

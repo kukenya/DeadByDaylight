@@ -234,7 +234,7 @@ public class SurvivorInteraction : MonoBehaviourPun
             case InteractiveType.HealCamper:
                 if (Input.GetMouseButtonDown(0))
                 {
-                    CamperHealing.OnFriendHeal(this);
+                    FriendHealing();
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
@@ -242,6 +242,11 @@ public class SurvivorInteraction : MonoBehaviourPun
                 }
                 break;
         }
+    }
+
+    void FriendHealing()
+    {
+        StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(CamperHealing.OnFriendHeal, this));
     }
 
     // Àå¾Ö¹°

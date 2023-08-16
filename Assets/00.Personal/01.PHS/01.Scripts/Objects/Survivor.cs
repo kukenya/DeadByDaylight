@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Survivor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    SurviverHealth health;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        health = GetComponentInParent<SurviverHealth>();
     }
 }
