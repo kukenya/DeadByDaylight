@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using static UnityEngine.Rendering.DebugUI;
 
-public class SurviverAnimation : MonoBehaviour
+public class SurviverAnimation : MonoBehaviourPun
 {
     public Animator anim;
     SurviverController controller;
@@ -34,33 +36,61 @@ public class SurviverAnimation : MonoBehaviour
     public ObjectInteractState interactState = ObjectInteractState.Generator;
 
     public MoveState mState { get { return moveState; } set {
-            if (value != moveState)
-            {
-                moveState = value;
-                AnimationChange();
-            }
-        } }
+            photonView.RPC(nameof(SetMoveStateRPC), RpcTarget.All, value);
+        }
+    }
+
+    [PunRPC]
+    void SetMoveStateRPC(MoveState value)
+    {
+        if (value != moveState)
+        {
+            moveState = value;
+            AnimationChange();
+        }
+    }
 
     public PoseState Pose { get { return poseState; } set {
-            if (value != poseState)
-            {
-                poseState = value;
-                AnimationChange();
-            } 
-        } }
+            photonView.RPC(nameof(SetPoseRPC), RpcTarget.All, value);       
+        }
+    }
+
+    [PunRPC]
+    void SetPoseRPC(PoseState value)
+    {
+        if (value != poseState)
+        {
+            poseState = value;
+            AnimationChange();
+        }
+    }
 
     bool isInjuerd = false;
 
-    public bool Injuerd { get { return isInjuerd; } set { if (isInjuerd == value) return; isInjuerd = value; AnimationChange(); healing.Prograss = 0; } }
+    public bool Injuerd { get { return isInjuerd; } set { photonView.RPC(nameof(SetInjuerdRPC), RpcTarget.All, value); } }
+
+    [PunRPC]
+    void SetInjuerdRPC(bool value)
+    {
+        if (isInjuerd == value) return;
+        isInjuerd = value;
+        AnimationChange();
+        healing.Prograss = 0;
+    }
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         controller = GetComponent<SurviverController>();
         healing = GetComponent<SurviverHealing>();
+        if(photonView.IsMine == false)
+        {
+            anim.applyRootMotion = false;
+        }
         AnimationChange();
     }
 
+    [PunRPC]
     public void AnimationChange()
     {
         switch (Pose)
@@ -170,11 +200,18 @@ public class SurviverAnimation : MonoBehaviour
 
 
         anim.enabled = true;
+        photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, time);
         anim.CrossFadeInFixedTime(state, time, 0);
 
 
         if (overplay) currentState = "";
         else currentState = state;
+    }
+
+    [PunRPC]
+    void PlayAnimationRPC(string state, float time)
+    {
+        anim.CrossFadeInFixedTime(state, time, 0);
     }
 
 

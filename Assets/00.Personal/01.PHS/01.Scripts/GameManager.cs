@@ -1,9 +1,11 @@
+using Cinemachine;
 using DG.Tweening;
 using Photon.Pun;
 using Photon.Pun.Demo.Cockpit;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +16,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI subText;
     public Image lineImage;
+
+    public CinemachineVirtualCamera survivorCamera1;
 
     public List<Transform> spawnPos;
 
@@ -43,12 +47,13 @@ public class GameManager : MonoBehaviour
         }
 
         //RPC »£√‚ ∫Ûµµ
-        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SendRate = 60;
 
         //OnPhotonSerializeView »£√‚ ∫Ûµµ
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SerializationRate = 60;
 
-        PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
+        GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[Random.Range(0, spawnPos.Count)].position, Quaternion.identity);
+        survivorCamera1.Follow = survivor.transform.GetChild(0);
 
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);

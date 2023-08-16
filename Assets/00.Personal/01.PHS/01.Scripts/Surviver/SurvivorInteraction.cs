@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SurvivorInteraction : MonoBehaviour
+public class SurvivorInteraction : MonoBehaviourPun
 {
     public enum InteractiveType
     {
@@ -54,9 +55,16 @@ public class SurvivorInteraction : MonoBehaviour
     }
 
     SurviverHealing surviverHealing;
-    SurviverHealth health;
     SurviverAnimation surviverAnimation;
     CharacterController controller;
+    public bool Controller { get { return controller.enabled; } set { photonView.RPC(nameof(SetController), RpcTarget.All, value); } }
+
+    [PunRPC]
+    void SetController(bool value)
+    {
+        controller.enabled = value; surviverController.anim = !value;
+    }
+
     SurviverController surviverController;
     SurviverAutoMove surviverAutoMove;
     SurviverLookAt surviverLookAt;
@@ -76,7 +84,6 @@ public class SurvivorInteraction : MonoBehaviour
 
     private void Start()
     {
-        health = GetComponent<SurviverHealth>();
         surviverAnimation = GetComponent<SurviverAnimation>();
         controller = GetComponent<CharacterController>();
         surviverController = GetComponent<SurviverController>();
@@ -94,6 +101,8 @@ public class SurvivorInteraction : MonoBehaviour
     
     public void UpdateSurvivorUI()
     {
+        if (photonView.IsMine == false) return;
+
         ui.UnFocusSpaceBarUI();
         ui.OffFocusProgressUI();
 
@@ -145,6 +154,8 @@ public class SurvivorInteraction : MonoBehaviour
 
     void UpdateInteractionInput()
     {
+        if (photonView.IsMine == false) return;
+
         if (activate == true) return;
 
         switch (interactiveType)
@@ -230,11 +241,10 @@ public class SurvivorInteraction : MonoBehaviour
         Transform targetTrans = pallet.GetAnimPosition(transform.position);
         switch (pallet.state)
         {
-            case Pallet.State.Stand:
+            case Pallet.PalletState.Stand:
                 surviverAutoMove.OnAutoMove(targetTrans, PullDownPallet);
-                pallet.state = Pallet.State.Ground;
                 break;
-            case Pallet.State.Ground:
+            case Pallet.PalletState.Ground:
                 if (targetTrans.localEulerAngles.y == 90) surviverAutoMove.OnAutoMove(targetTrans, JumpPalletLT, true);
                 else surviverAutoMove.OnAutoMove(targetTrans, JumpPalletRT, true);
                 break;
@@ -247,7 +257,9 @@ public class SurvivorInteraction : MonoBehaviour
 
     void JumpWindow(float targetAngle)
     {
-        controller.enabled = false;
+        Controller = false;
+        print(surviverController.anim);
+        if (photonView.IsMine == false) 
 
         if (surviverController.sprintTime == 0)
         {
@@ -276,7 +288,7 @@ public class SurvivorInteraction : MonoBehaviour
 
     void JumpPalletRT()
     {
-        controller.enabled = false;
+        Controller = false;
         if (surviverController.Sprint == false)
         {
             surviverAnimation.Play("JumpPalletRT");
@@ -290,7 +302,7 @@ public class SurvivorInteraction : MonoBehaviour
 
     void JumpPalletLT()
     {
-        controller.enabled = false;
+        Controller = false;
         if (surviverController.Sprint == false)
         {
             surviverAnimation.Play("JumpPalletLT");
@@ -305,7 +317,7 @@ public class SurvivorInteraction : MonoBehaviour
     void PullDownPallet()
     {
         surviverAnimation.Play("PullDownPalletRT");
-        pallet.Play("FallOnGround");
+        pallet.State = Pallet.PalletState.Ground;
         StartCoroutine(WaitAnimEnd("PullDownPalletRT"));
     }
 
@@ -315,16 +327,19 @@ public class SurvivorInteraction : MonoBehaviour
 
     public void StartFowardMoveSprint(string animName)
     {
+        if(photonView.IsMine == false) { return; }
         cor = StartCoroutine(FowardMoveCor(animName, 4));
     }
 
     public void StartFowardMoveWalk(string animName)
     {
+        if (photonView.IsMine == false) { return; }
         cor = StartCoroutine(FowardMoveCor(animName, 2.26f));
     }
 
     public void StopFowardMove()
     {
+        if (photonView.IsMine == false) { return; }
         StopCoroutine(cor);
     }
 
@@ -338,29 +353,6 @@ public class SurvivorInteraction : MonoBehaviour
         }
     }
 
-    
-
-    //IEnumerator WaitAnimFast()
-    //{
-    //    surviverController.BanMove = true;
-    //    float currentTime = 0;
-    //    while (true)
-    //    {
-    //        currentTime += Time.deltaTime;
-    //        if (currentTime > a)
-    //        {
-    //            transform.position += transform.forward * 4.0f * Time.deltaTime;
-    //        }
-    //        if (surviverAnimation.IsAnimEnd("WindowFast")) break;
-    //        yield return null;
-    //    }
-    //    surviverController.BanMove = false;
-    //    controller.enabled = true;
-    //    surviverAnimation.AnimationChange();
-    //    activate = false;
-    //    surviverLookAt.LookAt = true;
-    //}
-
     IEnumerator WaitAnimEnd(string animName)
     {
         surviverController.BanMove = true;
@@ -370,7 +362,7 @@ public class SurvivorInteraction : MonoBehaviour
             yield return null;
         }
         surviverController.BanMove = false;
-        controller.enabled = true;
+        Controller = true;
         surviverAnimation.AnimationChange();
         activate = false;
         surviverLookAt.LookAt = true;
@@ -399,7 +391,7 @@ public class SurvivorInteraction : MonoBehaviour
         surviverAutoMove.StopCoroutine();
         surviverController.BanMove = false;
         generator.Repair = false;
-        controller.enabled = true;
+        Controller = true;
         surviverLookAt.LookAt = true;
     }
 
@@ -422,7 +414,7 @@ public class SurvivorInteraction : MonoBehaviour
     {
         surviverAutoMove.StopCoroutine();
         surviverController.BanMove = false;
-        controller.enabled = true;
+        Controller = true;
         surviverLookAt.LookAt = true;
         exit.OffSwitch();
     }

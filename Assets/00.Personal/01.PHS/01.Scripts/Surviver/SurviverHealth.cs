@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurviverHealth : MonoBehaviour
+public class SurviverHealth : MonoBehaviourPun
 {
     public SurviverController controller;
     SurviverAnimation surviverAnimation;
@@ -21,10 +22,17 @@ public class SurviverHealth : MonoBehaviour
     HealthState state = HealthState.Healthy;
 
     public HealthState State { get { return state; } set { 
-            state = value;
-            surviverAnimation.Injuerd = false;
-            surviverAnimation.AnimationChange();
-        } }
+            photonView.RPC(nameof(SetHealthState), RpcTarget.All, value);
+        }
+    }
+
+    [PunRPC]
+    void SetHealthState(HealthState value)
+    {
+        state = value;
+        surviverAnimation.Injuerd = false;
+        surviverAnimation.AnimationChange();
+    }
 
     // 플레이어 갈고리 걸린 횟수 관련 변수
     [Range(0, 2)]
@@ -40,10 +48,13 @@ public class SurviverHealth : MonoBehaviour
 
     private void Update()
     {
+        if (photonView.IsMine == false) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             NormalHit();
-        }else if (Input.GetKeyDown(KeyCode.Alpha2))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ChangeCarring();
         }

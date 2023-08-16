@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 7215037100812034040}
   - component: {fileID: 6904383962480391052}
   - component: {fileID: 8133676718529564941}
+  - component: {fileID: 5168516265396567321}
   m_Layer: 7
   m_Name: SK_Pallet_01_REF.mo
   m_TagString: Untagged
@@ -275,6 +276,28 @@ MonoBehaviour:
   anim: {fileID: 7241105089183798794}
   animPos1: {fileID: 7161814636547427081}
   animPos2: {fileID: 4482268418399723948}
+--- !u!114 &5168516265396567321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857441271236274333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3572012856653628276
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurvivorCheckArround : MonoBehaviour
+public class SurvivorCheckArround : MonoBehaviourPun
 {
     public float checkRadius;
     public Collider[] checkColliders = new Collider[10];
@@ -32,6 +33,8 @@ public class SurvivorCheckArround : MonoBehaviour
 
     void CheckArround() 
     {
+        if (photonView.IsMine == false) return;
+
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, checkRadius, checkLayer);
         this.checkColliders = checkColliders;
 

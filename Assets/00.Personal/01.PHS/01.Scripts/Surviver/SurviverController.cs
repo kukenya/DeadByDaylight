@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening; //import
 using Photon.Pun;
 
-public class SurviverController : MonoBehaviourPun
+public class SurviverController : MonoBehaviourPun, IPunObservable
 {
     [Header("플레이어")]
     public float walkSpeed = 2.26f;
@@ -100,7 +100,7 @@ public class SurviverController : MonoBehaviourPun
             if (value == false)
             {
                 controller.enabled = true;
-                surviverAnimation.AnimationChange();
+                surviverAnimation.photonView.RPC("AnimationChange", RpcTarget.All);
             }
             else
             {
@@ -112,15 +112,14 @@ public class SurviverController : MonoBehaviourPun
     Vector3 receivePos;
     Quaternion receiveRot;
     public float lerpSpeed = 5;
+
+    public bool anim = false;
     private void Move()
     {
-        if(banMove) 
-        {
-            return;
-        }
-
         if (photonView.IsMine)
         {
+            if (banMove) return;
+
             // ���� �ӷ��� �޸��� ��ư�� ���������� �ȴ������� ������.
             isSprint = Input.GetKey(KeyCode.LeftShift) ? true : false;
             isCrouching = Input.GetKey(KeyCode.LeftControl) ? true : false;
@@ -207,10 +206,11 @@ public class SurviverController : MonoBehaviourPun
         }
         else
         {
-            //위치 보정
-            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             //회전 보정
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+            if (anim) return;
+            //위치 보정
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
         }
     }
 
@@ -277,6 +277,7 @@ public class SurviverController : MonoBehaviourPun
         if (angle > 360f) angle -= 360f;
         return Mathf.Clamp(angle, min, max);
     }
+    
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

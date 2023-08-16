@@ -1,17 +1,34 @@
 using JetBrains.Annotations;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
-public class Pallet : MonoBehaviour
+public class Pallet : MonoBehaviourPun
 {
-    public enum State
+    public enum PalletState
     {
         Stand,
         Ground
     }
 
-    public State state;
+    public PalletState state;
+    public PalletState State { get { return state; } set {
+            photonView.RPC(nameof(SetState), RpcTarget.All, value);
+             }
+    }
+
+    [PunRPC]
+    void SetState(PalletState value)
+    {
+        if (value == PalletState.Ground)
+        {
+            Play("FallOnGround");
+        }
+        state = value;
+    }
+
     public LayerMask layerMask;
 
     public Animator anim;
@@ -24,10 +41,8 @@ public class Pallet : MonoBehaviour
     {
         if (state == currentState) return;
 
-
         anim.enabled = true;
         anim.CrossFadeInFixedTime(state, time, 0);
-
         currentState = state;
     }
 
@@ -38,6 +53,18 @@ public class Pallet : MonoBehaviour
 
         return dist < dist2 ? animPos1 : animPos2;
     }
+
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        stream.SendNext(state);
+    //    }
+    //    else
+    //    {
+    //        state = (PalletState)stream.ReceiveNext();
+    //    }
+    //}
 
     //private void OnTriggerStay(Collider other)
     //{

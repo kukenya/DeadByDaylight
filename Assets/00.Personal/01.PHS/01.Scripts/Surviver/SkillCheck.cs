@@ -39,10 +39,7 @@ public class SkillCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Check();
-        }
+        Check();
     }
 
     public void StartRandomSkillCheck(System.Action<int> action = null, float checkTime = 1)
@@ -131,27 +128,30 @@ public class SkillCheck : MonoBehaviour
     // 23
     public void Check()
     {
-        if (skillCheckCor == null) return;
-
-        skillCheck.SetActive(false);
-        StopCoroutine(skillCheckCor);
-        skillCheckCor = null;
-        if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(checkAngle < maxHardCheckAngle &&  checkAngle > minHardCheckAngle) 
+            if (skillCheckCor == null) return;
+
+            skillCheck.SetActive(false);
+            StopCoroutine(skillCheckCor);
+            skillCheckCor = null;
+            if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
             {
-                action?.Invoke(2);
-                AudioPlay(hardCheckSound);
+                if (checkAngle < maxHardCheckAngle && checkAngle > minHardCheckAngle)
+                {
+                    action?.Invoke(2);
+                    AudioPlay(hardCheckSound);
+                }
+                else
+                {
+                    action?.Invoke(1);
+                    AudioPlay(normalCheckSound);
+                }
             }
             else
             {
-                action?.Invoke(1);
-                AudioPlay(normalCheckSound);
+                action?.Invoke(0);
             }
-        }
-        else
-        {
-            action?.Invoke(0);
         }
     }
 
