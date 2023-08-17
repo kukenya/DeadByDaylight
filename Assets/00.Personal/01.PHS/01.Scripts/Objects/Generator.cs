@@ -1,9 +1,11 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Generator : MonoBehaviour
+public class Generator : MonoBehaviourPun
 {
     public bool repaierd = false;
     public Transform[] animPos;
@@ -19,8 +21,16 @@ public class Generator : MonoBehaviour
 
     public bool Repair { get { return repairing; } set {
             repairing = value;
-            if (repairing == false) skillCheck.EndRandomSkillCheck();
-            else skillCheck.StartRandomSkillCheck(GetSkillCheckValue);
+            if (repairing == false)
+            {
+                skillCheck.EndRandomSkillCheck();
+                RepairingSurvivor--;
+            }
+            else
+            {
+                skillCheck.StartRandomSkillCheck(GetSkillCheckValue);
+                RepairingSurvivor++;
+            }
         } 
     }
 
@@ -34,6 +44,35 @@ public class Generator : MonoBehaviour
 
     public AudioSource failAudio;
 
+    [Header("플레이어 수")]
+    int intSurvivor = 0;
+    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+    [PunRPC]
+    void SetIntSurvivor(int value)
+    {
+        intSurvivor = value; SetMultiplayIncrease();
+    }
+    public float multiplyIncrease = 1;
+
+    void SetMultiplayIncrease()
+    {
+        switch (intSurvivor)
+        {
+            case 0:
+                multiplyIncrease = 0;
+                break;
+            case 1:
+                multiplyIncrease = 1;
+                break;
+            case 2:
+                multiplyIncrease = 1.5f;
+                break;
+            case 3:
+                multiplyIncrease = 2;
+                break;
+        }
+    }
+
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
@@ -46,6 +85,7 @@ public class Generator : MonoBehaviour
         UpdateAnim();
     }
 
+    [PunRPC]
     void SkillCheckFail()
     {
         Prograss += failValue;
@@ -67,7 +107,7 @@ public class Generator : MonoBehaviour
             interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
             gameObject.layer = 0;
         }
-        Prograss += Time.deltaTime;
+        Prograss += Time.deltaTime * multiplyIncrease;
     }
 
     void UpdateAnim()
@@ -86,7 +126,7 @@ public class Generator : MonoBehaviour
         switch (value)
         {
             case 0:
-                SkillCheckFail();
+                photonView.RPC(nameof(SkillCheckFail), RpcTarget.All);
                 break;
             case 1:
                 Prograss += normalValue;

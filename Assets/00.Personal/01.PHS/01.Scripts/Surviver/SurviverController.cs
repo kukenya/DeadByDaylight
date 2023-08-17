@@ -62,7 +62,6 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
 
     // �ִϸ��̼� �Ŵ���
     SurviverAnimation surviverAnimation;
-    private string waitAnimState;
 
     // ET
     public CharacterController controller;

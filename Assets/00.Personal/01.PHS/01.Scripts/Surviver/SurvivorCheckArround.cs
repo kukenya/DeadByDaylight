@@ -10,11 +10,6 @@ public class SurvivorCheckArround : MonoBehaviourPun
     public Collider[] checkColliders = new Collider[10];
 
     public LayerMask checkLayer;
-
-    public Window window;
-    public Pallet pallet;
-    public Generator generator;
-    public Exit exit;
     public GameObject childCollider;
 
     SurvivorInteraction interaction;
@@ -53,6 +48,12 @@ public class SurvivorCheckArround : MonoBehaviourPun
             if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
             {
                 checkColliders[i] = null; 
+                continue;
+            }
+
+            if (health.State == SurviverHealth.HealthState.Hook)
+            {
+                checkColliders[i] = null;
                 continue;
             }
 

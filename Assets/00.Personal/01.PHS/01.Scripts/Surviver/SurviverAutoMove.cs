@@ -82,25 +82,25 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     public float friendHealAutoStopDist = 0.5f;
 
-    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, SurvivorInteraction survivorInteraction)
+    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, System.Action action2, SurvivorInteraction survivorInteraction, Transform moveTrans)
     {
         controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
-            float targetAngle = targetTrans.eulerAngles.y;
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+            transform.rotation = Quaternion.LookRotation(moveTrans.position - transform.position);
             if (Vector3.Distance(
-                new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
+                new Vector3(moveTrans.position.x, 0, moveTrans.position.z),
                 new Vector3(transform.position.x, 0, transform.position.z)) < friendHealAutoStopDist) break;
 
             transform.position = Vector3.MoveTowards(
                    transform.position,
-                   new Vector3(targetTrans.position.x, transform.position.y, targetTrans.position.z),
+                   new Vector3(moveTrans.position.x, transform.position.y, moveTrans.position.z),
                    Time.deltaTime * autoMoveSpeed);
 
             yield return null;
         }
         action?.Invoke(survivorInteraction);
+        action2?.Invoke();
     }
 }

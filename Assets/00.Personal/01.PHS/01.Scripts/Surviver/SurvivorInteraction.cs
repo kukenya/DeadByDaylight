@@ -31,6 +31,7 @@ public class SurvivorInteraction : MonoBehaviourPun
                     pallet = null;
                     generator = null;
                     exit = null;
+                    camperHealing = null;
                     break;
                 case InteractiveType.Window:
                     pallet = null;
@@ -88,6 +89,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public bool activate = false;
 
+    #region 유니티
     private void Start()
     {
         health = GetComponent<SurviverHealth>();
@@ -105,7 +107,9 @@ public class SurvivorInteraction : MonoBehaviourPun
         UpdateInteractionInput();
         UpdateSurvivorUI();
     }
-    
+    #endregion
+
+    #region UI업데이트
     public void UpdateSurvivorUI()
     {
         if (photonView.IsMine == false) return;
@@ -152,6 +156,7 @@ public class SurvivorInteraction : MonoBehaviourPun
                 break;
         }
     }
+    #endregion
 
     public void EndInteract(InteractiveType type)
     {
@@ -167,6 +172,7 @@ public class SurvivorInteraction : MonoBehaviourPun
         Type = InteractiveType.None;
     }
 
+    #region 인풋
     void UpdateInteractionInput()
     {
         if (photonView.IsMine == false) return;
@@ -238,15 +244,29 @@ public class SurvivorInteraction : MonoBehaviourPun
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
-                    CamperHealing.OffFriendHeal();
+                    OffFriendHealing();
                 }
                 break;
         }
     }
+    #endregion
 
     void FriendHealing()
     {
-        StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(CamperHealing.OnFriendHeal, this));
+        StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
+            CamperHealing.OnFriendHeal, 
+            () => { surviverAnimation.Play("Heal_Camper"); },
+            this,
+            CamperHealing.transform)
+            );
+    }
+
+    public void OffFriendHealing()
+    {
+        surviverController.BanMove = false;
+        Controller = true;
+        CamperHealing.OffFriendHeal();
+        surviverAnimation.AnimationChange();
     }
 
     // 장애물
@@ -430,8 +450,8 @@ public class SurvivorInteraction : MonoBehaviourPun
     {
         surviverAutoMove.StopCoroutine();
         surviverController.BanMove = false;
-        generator.Repair = false;
         Controller = true;
+        generator.Repair = false;
         surviverLookAt.LookAt = true;
     }
 

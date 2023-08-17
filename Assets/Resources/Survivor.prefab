@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoMoveStopDist: 0.001
   autoMoveSpeed: 8
-  friendHealAutoStopDist: 0.5
+  friendHealAutoStopDist: 1
 --- !u!114 &6445668696811590815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,6 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: 0
   interaction: {fileID: 0}
   maxPrograssTime: 10
   healing: 0
@@ -1091,10 +1092,6 @@ MonoBehaviour:
   checkLayer:
     serializedVersion: 2
     m_Bits: 128
-  window: {fileID: 0}
-  pallet: {fileID: 0}
-  generator: {fileID: 0}
-  exit: {fileID: 0}
   childCollider: {fileID: 7104911752054812998}
 --- !u!114 &6445668696811590806
 MonoBehaviour:
