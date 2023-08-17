@@ -452,6 +452,7 @@ public class SurvivorInteraction : MonoBehaviourPun
         surviverController.BanMove = false;
         Controller = true;
         generator.Repair = false;
+        generator.interaction = null;
         surviverLookAt.LookAt = true;
     }
 
@@ -486,14 +487,14 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     IEnumerator GeneratorFailCor()
     {
+        generator.Fail = true;
         surviverAnimation.Play("Generator_Fail_FT", 0.1f, 0, true);
-        generator.Repair = false;
         while (true)
         {
             if (surviverAnimation.IsAnimEnd("Generator_Fail_FT")) break;
             yield return null;
         }
-        generator.Repair = true;
+        generator.Fail = false;
         surviverAnimation.Play("Generator_Idle_FT");
     }
 }

@@ -1,11 +1,8 @@
 using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class Generator : MonoBehaviourPun
+public class Generator : MonoBehaviourPun, IPunObservable
 {
     public bool repaierd = false;
     public Transform[] animPos;
@@ -21,7 +18,7 @@ public class Generator : MonoBehaviourPun
 
     public bool Repair { get { return repairing; } set {
             repairing = value;
-            if (repairing == false)
+            if (value == false)
             {
                 skillCheck.EndRandomSkillCheck();
                 RepairingSurvivor--;
@@ -46,13 +43,15 @@ public class Generator : MonoBehaviourPun
 
     [Header("플레이어 수")]
     int intSurvivor = 0;
-    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.MasterClient, value); } }
+
     [PunRPC]
     void SetIntSurvivor(int value)
     {
-        intSurvivor = value; SetMultiplayIncrease();
+        intSurvivor = value; 
+        SetMultiplayIncrease();
     }
-    public float multiplyIncrease = 1;
+    float multiplyIncrease = 0;
 
     void SetMultiplayIncrease()
     {
@@ -71,6 +70,14 @@ public class Generator : MonoBehaviourPun
                 multiplyIncrease = 2;
                 break;
         }
+    }
+
+    bool fail = false;
+    public bool Fail { get { return fail; } set { photonView.RPC(nameof(SetFail), RpcTarget.MasterClient, value); } }
+    [PunRPC]
+    void SetFail(bool value)
+    {
+        fail = value;
     }
 
     private void Start()
@@ -94,20 +101,25 @@ public class Generator : MonoBehaviourPun
         Transform sparkTrans = animPos[0].GetChild(0).transform;
         Instantiate(spark, sparkTrans.position, sparkTrans.rotation);
         failAudio.Play();
-        interaction.GeneratorFail();
+        if(interaction != null) interaction.GeneratorFail();
     }
+
 
     void GenRepair()
     {
-        if (repairing == false) return;
         if(Prograss >= maxPrograssTime)
         {
+            Repair = false;
             repaierd = true;
             WorldSound.Instacne.PlayGeneratorClear();
-            interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
             gameObject.layer = 0;
         }
-        Prograss += Time.deltaTime * multiplyIncrease;
+
+        if(photonView.IsMine && fail == false)
+        {
+            Prograss += Time.deltaTime * multiplyIncrease;
+        }
     }
 
     void UpdateAnim()
@@ -149,5 +161,17 @@ public class Generator : MonoBehaviourPun
         playerPos = position;
         System.Array.Sort(animPos, TransformListSortComparer);
         return animPos[0];
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(Prograss);
+        }
+        else
+        {
+            Prograss = (float)stream.ReceiveNext();
+        }
     }
 }

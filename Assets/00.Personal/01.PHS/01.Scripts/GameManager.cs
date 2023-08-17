@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     public static GameManager Instance;
 
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera survivorCamera1;
 
     public List<Transform> spawnPos;
+    public List<Transform> generatorSpawnPos;
 
     public string survivorName;
 
@@ -53,6 +54,14 @@ public class GameManager : MonoBehaviour
 
         //OnPhotonSerializeView »£√‚ ∫Ûµµ
         PhotonNetwork.SerializationRate = 60;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (Transform tr in generatorSpawnPos)
+            {
+                PhotonNetwork.Instantiate("Generator", tr.position, tr.rotation);
+            }
+        }
 
         GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
         survivorCamera1.Follow = survivor.transform.GetChild(0);

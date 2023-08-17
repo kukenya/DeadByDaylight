@@ -45,10 +45,13 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 continue;
             }
 
-            if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+            if (checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
             {
-                checkColliders[i] = null; 
-                continue;
+                if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+                {
+                    checkColliders[i] = null;
+                    continue;
+                }
             }
 
             if (health.State == SurviverHealth.HealthState.Hook)
