@@ -14,7 +14,7 @@ public class BigAxe : MonoBehaviour
     public Image bloodImage;        // 핏자국 이미지
     Color color;                    // 컬러 <- 알파값
 
-    public GameObject bloodEffectFactory;
+    // public GameObject bloodEffectFactory;
 
 
     private void Start()

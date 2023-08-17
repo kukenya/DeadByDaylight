@@ -108,9 +108,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         anim = GetComponent<Animator>();                    // 안나 Animator 컴포넌트
         cc = GetComponent<CharacterController>();           // 안나 Rigidbody 컴포넌트
 
-        anim.SetLayerWeight(1, 0);                          // 던지는 애니메이션 레이어
-        anim.SetLayerWeight(2, 0);                          // 들기 애니메이션 레이어
-        anim.SetLayerWeight(3, 0);                          // 일반 애니메이션 레이어
+        //anim.SetLayerWeight(1, 0);                          // 던지는 애니메이션 레이어
+        //anim.SetLayerWeight(2, 0);                          // 들기 애니메이션 레이어
+        //anim.SetLayerWeight(3, 0);                          // 일반 애니메이션 레이어
 
         throwUI.SetActive(false);                           // 도끼 던지기  UI 비활성화
         smallAxe.SetActive(false);                          // 왼손에 들고 있는 한손도끼 렌더러 비활성화
@@ -219,8 +219,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 위치 보정
             // 회전 보정
             // Animator2 에 Parameter 값을 전달
-            anim2.SetFloat("h", h);
-            anim2.SetFloat("v", v);
+            // anim2.SetFloat("h", h);
+            // anim2.SetFloat("v", v);
         }
         #endregion
 
@@ -324,7 +324,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
 
                 // 상태가 Down 이라면 canCarry 을 true 로 바꾼다.
-                if (survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Down)
+                if (survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
                 {
                     canCarry = true;
                 }
@@ -383,7 +383,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             }
 
             // Hook 갈고리 // 만약 내 상태가 Carry라면
-            if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().state == SurviverHealth.HealthState.Carrying)
+            if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Carrying)
             {
                 // canHook -> true
                 canHook = true;
@@ -567,17 +567,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             }
         }
         #endregion
-
-        #region 이동할 때 안할 때 레이어값 조정
-        //if (cc.velocity == Vector3.zero)
-        //{
-        //    anim.SetLayerWeight(3, 0f);
-        //}
-        //else
-        //{
-        //    anim.SetLayerWeight(3, 0);
-        //}
-        #endregion
     }
     #endregion
 
@@ -624,17 +613,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             //  최대힘으로 유지한다.
             chargingForce = maxAxePower;
         }
-        #endregion
-
-        #region 이동할 때 안할 때 레이어값 조정
-        //if (cc.velocity == Vector3.zero)
-        //{
-        //    anim.SetLayerWeight(1, 0);
-        //}
-        //else
-        //{
-        //    anim.SetLayerWeight(1, 1);
-        //}
         #endregion
     }
 
@@ -696,7 +674,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             anim.SetTrigger("Drop");
             cc.enabled = false;
             survivor.transform.parent = null;
-            survivor.GetComponent<SurviverHealth>().state = SurviverHealth.HealthState.Down;
+            survivor.GetComponent<SurviverHealth>().State = SurviverHealth.HealthState.Down;
         }
         #endregion
 
@@ -706,17 +684,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             anim.SetTrigger("CarryAttack");
             state = State.CarryAttack;
         }
-        #endregion
-
-        #region 이동할 때 안할 때 레이어값 조정
-        //if (cc.velocity == Vector3.zero)
-        //{
-        //    anim.SetLayerWeight(2, 0);
-        //}
-        //else
-        //{
-        //    anim.SetLayerWeight(2, 1);
-        //}
         #endregion
     }
 

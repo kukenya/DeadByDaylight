@@ -297,7 +297,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362176977}
-  m_LocalRotation: {x: 0.054538358, y: 0.007102251, z: -0.00038792565, w: 0.9984864}
+  m_LocalRotation: {x: 0.054538403, y: 0.007103012, z: -0.00038797414, w: 0.99848634}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -731,7 +731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808067351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000333786, y: 1.5, z: -2.500001}
+  m_LocalPosition: {x: 0, y: 1.5, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1192,7 +1192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031200275}
-  m_LocalRotation: {x: 0.082566015, y: 0.007088542, z: -0.0005872883, w: 0.9965603}
+  m_LocalRotation: {x: 0.08256603, y: 0.007089293, z: -0.00058735517, w: 0.9965602}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1915,7 +1915,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783715781}
-  m_LocalRotation: {x: 0.026643883, y: 0.0071102977, z: -0.00018951949, w: 0.9996197}
+  m_LocalRotation: {x: 0.026643906, y: 0.0071110576, z: -0.00018953842, w: 0.9996197}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2000,7 +2000,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917000577}
-  m_LocalRotation: {x: 0.054538354, y: 0.007102251, z: -0.00038793124, w: 0.9984864}
+  m_LocalRotation: {x: 0.05453839, y: 0.0071029947, z: -0.00038797318, w: 0.99848634}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2435,6 +2435,7 @@ GameObject:
   - component: {fileID: 5772585166750899922}
   - component: {fileID: 6648296248159742610}
   - component: {fileID: 808181213}
+  - component: {fileID: 1916263896749106196}
   m_Layer: 20
   m_Name: AnnaAnimation
   m_TagString: Untagged
@@ -2516,6 +2517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   anim: {fileID: 0}
+  anim2: {fileID: 0}
   cineCam: {fileID: 362176982}
   neck: {fileID: 503412822267233453}
   yVelocity: 0
@@ -2598,6 +2600,29 @@ PlayableDirector:
     value: {fileID: 808067352}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1916263896749106196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988447655953554967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5772585166750899922}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1103535126519011486
 GameObject:
   m_ObjectHideFlags: 0
@@ -6712,7 +6737,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   survivor: {fileID: 0}
   bloodImage: {fileID: 0}
-  bloodEffectFactory: {fileID: 0}
 --- !u!1 &8122455343958146012
 GameObject:
   m_ObjectHideFlags: 0
