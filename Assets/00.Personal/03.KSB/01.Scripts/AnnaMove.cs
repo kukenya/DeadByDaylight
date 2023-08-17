@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class AnnaMove : MonoBehaviour
+public class AnnaMove : MonoBehaviourPun, IPunObservable
 {
     #region 싱글톤 및 상태
     public static AnnaMove instance;
@@ -23,7 +24,8 @@ public class AnnaMove : MonoBehaviour
     #endregion
 
     #region 변수
-    public Animator anim;                          // 애니메이터
+    public Animator anim;                   // 살인마 애니메이터
+    public Animator anim2;                  // 생존자 용 살인마 애니메이터
     CharacterController cc;                 // 캐릭터 컨트롤러
     public Camera cineCam;                  // 시네머신 카메라 
     public Transform neck;
@@ -95,6 +97,8 @@ public class AnnaMove : MonoBehaviour
     // 애니메이션 실행 위치
     public Transform hookSpot;                         // 갈고리
 
+    float h;
+    float v;
 
     #endregion
 
@@ -157,53 +161,67 @@ public class AnnaMove : MonoBehaviour
         #endregion
 
         #region 이동
-        // 이동값 받아온다
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        // 나의 Anna 일 때
+        if (photonView.IsMine)
+        {
+            // 이동값 받아온다
+            h = Input.GetAxis("Horizontal");
+            v = Input.GetAxis("Vertical");
 
-        // 이동값을 애니메이션과 연결
-        anim.SetFloat("h", h);
-        anim.SetFloat("v", v);
+            // 이동값을 애니메이션과 연결
+            anim.SetFloat("h", h);
+            anim.SetFloat("v", v);
 
-        // 방향을 구한다
-        Vector3 dirH = transform.right * h;
-        Vector3 dirV = transform.forward * v;
-        Vector3 dir = dirH + dirV;
-        dir.Normalize();
+            // 방향을 구한다
+            Vector3 dirH = transform.right * h;
+            Vector3 dirV = transform.forward * v;
+            Vector3 dir = dirH + dirV;
+            dir.Normalize();
 
-        // 만약 차징 중이라면
-        if (isCharging == true)
-        {
-            // 차지속도(3.08)로 이동
-            currentSpeed = chargingSpeed;
-        }
-        else if (state == State.CoolTime)
-        {
-            currentSpeed = delaySpeed;
-        }
-        else if (state == State.NormalAttack)
-        {
-            currentSpeed = 6;
-        }
-        else if (isCharging == false || state != State.CoolTime || isThrowing == false)
-        {
-            // 그 이외는 일반속도(4.4)로 이동
-            currentSpeed = normalSpeed;
-        }
+            // 만약 차징 중이라면
+            if (isCharging == true)
+            {
+                // 차지속도(3.08)로 이동
+                currentSpeed = chargingSpeed;
+            }
+            else if (state == State.CoolTime)
+            {
+                currentSpeed = delaySpeed;
+            }
+            else if (state == State.NormalAttack)
+            {
+                currentSpeed = 6;
+            }
+            else if (isCharging == false || state != State.CoolTime || isThrowing == false)
+            {
+                // 그 이외는 일반속도(4.4)로 이동
+                currentSpeed = normalSpeed;
+            }
 
-        if (cc.isGrounded == false)
-        {
-            yVelocity += gravity;
+            if (cc.isGrounded == false)
+            {
+                yVelocity += gravity;
+            }
+            else
+            {
+                yVelocity = 0;
+            }
+
+            // 이동한다
+            Vector3 velocity = dir * currentSpeed;
+            velocity.y = yVelocity;
+            cc.Move(velocity * Time.deltaTime);
         }
+        
+        // 나의 Anna 가 아닐 때
         else
         {
-            yVelocity = 0;
+            // 위치 보정
+            // 회전 보정
+            // Animator2 에 Parameter 값을 전달
+            anim2.SetFloat("h", h);
+            anim2.SetFloat("v", v);
         }
-
-        // 이동한다
-        Vector3 velocity = dir * currentSpeed;
-        velocity.y = yVelocity;
-        cc.Move(velocity * Time.deltaTime);
         #endregion
 
         // 상호작용을 할 때는 상호작용 애니메이션이 시작하는 위치로 이동을 해야한다.
@@ -786,6 +804,37 @@ public class AnnaMove : MonoBehaviour
     public void OffSmallAxe()   // 도끼 비활성화
     {
         smallAxe.SetActive(false);
+    }
+    #endregion
+
+
+
+    #region Pun
+    [PunRPC]
+    void SetTriggerRpc(string parameter)        // 애니메이션 SetTrigger
+    {
+        anim2.SetTrigger(parameter);
+    }
+
+    //[PunRPC]
+    //void SetBoolTrueRpc(string parameter)       // 애니메이션 SetBool -> true
+    //{
+    //    anim2.SetBool(parameter, true);
+    //}
+
+    //[PunRPC]
+    //void SetBoolFalseRpc(string parameter)      // 애니메이션 SetBool -> false
+    //{
+    //    anim2.SetBool(parameter, false);
+    //}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 나의 Anna 라면
+
+
+        // 나의 Anna 가 아니라면
+
     }
     #endregion
 }
