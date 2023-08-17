@@ -17,17 +17,20 @@ public class Generator : MonoBehaviourPun, IPunObservable
     bool repairing = false;
 
     public bool Repair { get { return repairing; } set {
-            repairing = value;
-            if (value == false)
+            
+            if (value == false && repairing != value)
             {
                 skillCheck.EndRandomSkillCheck();
                 RepairingSurvivor--;
+                repairing = value;
             }
-            else
+            else if(value == true && repairing != value)
             {
                 skillCheck.StartRandomSkillCheck(GetSkillCheckValue);
                 RepairingSurvivor++;
+                repairing = value;
             }
+            
         } 
     }
 
@@ -43,7 +46,21 @@ public class Generator : MonoBehaviourPun, IPunObservable
 
     [Header("플레이어 수")]
     int intSurvivor = 0;
-    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.MasterClient, value); } }
+    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+
+    [PunRPC]
+    void SurvivorIncrease()
+    {
+        intSurvivor++;
+        SetMultiplayIncrease();
+    }
+
+    [PunRPC]
+    void SurvivorDecrease()
+    {
+        intSurvivor--;
+        SetMultiplayIncrease();
+    }
 
     [PunRPC]
     void SetIntSurvivor(int value)
@@ -73,7 +90,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     }
 
     bool fail = false;
-    public bool Fail { get { return fail; } set { photonView.RPC(nameof(SetFail), RpcTarget.MasterClient, value); } }
+    public bool Fail { get { return fail; } set { photonView.RPC(nameof(SetFail), RpcTarget.All, value); } }
     [PunRPC]
     void SetFail(bool value)
     {
