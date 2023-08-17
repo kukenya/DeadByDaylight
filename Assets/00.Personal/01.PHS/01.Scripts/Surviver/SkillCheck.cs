@@ -39,7 +39,10 @@ public class SkillCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Check();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Check();
+        }
     }
 
     public void StartRandomSkillCheck(System.Action<int> action = null, float checkTime = 1)
@@ -128,30 +131,27 @@ public class SkillCheck : MonoBehaviour
     // 23
     public void Check()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (skillCheckCor == null) return;
+        if (skillCheckCor == null) return;
 
-            skillCheck.SetActive(false);
-            StopCoroutine(skillCheckCor);
-            skillCheckCor = null;
-            if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
+        skillCheck.SetActive(false);
+        StopCoroutine(skillCheckCor);
+        skillCheckCor = null;
+        if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
+        {
+            if (checkAngle < maxHardCheckAngle && checkAngle > minHardCheckAngle)
             {
-                if (checkAngle < maxHardCheckAngle && checkAngle > minHardCheckAngle)
-                {
-                    action?.Invoke(2);
-                    AudioPlay(hardCheckSound);
-                }
-                else
-                {
-                    action?.Invoke(1);
-                    AudioPlay(normalCheckSound);
-                }
+                action?.Invoke(2);
+                AudioPlay(hardCheckSound);
             }
             else
             {
-                action?.Invoke(0);
+                action?.Invoke(1);
+                AudioPlay(normalCheckSound);
             }
+        }
+        else
+        {
+            action?.Invoke(0);
         }
     }
 
@@ -175,8 +175,8 @@ public class SkillCheck : MonoBehaviour
             checkAngle = Mathf.Lerp(0, 360, currentTime / pointerRotationTime);
             pointer.transform.eulerAngles = new Vector3 (0, 0, -checkAngle);
 
-            yield return null;
             if(currentTime >= pointerRotationTime) break;
+            yield return null;
         }
         Check();
     }

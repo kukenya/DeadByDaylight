@@ -53,6 +53,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor++;
         SetMultiplayIncrease();
+        
     }
 
     [PunRPC]
@@ -60,6 +61,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor--;
         SetMultiplayIncrease();
+        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
 
     [PunRPC]
@@ -67,6 +69,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor = value; 
         SetMultiplayIncrease();
+        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
     float multiplyIncrease = 0;
 
@@ -128,6 +131,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
         {
             Repair = false;
             repaierd = true;
+            GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayGeneratorClear();
             if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
             gameObject.layer = 0;

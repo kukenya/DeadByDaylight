@@ -12,6 +12,7 @@ public class SurviverHealth : MonoBehaviourPun
     SurvivorInteraction interaction;
     SurviverSound surviverSound;
     Animator anim;
+    SurvivorShader shader;
 
     public Transform rootCameraPosition;
 
@@ -129,6 +130,7 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeDown()
     {
         surviverLookAt.LookAt = false;
+        shader.OnRedXray();
         State = HealthState.Down;
         controller.Crawl = true;
         surviverLookAt.isLookAt = false;

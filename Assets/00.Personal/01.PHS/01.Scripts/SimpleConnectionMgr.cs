@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
+using UnityEditor.Build.Content;
 
 public class SimpleConnectionMgr : MonoBehaviourPunCallbacks
 {
@@ -76,7 +76,15 @@ public class SimpleConnectionMgr : MonoBehaviourPunCallbacks
         print(nameof(OnJoinedRoom));
         //Game Scene 으로 이동
         PhotonNetwork.LoadLevel(1);
+        StartCoroutine(LoadScene());
     }
 
-
+    IEnumerator LoadScene()
+    {
+        while (true)
+        {
+            print(PhotonNetwork.LevelLoadingProgress);
+            yield return null;
+        }
+    }
 }

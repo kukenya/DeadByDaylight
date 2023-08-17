@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviourPun
     public TextMeshProUGUI subText;
     public Image lineImage;
 
+    public TextMeshProUGUI generatorText;
+    int maxGenerator = 4;
+    public int Generator { get { return maxGenerator; } set { maxGenerator = value; generatorText.text = maxGenerator.ToString(); } }
+
     public CinemachineVirtualCamera survivorCamera1;
 
     public List<Transform> spawnPos;
@@ -67,10 +71,12 @@ public class GameManager : MonoBehaviourPun
         survivorCamera1.Follow = survivor.transform.GetChild(0);
 
         OffCursor();
+        generatorText.text = maxGenerator.ToString();
         yield return new WaitForSeconds(textFadeOffset);
         titleText.DOFade(0, textFadeTime);
         subText.DOFade(0, textFadeTime);
         lineImage.DOFade(0, textFadeTime);
+        generatorText.DOFade(1, textFadeTime);
     }
 
     // Update is called once per frame

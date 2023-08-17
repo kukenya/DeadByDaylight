@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SurvivorShader : MonoBehaviour
 {
+    public GameObject go;
+
     public void OnRedXray()
     {
-        gameObject.layer = 9;
+        go.layer = 9;
     }
 
     public void OffShader()
     {
-        gameObject.layer = 6;
+        go.layer = 6;
     }
 }

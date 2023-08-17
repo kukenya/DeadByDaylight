@@ -10,14 +10,16 @@ Material:
   m_Name: SeeThroughExample
   m_Shader: {fileID: -6465566751694194690, guid: 53608af8f1e22e740b9d4ac1d8f09324, type: 3}
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHATEST_ON
+  - _DISABLE_SSR
+  - _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2994
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
@@ -26,6 +28,7 @@ Material:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
+  - RayTracingPrepass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -44,7 +47,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Vector1_26270EFD: 0.5
-    - Vector1_7F93466: 2
+    - Vector1_7F93466: 1.78
     - Vector1_8A933A61: 1
     - _AddPrecomputedVelocity: 0
     - _Alpha: 1
@@ -68,7 +71,10 @@ Material:
     - _Offst: 0
     - _OpaqueCullMode: 2
     - _Range: 111
+    - _RayTracing: 0
     - _ReceivesSSR: 0
+    - _ReceivesSSRTransparent: 0
+    - _RefractionModel: 0
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _SrcBlend: 1
@@ -82,12 +88,13 @@ Material:
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskGBuffer: 14
     - _StencilWriteMaskMV: 42
+    - _SupportDecals: 1
     - _SurfaceType: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
-    - _TransparentSortPriority: 0
+    - _TransparentSortPriority: -6
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 1
     - _UseShadowThreshold: 0
@@ -97,7 +104,7 @@ Material:
     - _ZTestTransparent: 5
     - _ZWrite: 1
     m_Colors:
-    - Color_91F87372: {r: 1, g: 0.12641507, b: 0.12641507, a: 1}
+    - Color_91F87372: {r: 1, g: 0, b: 0, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}
