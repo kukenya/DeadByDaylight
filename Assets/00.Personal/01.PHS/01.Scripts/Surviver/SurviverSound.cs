@@ -13,6 +13,9 @@ public class SurviverSound : MonoBehaviour
     public AudioClip[] jumpWindowSounds;
 
     public AudioSource[] footStep;
+    public AudioClip[] sprintSound;
+
+    SurviverController controller;
 
     public void PlayFootStepLT()
     {
@@ -41,5 +44,27 @@ public class SurviverSound : MonoBehaviour
     {
         windowSource.clip = jumpWindowSounds[Random.Range(0, jumpWindowSounds.Length)];
         windowSource.Play();
+    }
+
+    private void Start()
+    {
+        controller = GetComponent<SurviverController>();
+    }
+
+    private void Update()
+    {
+        SprintSound();
+    }
+
+    void SprintSound()
+    {
+        if (controller.enabled == false) return;
+
+        if (controller.sprintTime >= controller.maxSprintTime)
+        {
+            if (audioSource.isPlaying) return;
+            audioSource.clip = sprintSound[Random.Range(0, sprintSound.Length)];
+            audioSource.Play();
+        }
     }
 }

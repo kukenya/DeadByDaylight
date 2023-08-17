@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,10 +39,7 @@ public class SkillCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Check();
-        }
+        Check();
     }
 
     public void StartRandomSkillCheck(System.Action<int> action = null, float checkTime = 1)
@@ -64,13 +62,22 @@ public class SkillCheck : MonoBehaviour
         skillCheckSound.Play();
     }
 
+    float delayTime;
+
     public IEnumerator RandomSkillCheck(float checkTime)
     {
         while (true)
         {
             yield return new WaitForSeconds(checkTime);
-            if(Random.Range(0, 5) == 1)
+            if (delayTime > 0)
             {
+                delayTime--;
+                continue;
+            }
+
+            if (Random.Range(0, 5) == 1)
+            {
+                delayTime = 3;
                 AudioPlay(startSound);
                 yield return new WaitForSeconds(0.2f);
                 StartSKillCheck();
@@ -87,41 +94,64 @@ public class SkillCheck : MonoBehaviour
         }
 
         GameObject obj = skillCheckRange[Random.Range(0, skillCheckRange.Length)];
+
+        float offsetAngle = Random.Range(200, 360);
+        print(offsetAngle);
+        obj.transform.parent.rotation = Quaternion.Euler(0, 0, -offsetAngle);
+
         obj.SetActive(true);
         SkillCheckRange range = obj.GetComponent<SkillCheckRange>();
 
-        minCheckAngle = range.normalCheckStartPos;
-        maxCheckAngle = range.normalCheckEndPos;
-        minHardCheckAngle = range.hardCheckStartPos;
-        maxHardCheckAngle = range.hardCheckEndPos;
+        minCheckAngle = ClampAngle(range.normalCheckStartPos + offsetAngle);
+        maxCheckAngle = ClampAngle(range.normalCheckEndPos + offsetAngle);
+        minHardCheckAngle = ClampAngle(range.hardCheckStartPos + offsetAngle);
+        maxHardCheckAngle = ClampAngle(range.hardCheckEndPos + offsetAngle);
 
         skillCheck.SetActive(true);
         skillCheckCor = StartCoroutine(PointerRotation());
     }
+
+    float ClampAngle(float angle)
+    {
+        if(angle > 360)
+        {
+            angle -= 360;
+        }
+        else if(angle < 0)
+        {
+            angle += 360;
+        }
+
+        return angle;
+    }
+
     // 23
     public void Check()
     {
-        if(skillCheckCor == null) return;
-
-        skillCheck.SetActive(false);
-        StopCoroutine(skillCheckCor);
-        skillCheckCor = null;
-        if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(checkAngle < maxHardCheckAngle &&  checkAngle > minHardCheckAngle) 
+            if (skillCheckCor == null) return;
+
+            skillCheck.SetActive(false);
+            StopCoroutine(skillCheckCor);
+            skillCheckCor = null;
+            if (checkAngle < maxCheckAngle && checkAngle > minCheckAngle)
             {
-                action?.Invoke(2);
-                AudioPlay(hardCheckSound);
+                if (checkAngle < maxHardCheckAngle && checkAngle > minHardCheckAngle)
+                {
+                    action?.Invoke(2);
+                    AudioPlay(hardCheckSound);
+                }
+                else
+                {
+                    action?.Invoke(1);
+                    AudioPlay(normalCheckSound);
+                }
             }
             else
             {
-                action?.Invoke(1);
-                AudioPlay(normalCheckSound);
+                action?.Invoke(0);
             }
-        }
-        else
-        {
-            action?.Invoke(0);
         }
     }
 

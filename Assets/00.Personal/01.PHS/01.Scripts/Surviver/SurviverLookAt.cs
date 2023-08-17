@@ -1,10 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class SurviverLookAt : MonoBehaviour
+public class SurviverLookAt : MonoBehaviourPun
 {
     public Transform rootCamTrans;
 
@@ -13,17 +12,23 @@ public class SurviverLookAt : MonoBehaviour
     public bool LookAt { get { return isLookAt; }
         set
         {
-            if (value == true) 
-            {
-                anim.SetLayerWeight(1, 0);
-                isLookAt = value;
-            }
-            else
-            {
-                anim.SetLayerWeight(1, 0);
-                isLookAt = value;
-            }
+            SetLookAt(value);
         } 
+    }
+
+    [PunRPC]
+    void SetLookAt(bool value)
+    {
+        if (value == true)
+        {
+            anim.SetLayerWeight(1, 0);
+            isLookAt = value;
+        }
+        else
+        {
+            anim.SetLayerWeight(1, 0);
+            isLookAt = value;
+        }
     }
 
     string currentState = null;
@@ -45,14 +50,16 @@ public class SurviverLookAt : MonoBehaviour
     {
         if (isLookAt == false) return;
 
+        if(photonView.IsMine == false) { return; }
+
         float angle = rootCamTrans.localRotation.eulerAngles.y;
 
-        LookAtLayer(angle);
+        photonView.RPC(nameof(LookAtLayer), RpcTarget.All, angle);
 
 
         if (angle < 170)
         {
-            if(surviverAnimation.Pose == SurviverAnimation.PoseState.Standing)
+            if (surviverAnimation.Pose == SurviverAnimation.PoseState.Standing)
             {
                 if (surviverAnimation.Injuerd == false) Play("StandRight");
                 else Play("Inj_StandRight");
@@ -63,7 +70,7 @@ public class SurviverLookAt : MonoBehaviour
                 else Play("Inj_CrouchRight");
             }
         }
-        else if(angle >= 190)
+        else if (angle >= 190)
         {
             if (surviverAnimation.Pose == SurviverAnimation.PoseState.Standing)
             {
@@ -78,12 +85,16 @@ public class SurviverLookAt : MonoBehaviour
         }
     }
 
+
+    [PunRPC]
     void LookAtLayer(float angle)
     {
         if(angle > 180)
         {
             angle = 360 - angle;
         }
+
+        if(anim == null) { return; }
         anim.SetLayerWeight(1, angle / 100);
     }
 
@@ -106,12 +117,19 @@ public class SurviverLookAt : MonoBehaviour
 
 
         anim.enabled = true;
-        anim.CrossFadeInFixedTime(state, time, 1);
-
+        photonView.RPC(nameof(AnimPlay), RpcTarget.All, state, time);
 
         if (overplay) currentState = "";
         else currentState = state;
     }
+
+    [PunRPC]
+    void AnimPlay(string state, float time)
+    {
+        if(anim == null) { return; }
+        anim.CrossFadeInFixedTime(state, time, 1);
+    }
+
     public bool CheckAnimExists(string animName)
     {
         if (animName.Length <= 0 || animName == null)

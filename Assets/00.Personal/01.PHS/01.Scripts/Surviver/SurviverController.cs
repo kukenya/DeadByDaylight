@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening; //import
-using UnityEditor.SceneTemplate;
-using System;
-using UnityEditor.Experimental.GraphView;
+using Photon.Pun;
 
-public class SurviverController : MonoBehaviour
+public class SurviverController : MonoBehaviourPun, IPunObservable
 {
     [Header("플레이어")]
     public float walkSpeed = 2.26f;
@@ -59,6 +57,9 @@ public class SurviverController : MonoBehaviour
     public bool Sprint { get { return isSprint; } set { isSprint = value; } }
     public bool Crawl { get { return isCrawl; }  set { isCrawl = value; } }
 
+    public float sprintTime;
+    public float maxSprintTime = 1;
+
     // �ִϸ��̼� �Ŵ���
     SurviverAnimation surviverAnimation;
     private string waitAnimState;
@@ -71,10 +72,9 @@ public class SurviverController : MonoBehaviour
 
     void Start()
     {
-        mainCamera = Camera.main;
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         surviverAnimation = GetComponent<SurviverAnimation>();
-        //this.enabled = false;
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -82,12 +82,12 @@ public class SurviverController : MonoBehaviour
     {
         GroundedCheck();
         CameraStopCheck();
-        // Move();
+        Move();
     }
 
     void CameraStopCheck()
     {
-        Moving = mainCamera.velocity == Vector3.zero ? false : true;
+        Moving = currentSpeed == 0 ? false : true;
     }
 
     public float rotationSpeed;
@@ -100,101 +100,118 @@ public class SurviverController : MonoBehaviour
             if (value == false)
             {
                 controller.enabled = true;
-                surviverAnimation.AnimationChange();
+                surviverAnimation.photonView.RPC("AnimationChange", RpcTarget.All);
             }
             else
             {
                 controller.enabled = false;
             }
-        } }
+        }
+    }
+
+    Vector3 receivePos;
+    Quaternion receiveRot;
+    public float lerpSpeed = 5;
+
+    public bool anim = false;
     private void Move()
     {
-        if(banMove) 
+        if (photonView.IsMine)
         {
-            return;
-        }
+            if (banMove) return;
 
-        // ���� �ӷ��� �޸��� ��ư�� ���������� �ȴ������� ������.
-        isSprint = Input.GetKey(KeyCode.LeftShift) ? true : false;
-        isCrouching = Input.GetKey(KeyCode.LeftControl) ? true : false;
+            // ���� �ӷ��� �޸��� ��ư�� ���������� �ȴ������� ������.
+            isSprint = Input.GetKey(KeyCode.LeftShift) ? true : false;
+            isCrouching = Input.GetKey(KeyCode.LeftControl) ? true : false;
 
-        if (surviverAnimation.Pose != SurviverAnimation.PoseState.Crawl)
-        {
-            surviverAnimation.Pose = isCrouching ? SurviverAnimation.PoseState.Crouching : SurviverAnimation.PoseState.Standing;
-        }
+            sprintTime = Mathf.Clamp(isSprint ? sprintTime + Time.deltaTime : 0, 0, maxSprintTime);
 
-        deltaAngle = Mathf.DeltaAngle(transform.eulerAngles.y, targetRotation);
-
-        targetSpeed = GetTargetSpeed();
-
-        float inputHorizontal = Input.GetAxisRaw("Horizontal");
-        float inputVertical = Input.GetAxisRaw("Vertical");
-
-        // ��ǲ�� ������ ���� �ӷ��� 0���� �����.
-        if (inputHorizontal == 0 && inputVertical == 0)
-        {
-            targetSpeed = 0.0f;
-        }
-        //speed = Mathf.MoveTowards(speed, targetSpeed, Time.deltaTime * speedChangeRate);
-
-        float speedOffset = 0.1f;
-
-
-        // �����϶� ���Ӱ� ��������
-        if (currentSpeed < targetSpeed - speedOffset ||
-           currentSpeed > targetSpeed + speedOffset)
-        {
-            speed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedChangeRate);
-
-            // �Ҽ��� 3�ڸ������� �ڸ���
-            speed = Mathf.Round(speed * 1000f) / 1000f;
-        }
-        else
-        {
-            speed = targetSpeed;
-        }
-        speed = Mathf.SmoothDamp(speed, targetSpeed, ref moveVelocity, speedChangeRate);
-
-
-        ////�ִϸ��̼ǿ� �ӵ��� �´� �ε巯�� �ֱ�
-
-        // �Էµ� ������ ����ȭ �Ѵ�.
-        Vector3 inputDirection = new Vector3(inputHorizontal, 0.0f, inputVertical).normalized;
-
-        // �����϶� ������ �ε巴�� �Ѱ��ش�.
-        if (inputDirection != Vector3.zero)
-        {
-
-            if (isSprint)
+            if (surviverAnimation.Pose != SurviverAnimation.PoseState.Crawl)
             {
-                surviverAnimation.mState = SurviverAnimation.MoveState.Sprinting;
+                surviverAnimation.Pose = isCrouching ? SurviverAnimation.PoseState.Crouching : SurviverAnimation.PoseState.Standing;
+            }
+
+            deltaAngle = Mathf.DeltaAngle(transform.eulerAngles.y, targetRotation);
+
+            targetSpeed = GetTargetSpeed();
+
+            float inputHorizontal = Input.GetAxisRaw("Horizontal");
+            float inputVertical = Input.GetAxisRaw("Vertical");
+
+            // ��ǲ�� ������ ���� �ӷ��� 0���� �����.
+            if (inputHorizontal == 0 && inputVertical == 0)
+            {
+                targetSpeed = 0.0f;
+            }
+            //speed = Mathf.MoveTowards(speed, targetSpeed, Time.deltaTime * speedChangeRate);
+
+            float speedOffset = 0.1f;
+
+
+            // �����϶� ���Ӱ� ��������
+            if (currentSpeed < targetSpeed - speedOffset ||
+               currentSpeed > targetSpeed + speedOffset)
+            {
+                speed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedChangeRate);
+
+                // �Ҽ��� 3�ڸ������� �ڸ���
+                speed = Mathf.Round(speed * 1000f) / 1000f;
             }
             else
             {
-                surviverAnimation.mState = SurviverAnimation.MoveState.Walking;
+                speed = targetSpeed;
             }
-            targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                mainCamera.transform.eulerAngles.y;
+            speed = Mathf.SmoothDamp(speed, targetSpeed, ref moveVelocity, speedChangeRate);
 
-            Vector3 rotation = Vector3.MoveTowards(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, transform.eulerAngles.y + deltaAngle, 0), rotationSpeed * Time.deltaTime);
-            //isRotating = rotation == new Vector3(0, transform.eulerAngles.y + deltaAngle, 0) ? false : true;
 
-            // ���� ī�޶� �����ǿ� �°� ȸ���Ѵ�. (���� ī�޶� �ƴҶ���)
-            transform.rotation = Quaternion.Euler(rotation);
+            ////�ִϸ��̼ǿ� �ӵ��� �´� �ε巯�� �ֱ�
+
+            // �Էµ� ������ ����ȭ �Ѵ�.
+            Vector3 inputDirection = new Vector3(inputHorizontal, 0.0f, inputVertical).normalized;
+
+            // �����϶� ������ �ε巴�� �Ѱ��ش�.
+            if (inputDirection != Vector3.zero)
+            {
+
+                if (isSprint)
+                {
+                    surviverAnimation.mState = SurviverAnimation.MoveState.Sprinting;
+                }
+                else
+                {
+                    surviverAnimation.mState = SurviverAnimation.MoveState.Walking;
+                }
+                targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                    mainCamera.transform.eulerAngles.y;
+
+                Vector3 rotation = Vector3.MoveTowards(new Vector3(0, transform.eulerAngles.y, 0), new Vector3(0, transform.eulerAngles.y + deltaAngle, 0), rotationSpeed * Time.deltaTime);
+                //isRotating = rotation == new Vector3(0, transform.eulerAngles.y + deltaAngle, 0) ? false : true;
+
+                // ���� ī�޶� �����ǿ� �°� ȸ���Ѵ�. (���� ī�޶� �ƴҶ���)
+                transform.rotation = Quaternion.Euler(rotation);
+            }
+            else
+            {
+                surviverAnimation.mState = SurviverAnimation.MoveState.Idle;
+            }
+
+            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+            currentSpeed = speed;
+
+
+            verticalVelocity = Grounded ? 0f : -2f;
+            // ���������� �÷��̾ �����δ�.
+            controller.Move(targetDirection * speed * Time.deltaTime + new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+
         }
         else
         {
-            surviverAnimation.mState = SurviverAnimation.MoveState.Idle;
+            
+            ////회전 보정
+            //transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+            ////위치 보정
+            //transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
         }
-
-        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
-        currentSpeed = speed;
-
-
-        verticalVelocity = Grounded ? 0f : -2f;
-        // ���������� �÷��̾ �����δ�.
-        controller.Move(targetDirection * speed * Time.deltaTime + new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
-
     }
 
     float GetTargetSpeed()
@@ -220,6 +237,13 @@ public class SurviverController : MonoBehaviour
     private void LateUpdate()
     {
         CameraRotation();
+        if (photonView.IsMine == false)
+        {
+            //회전 보정
+            transform.rotation = receiveRot;
+            //위치 보정
+            transform.position = receivePos;
+        }
     }
 
     public float cameraDistMultiply = 0.1f;
@@ -260,21 +284,36 @@ public class SurviverController : MonoBehaviour
         if (angle > 360f) angle -= 360f;
         return Mathf.Clamp(angle, min, max);
     }
+    
 
-    bool WaitAnim()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(waitAnimState == null)
+        //내 Player 라면
+        if (stream.IsWriting)
         {
-            return true;
+            //나의 위치값을 보낸다.
+            stream.SendNext(transform.position);
+            //나의 회전값을 보낸다.
+            stream.SendNext(transform.rotation);
+            ////h 값 보낸다.
+            //stream.SendNext(h);
+            ////v 값 보낸다.
+            //stream.SendNext(v);
         }
-        else if(waitAnimState != null)
+        //내 Player 아니라면
+        else
         {
-            if (surviverAnimation.IsAnimEnd(waitAnimState))
+            //위치값을 받자.
+            if(anim == false)
             {
-                waitAnimState = null;
-                return true;
+                receivePos = (Vector3)stream.ReceiveNext();
             }
+            //회전값을 받자.
+            receiveRot = (Quaternion)stream.ReceiveNext();
+            //h 값 받자.
+            //h = (float)stream.ReceiveNext();
+            //v 값 받자.
+            //v = (float)stream.ReceiveNext();
         }
-        return false;
     }
 }

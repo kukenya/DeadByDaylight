@@ -1,9 +1,10 @@
 using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurviverAutoMove : MonoBehaviour
+public class SurviverAutoMove : MonoBehaviourPun
 {
     public float autoMoveStopDist = 0.2f;
     public float autoMoveSpeed = 8;
@@ -63,7 +64,7 @@ public class SurviverAutoMove : MonoBehaviour
         surviverController.BanMove = true;
         while (true)
         {
-            float targetAngle = reverse == false ? targetTrans.eulerAngles.y : -targetTrans.eulerAngles.y;
+            float targetAngle = reverse == false ? targetTrans.eulerAngles.y : targetTrans.eulerAngles.y - 180;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
             if (Vector3.Distance(
                 new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
@@ -77,5 +78,29 @@ public class SurviverAutoMove : MonoBehaviour
             yield return null;
         }
         action?.Invoke();
+    }
+
+    public float friendHealAutoStopDist = 0.5f;
+
+    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, SurvivorInteraction survivorInteraction)
+    {
+        controller.enabled = false;
+        surviverController.BanMove = true;
+        while (true)
+        {
+            float targetAngle = targetTrans.eulerAngles.y;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+            if (Vector3.Distance(
+                new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
+                new Vector3(transform.position.x, 0, transform.position.z)) < friendHealAutoStopDist) break;
+
+            transform.position = Vector3.MoveTowards(
+                   transform.position,
+                   new Vector3(targetTrans.position.x, transform.position.y, targetTrans.position.z),
+                   Time.deltaTime * autoMoveSpeed);
+
+            yield return null;
+        }
+        action?.Invoke(survivorInteraction);
     }
 }
