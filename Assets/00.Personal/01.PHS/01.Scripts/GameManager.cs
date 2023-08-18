@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     public List<Transform> spawnPos;
 
     public string survivorName;
-    public string killerName;
 
     public bool multiplay = false;
 
@@ -56,15 +55,13 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.SerializationRate = 60;
 
         GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
-        //survivorCamera1.Follow = survivor.transform.GetChild(0);
-
-        PhotonNetwork.Instantiate(killerName, spawnPos[1].position, Quaternion.identity);
+        survivorCamera1.Follow = survivor.transform.GetChild(0);
 
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);
-        //titleText.DOFade(0, textFadeTime);
-        //subText.DOFade(0, textFadeTime);
-        //lineImage.DOFade(0, textFadeTime);
+        titleText.DOFade(0, textFadeTime);
+        subText.DOFade(0, textFadeTime);
+        lineImage.DOFade(0, textFadeTime);
     }
 
     // Update is called once per frame

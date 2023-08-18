@@ -24,11 +24,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     #endregion
 
     #region 변수
-    Animator anim;                   // 살인마 애니메이터
-    // public Animator anim2;                  // 생존자 용 살인마 애니메이터
+    Animator anim;                          // 살인마 애니메이터
     CharacterController cc;                 // 캐릭터 컨트롤러
     public Camera cineCam;                  // 시네머신 카메라 
-    public Transform neck;
+    public Transform camera;                // 플레이 카메라
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -71,16 +70,16 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public float maxAxePower = 40;          // 한손도끼 던지는 힘 최대값
 
     // bool
-    public bool isNormalAttack;                     // 일반공격 중인가?
-    bool isCharging;                                // 차징 중인가?
-    bool isCanceled;                                // 차징을 취소했는가?
-    bool isThrowing;                                // 손도끼를 던졌는가?
-    bool isStunned;                                 // 스턴 당했는가?
-    public bool canCarry;                           // 생존자를 들 수 있는가?
-    public bool canDestroyGenerator;                // 발전기를 부술 수 있는가?
-    public bool canHook;                            // 갈고리에 걸 수 있는가?
-    public bool canReLoad;                          // 한 손 도끼를 재충전 할 수 있는가?
-    public bool canDestroyPallet;                   // 내려간 판자를 부술 수 있는가?
+    public bool isNormalAttack;             // 일반공격 중인가?
+    bool isCharging;                        // 차징 중인가?
+    bool isCanceled;                        // 차징을 취소했는가?
+    bool isThrowing;                        // 손도끼를 던졌는가?
+    bool isStunned;                         // 스턴 당했는가?
+    public bool canCarry;                   // 생존자를 들 수 있는가?
+    public bool canDestroyGenerator;        // 발전기를 부술 수 있는가?
+    public bool canHook;                    // 갈고리에 걸 수 있는가?
+    public bool canReLoad;                  // 한 손 도끼를 재충전 할 수 있는가?
+    public bool canDestroyPallet;           // 내려간 판자를 부술 수 있는가?
     public bool canRotate;
 
     // UI
@@ -103,43 +102,48 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     float h;
     float v;
-
     #endregion
+
+    
 
     #region Start & Update
     void Start()
     {
+        // 내가 만든 살인마일 경우에만!!
         if (photonView.IsMine == true)
         {
-            redlight.enabled = false;
-            anim = GetComponent<Animator>();                    // 안나 Animator 컴포넌트
-                                                                //anim.runtimeAnimatorController =
-            cc = GetComponent<CharacterController>();           // 안나 Rigidbody 컴포넌트
+            redlight.enabled = false;                               // 안나 redlight 꺼놓는다.
 
-            anim.SetLayerWeight(1, 0);                          // 던지는 애니메이션 레이어
-            anim.SetLayerWeight(2, 0);                          // 들기 애니메이션 레이어
-            anim.SetLayerWeight(3, 0);                          // 일반 애니메이션 레이어
+            anim = GetComponent<Animator>();                        // 안나 Animator 컴포넌트 가져온다.
+
+            camera.gameObject.SetActive(true);                      // 안나 MainCamera 활성화
+
+            cc = GetComponent<CharacterController>();               // 안나 Character Controller 컴포넌트 가져온다.
+
+            anim.SetLayerWeight(1, 0);                              // 던지는 애니메이션 레이어를 설정한다.
+            anim.SetLayerWeight(2, 0);                              // 들기   애니메이션 레이어를 설정한다.
+            anim.SetLayerWeight(3, 0);                              // 일반   애니메이션 레이어를 설정한다.
 
             goGeneratorCount = GameObject.Find("TextGenerator");    // TextGenerator GameObject 찾는다.
-            TextMeshProUGUI generatorCount =                        // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.
-                goGeneratorCount.GetComponent<TextMeshProUGUI>();
+            generatorCount
+                = goGeneratorCount.GetComponent<TextMeshProUGUI>(); // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.
 
-            goAxeCount = GameObject.Find("TextAxe");            // TextAxe GameObject  를 찾는다.
-            TextMeshProUGUI axeCount =                          // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.
-                goAxeCount.GetComponent<TextMeshProUGUI>();
+            goAxeCount = GameObject.Find("TextAxe");                // TextAxe GameObject  를 찾는다.
+            axeCount = goAxeCount.GetComponent<TextMeshProUGUI>();  // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.
 
-            currentAxeCount = maxAxeCount;                      // 시작할 때 도끼 개수를 최대(5개)로 소지한다.
+            currentAxeCount = maxAxeCount;                          // 시작할 때 도끼 개수를 최대(5개)로 소지한다.
 
-            axeCount.text = Convert.ToString(maxAxeCount);      // UI 로 나타낸다.
+            axeCount.text = Convert.ToString(currentAxeCount);      // UI 로 나타낸다.
 
-            throwUI = GameObject.Find("ThrowUI");               // 도끼 던지기 UI 찾는다.
-            throwUI.SetActive(false);
+            throwUI = GameObject.Find("ThrowUI");                   // 도끼 던지기 UI 찾는다.
 
-            smallAxe.SetActive(false);                          // 왼손에 들고 있는 한손도끼 렌더러 비활성화
+            throwUI.SetActive(false);                               // 도끼 던지기 UI 를 비활성화 한다.
 
-            bigAxeCollider.enabled = false;                     // 양손도끼 콜라이더를 꺼놓는다.
+            smallAxe.SetActive(false);                              // 왼손에 들고 있는 한손도끼 렌더러 비활성화한다.
 
-            cineCam.depth = 5;                                  // 시네머신 카메라 보이게 한다.
+            bigAxeCollider.enabled = false;                         // 양손도끼 콜라이더를 비활성화 한다.
+
+            cineCam.depth = 5;                                      // 시네머신 카메라 보이게 한다.
         }
     }
 
@@ -508,6 +512,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     #region 이동 및 공격
 
     bool playingthrowsound;
+
     private void UpdateMove()
     {
         #region  일반 공격

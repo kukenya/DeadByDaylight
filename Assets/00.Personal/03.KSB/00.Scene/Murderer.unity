@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00129015, g: 0.0019962827, b: 0.002688326, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4264,13 +4264,14 @@ GameObject:
   m_Component:
   - component: {fileID: 808024825}
   - component: {fileID: 808024827}
+  - component: {fileID: 808024828}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &808024825
 Transform:
   m_ObjectHideFlags: 0
@@ -4293,7 +4294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808024823}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e8c490b2e9c9074782d9228c06cffe1, type: 3}
   m_Name: 
@@ -4306,10 +4307,22 @@ MonoBehaviour:
   - {fileID: 1079232925}
   - {fileID: 1247316080}
   survivorName: Survivor
-  killerName: AnnaAnimation
   multiplay: 0
   textFadeTime: 0
   textFadeOffset: 0
+--- !u!114 &808024828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808024823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fcda8d75e00464392b6d73a6d34709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPos: {fileID: 1247316080}
 --- !u!1 &883738621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,91 +5241,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &1620703649
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2788427879883519563, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0000000084065865
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788427879883519563, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0000000018287037
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788427881057599637, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_SplineCurvature
-      value: 0.465
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788427881144336281, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.2669336
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788427881144336281, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -3.4238033e-15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788427881144336281, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1.836517e-15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5465658704204983726, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: sceneViewId
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -26.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 93.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319253092841262359, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6699578995008591789, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
-      propertyPath: m_Name
-      value: AnnaAnimation
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
 --- !u!1 &1730364453
 GameObject:
   m_ObjectHideFlags: 3

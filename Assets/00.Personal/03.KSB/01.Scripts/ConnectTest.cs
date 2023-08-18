@@ -51,6 +51,6 @@ public class ConnectTest : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
-        PhotonNetwork.LoadLevel("TestScene");
+        PhotonNetwork.LoadLevel("Murderer");
     }
 }
