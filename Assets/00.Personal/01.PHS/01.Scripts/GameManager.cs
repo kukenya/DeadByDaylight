@@ -22,12 +22,13 @@ public class GameManager : MonoBehaviour
     public List<Transform> spawnPos;
 
     public string survivorName;
+    public string killerName;
 
     public bool multiplay = false;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        for(int i  = 0; i < transform.childCount; i++) 
+        for (int i = 0; i < transform.childCount; i++)
         {
             spawnPos.Add(transform.GetChild(i));
         }
@@ -55,19 +56,21 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.SerializationRate = 60;
 
         GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
-        survivorCamera1.Follow = survivor.transform.GetChild(0);
+        //survivorCamera1.Follow = survivor.transform.GetChild(0);
+
+        PhotonNetwork.Instantiate(killerName, spawnPos[1].position, Quaternion.identity);
 
         OffCursor();
         yield return new WaitForSeconds(textFadeOffset);
-        titleText.DOFade(0, textFadeTime);
-        subText.DOFade(0, textFadeTime);
-        lineImage.DOFade(0, textFadeTime);
+        //titleText.DOFade(0, textFadeTime);
+        //subText.DOFade(0, textFadeTime);
+        //lineImage.DOFade(0, textFadeTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 

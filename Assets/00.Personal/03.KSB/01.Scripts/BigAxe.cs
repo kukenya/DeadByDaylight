@@ -11,7 +11,8 @@ public class BigAxe : MonoBehaviour
 
     float currentTime;              // 현재시간
 
-    public Image bloodImage;        // 핏자국 이미지
+    GameObject goBloodImage;        // 핏자국 이미지
+    Image bloodImage;
     Color color;                    // 컬러 <- 알파값
 
     // public GameObject bloodEffectFactory;
@@ -19,6 +20,8 @@ public class BigAxe : MonoBehaviour
 
     private void Start()
     {
+        goBloodImage = GameObject.Find("Blood");
+        bloodImage = goBloodImage.GetComponent<Image>();
         color = bloodImage.GetComponent<Image>().color;
         color.a = 0;
         bloodImage.GetComponent<Image>().color = color;
