@@ -15,12 +15,19 @@ public class GameManager2 : MonoBehaviour
 
     void Start()
     {
-        PhotonNetwork.Instantiate("AnnaAnimation", spawnPos.position, Quaternion.identity);
+        if (PhotonNetwork.IsMasterClient == true)
+        {
+            PhotonNetwork.Instantiate("AnnaAnimation", spawnPos.position, Quaternion.identity);
+        }
+        else
+        {
+            PhotonNetwork.Instantiate("AnnaPhoton", spawnPos.position, Quaternion.identity);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

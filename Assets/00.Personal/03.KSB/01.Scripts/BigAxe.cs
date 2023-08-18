@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class BigAxe : MonoBehaviour
+public class BigAxe : MonoBehaviourPun
 {
     bool hit = false;               // hit Çß³ª?
 
@@ -20,6 +21,10 @@ public class BigAxe : MonoBehaviour
 
     private void Start()
     {
+        if(photonView.IsMine== false)
+        {
+            enabled = false;
+        }
         goBloodImage = GameObject.Find("Blood");
         bloodImage = goBloodImage.GetComponent<Image>();
         color = bloodImage.GetComponent<Image>().color;
