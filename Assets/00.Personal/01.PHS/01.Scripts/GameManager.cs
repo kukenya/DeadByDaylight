@@ -1,7 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
 using Photon.Pun;
-using Photon.Pun.Demo.Cockpit;
 using Photon.Realtime;
 using System;
 using System.Collections;
@@ -48,6 +47,10 @@ public class GameManager : MonoBehaviourPun
 
     public float textFadeTime;
     public float textFadeOffset;
+
+    public GameObject survivorCanvas;
+    public GameObject mudererCanvas;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -65,29 +68,41 @@ public class GameManager : MonoBehaviourPun
             }
         }
 
-        GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
-        survivorCamera1.Follow = survivor.transform.GetChild(0);
-        listManager.SurvivorsAdd = survivor;
-        photonView.RPC(nameof(UpdateSurvivorList), RpcTarget.All);
-
-        foreach(Player player in PhotonNetwork.PlayerList)
+        if(SelecterManager.Instance.IsSurvivor == false) 
         {
-            print(PhotonNetwork.NickName);
-            if (player.NickName.Equals(PhotonNetwork.NickName))
-            {
-                break;
-            }
-            playerListIdx++;
+            PhotonNetwork.Instantiate("AnnaAnimation", spawnPos[0].position, Quaternion.identity);
+            OffCursor();
+            survivorCanvas.SetActive(false);
+            mudererCanvas.SetActive(true); 
         }
-        yield return new WaitForSeconds(0.1f);
+        else
+        {
+            survivorCanvas.SetActive(true);
+            mudererCanvas.SetActive(false);
+            GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
+            survivorCamera1.Follow = survivor.transform.GetChild(0);
+            listManager.SurvivorsAdd = survivor;
+            photonView.RPC(nameof(UpdateSurvivorList), RpcTarget.All);
 
-        OffCursor();
-        generatorText.text = maxGenerator.ToString();
-        yield return new WaitForSeconds(textFadeOffset);
-        titleText.DOFade(0, textFadeTime);
-        subText.DOFade(0, textFadeTime);
-        lineImage.DOFade(0, textFadeTime);
-        generatorText.DOFade(1, textFadeTime);
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                print(PhotonNetwork.NickName);
+                if (player.NickName.Equals(PhotonNetwork.NickName))
+                {
+                    break;
+                }
+                playerListIdx++;
+            }
+            yield return new WaitForSeconds(0.1f);
+
+            OffCursor();
+            generatorText.text = maxGenerator.ToString();
+            yield return new WaitForSeconds(textFadeOffset);
+            titleText.DOFade(0, textFadeTime);
+            subText.DOFade(0, textFadeTime);
+            lineImage.DOFade(0, textFadeTime);
+            generatorText.DOFade(1, textFadeTime);
+        }
     }
 
     [PunRPC]

@@ -118,9 +118,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     float v;                                // 앞뒤 입력값
     #endregion
 
+    public bool HaxMode = false;
+
     #region Start
     void Start()
     {
+        if (HaxMode) maxAxeCount = 999;
         // 공통
         anim = GetComponent<Animator>();    // 안나 Animator 컴포넌트 가져온다.
         smallAxe.SetActive(false);          // 왼손에 들고 있는 한손도끼 렌더러 비활성화한다.
@@ -195,8 +198,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 rotY += my * rotSpeed * Time.deltaTime;
 
                 // 회전값을 적용
-                transform.eulerAngles = new Vector3(0, rotX, 0);
-                cam.eulerAngles = new Vector3(-rotY, rotX, 0);
+                transform.eulerAngles = new Vector3(0, rotX, 0);        // Horizontal
+                cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);        // Vertical
+                                                                        // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
 
                 // Y 회전값 35도로 고정
                 rotY = Mathf.Clamp(rotY, -35, 35);
@@ -895,7 +899,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             stream.SendNext(transform.position);
 
             // 회전 값을 보낸다.
-            stream.SendNext(transform.rotation);
+            stream.SendNext(new Vector3(0, transform.eulerAngles.y, 0));
 
             // h 값을 보낸다
             stream.SendNext(h);
@@ -911,7 +915,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             receivePos = (Vector3)stream.ReceiveNext();
 
             // 회전 값을 받는다.
-            receiveRot = (Quaternion)stream.ReceiveNext();
+            receiveRot = Quaternion.Euler((Vector3)stream.ReceiveNext());
 
             // h 값을 받는다
             h = (float)stream.ReceiveNext();

@@ -8,8 +8,6 @@ public class BigAxe : MonoBehaviourPun
 {
     bool hit = false;               // hit 했나?
 
-    public GameObject survivor;     // 생존자 게임오브젝트
-
     float currentTime;              // 현재시간
 
     GameObject goBloodImage;        // 핏자국 이미지
@@ -53,7 +51,7 @@ public class BigAxe : MonoBehaviourPun
         {
             hit = true;                                                 // 1초 후에 코루틴 함수를 호출한다.
 
-            survivor.GetComponent<SurviverHealth>().NormalHit();        // 생존자의 NormalHit 함수를 호출한다.
+            other.GetComponent<SurviverHealth>().NormalHit();        // 생존자의 NormalHit 함수를 호출한다.
             
             AnnaMove.instance.OffAxe();                                 // 도끼 콜라이더를 끈다.
               
