@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening; //import
 using Photon.Pun;
+using System.Linq;
 
 public class SurviverController : MonoBehaviourPun, IPunObservable
 {
@@ -62,6 +63,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
 
     // �ִϸ��̼� �Ŵ���
     SurviverAnimation surviverAnimation;
+    SurviverLookAt lookAt;
 
     // ET
     public CharacterController controller;
@@ -73,6 +75,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     {
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         surviverAnimation = GetComponent<SurviverAnimation>();
+        lookAt = GetComponent<SurviverLookAt>();
         mainCamera = Camera.main;
     }
 
@@ -98,11 +101,13 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
             banMove = value; 
             if (value == false)
             {
+                lookAt.LookAt = true;
                 controller.enabled = true;
                 surviverAnimation.photonView.RPC("AnimationChange", RpcTarget.All);
             }
             else
             {
+                lookAt.LookAt = false;
                 controller.enabled = false;
             }
         }

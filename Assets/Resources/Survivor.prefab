@@ -811,10 +811,10 @@ GameObject:
   - component: {fileID: 6445668696811590809}
   - component: {fileID: 6445668696811590806}
   - component: {fileID: 6664009196485085810}
-  - component: {fileID: 3538528236134128463}
+  - component: {fileID: 4914784267542751688}
   m_Layer: 6
   m_Name: Survivor
-  m_TagString: Untagged
+  m_TagString: Survivor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -892,7 +892,7 @@ MonoBehaviour:
   maxSprintTime: 0.5
   controller: {fileID: 6445668696811590788}
   playerAnimator: {fileID: 6445668696811590791}
-  rotationSpeed: 350
+  rotationSpeed: 410
   currentSpeed: 0
   lerpSpeed: 5
   anim: 0
@@ -912,6 +912,7 @@ MonoBehaviour:
   controller: {fileID: 6445668696811590797}
   rootCameraPosition: {fileID: 6445668696166776838}
   hook: 0
+  survivorRoomIdx: 0
   yOffset: 0.8
   maxPrograssTime: 2
   hookAnimationChangeRate: 2
@@ -1018,19 +1019,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveType: 0
-  pallet: {fileID: 0}
   window: {fileID: 0}
+  pallet: {fileID: 0}
   generator: {fileID: 0}
   exit: {fileID: 0}
   camperHealing: {fileID: 0}
-  activate: 0
   possibleAngle: 120
   autoMoverStopDistance: 0.2
   autoMoverSpeed: 8
   currentObstacleTrans: {fileID: 0}
   fastJumpAngle: 22
   midJumpAngle: 90
-  a: 0.48
 --- !u!114 &6445668696811590811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1092,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   childCollider: {fileID: 7104911752054812998}
+  type: 0
 --- !u!114 &6445668696811590806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,20 +1134,19 @@ MonoBehaviour:
   surviverController: {fileID: 6445668696811590797}
   ease: 4
   textEase: 0
---- !u!136 &3538528236134128463
-CapsuleCollider:
+--- !u!114 &4914784267542751688
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6445668696811590796}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.4
-  m_Height: 1.86
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04513063fe061741b978bcf3a474b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 6175266693468932706}
 --- !u!1 &7104911752054812998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1188,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7104911752054812998}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
@@ -1207,11 +1206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 4
-  window: {fileID: 0}
-  pallet: {fileID: 0}
-  generator: {fileID: 0}
-  exit: {fileID: 0}
-  healing: {fileID: 0}
+  interactScript: {fileID: 0}
 --- !u!1001 &6445668695339005747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5207,6 +5202,11 @@ Transform:
 --- !u!4 &6148659960373548771 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8347439298794823216, guid: 31613b5102a546e44a4938be7f229796, type: 3}
+  m_PrefabInstance: {fileID: 6445668695339005747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6175266693468932706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 31613b5102a546e44a4938be7f229796, type: 3}
   m_PrefabInstance: {fileID: 6445668695339005747}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6382320402892667121 stripped

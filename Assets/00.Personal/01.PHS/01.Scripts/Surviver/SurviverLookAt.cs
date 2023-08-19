@@ -12,7 +12,7 @@ public class SurviverLookAt : MonoBehaviourPun
     public bool LookAt { get { return isLookAt; }
         set
         {
-            SetLookAt(value);
+            photonView.RPC(nameof(SetLookAt), RpcTarget.All, value);
         } 
     }
 

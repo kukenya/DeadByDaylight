@@ -59,6 +59,13 @@ MonoBehaviour:
   - SetIntSurvivor
   - SkillCheckFail
   - SetFail
+  - SurvivorDecrease
+  - SurvivorIncrease
+  - SetRedXray
+  - GenerateBlackHole
+  - UpdateSurvivorAmount
+  - LoadSceneRPC
+  - UpdateSurvivorList
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

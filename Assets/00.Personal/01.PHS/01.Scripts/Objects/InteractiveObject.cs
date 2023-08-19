@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
@@ -15,32 +16,29 @@ public class InteractiveObject : MonoBehaviour
     }
 
     public Type type = Type.Window;
+    public MonoBehaviour interactScript;
 
-    public Window window;
-    public Pallet pallet;
-    public Generator generator;
-    public Exit exit;
-    public SurviverHealing healing;
-
+    #region Unity
     private void Start()
     {
         switch (type)
         {
             case Type.Window:
-                window = GetComponent<Window>();
+                interactScript = GetComponent<Window>();
                 break;
             case Type.Pallet:
-                pallet = GetComponent<Pallet>();
+                interactScript = GetComponent<Pallet>();
                 break;
             case Type.Generator:
-                generator = GetComponent<Generator>();
+                interactScript = GetComponent<Generator>();
                 break;
             case Type.Exit:
-                exit = GetComponent<Exit>();
+                interactScript = GetComponent<Exit>();
                 break;
             case Type.Survivor:
-                healing = GetComponentInParent<SurviverHealing>();
+                interactScript = GetComponentInParent<SurviverHealing>();
                 break;
         }
     }
+    #endregion
 }

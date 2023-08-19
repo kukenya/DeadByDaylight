@@ -1,5 +1,7 @@
+using DG.Tweening;
 using Photon.Pun;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Generator : MonoBehaviourPun, IPunObservable
@@ -53,6 +55,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor++;
         SetMultiplayIncrease();
+        
     }
 
     [PunRPC]
@@ -60,6 +63,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor--;
         SetMultiplayIncrease();
+        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
 
     [PunRPC]
@@ -67,6 +71,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         intSurvivor = value; 
         SetMultiplayIncrease();
+        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
     float multiplyIncrease = 0;
 
@@ -107,7 +112,22 @@ public class Generator : MonoBehaviourPun, IPunObservable
     {
         GenRepair();
         UpdateAnim();
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            photonView.RPC(nameof(GenerateBlackHole), RpcTarget.All);
+        }
     }
+    public GameObject blackHoleGO;
+    public Ease blackHoleEase;
+
+    [PunRPC]
+    void GenerateBlackHole()
+    {
+        GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
+        go.transform.DOScale(0, 10).SetDelay(4).SetEase(blackHoleEase).SetAutoKill();
+    }
+
+    
 
     [PunRPC]
     void SkillCheckFail()
@@ -128,6 +148,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
         {
             Repair = false;
             repaierd = true;
+            GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayGeneratorClear();
             if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
             gameObject.layer = 0;
