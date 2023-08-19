@@ -15,19 +15,29 @@ public class GameManager2 : MonoBehaviour
 
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient == true)
-        {
-            PhotonNetwork.Instantiate("AnnaAnimation", spawnPos.position, Quaternion.identity);
-        }
-        else
-        {
-            PhotonNetwork.Instantiate("AnnaPhoton", spawnPos.position, Quaternion.identity);
-        }
+        // OnPhotonSerializationView »£√‚ ∫Ûµµ
+        PhotonNetwork.SerializationRate = 60;
+
+
+        PhotonNetwork.Instantiate("AnnaAnimation", spawnPos.position, Quaternion.identity);
+        OffCursor();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void OnCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void OffCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
