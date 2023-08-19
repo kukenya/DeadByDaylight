@@ -11,12 +11,10 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     Transform targetTrans;
     SurviverController surviverController;
-    CharacterController controller;
 
     private void Start()
     {
         surviverController = GetComponent<SurviverController>();
-        controller = GetComponent<CharacterController>();
     }
 
     Coroutine cor;
@@ -40,7 +38,6 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     IEnumerator AutoMoveCor(System.Action<float> action, float targetAngle)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
@@ -60,10 +57,10 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     IEnumerator AutoMoveCor(System.Action action, bool reverse)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
+            print(1);
             float targetAngle = reverse == false ? targetTrans.eulerAngles.y : targetTrans.eulerAngles.y - 180;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
             if (Vector3.Distance(
@@ -84,7 +81,6 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, System.Action action2, SurvivorInteraction survivorInteraction, Transform moveTrans)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/00.Personal/01.PHS/PersonalScene/StartScene.unity
+    path: Assets/99.Scenes/StartScene.unity
     guid: c0dd0a5605932dc4c9a18dd9f99b9416
   - enabled: 1
     path: Assets/99.Scenes/Moved/PHS.unity

@@ -75,7 +75,6 @@ public class SimpleConnectionMgr : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene 으로 이동
-        PhotonNetwork.LoadLevel(1);
         StartCoroutine(LoadScene());
     }
 
@@ -83,8 +82,23 @@ public class SimpleConnectionMgr : MonoBehaviourPunCallbacks
     {
         while (true)
         {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                photonView.RPC(nameof(LoadSceneRPC), RpcTarget.All);
+                break;
+            }
+            yield return null;
+        }
+        while (true)
+        {
             print(PhotonNetwork.LevelLoadingProgress);
             yield return null;
         }
+    }
+
+    [PunRPC]
+    void LoadSceneRPC()
+    {
+        PhotonNetwork.LoadLevel(1);
     }
 }

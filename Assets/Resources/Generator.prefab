@@ -444,6 +444,8 @@ MonoBehaviour:
   sparkParticlePos:
   - {fileID: 978811058}
   failAudio: {fileID: 1323331915}
+  blackHoleGO: {fileID: 4203309697800615128, guid: 6ca2b255ae3a3b64cae817e26e22fd28, type: 3}
+  blackHoleEase: 33
   hardValue: 10
   normalValue: 5
   failValue: -10
@@ -473,11 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  window: {fileID: 0}
-  pallet: {fileID: 0}
-  generator: {fileID: 0}
-  exit: {fileID: 0}
-  healing: {fileID: 0}
+  interactScript: {fileID: 0}
 --- !u!114 &3394735650492183414
 MonoBehaviour:
   m_ObjectHideFlags: 0

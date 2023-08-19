@@ -1,18 +1,32 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurvivorShader : MonoBehaviour
+public class SurvivorShader : MonoBehaviourPun
 {
     public GameObject go;
 
-    public void OnRedXray()
-    {
-        go.layer = 9;
-    }
+    bool red = false;
+    public bool RedXray { get { return red; } set { photonView.RPC(nameof(SetRedXray), RpcTarget.All, value); } }
 
-    public void OffShader()
+    [PunRPC]
+    void SetRedXray(bool value)
     {
-        go.layer = 6;
+        if(value == true)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 9;
+            }
+        }
+        else
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = 6;
+            }
+        }
+        red = value;
     }
 }

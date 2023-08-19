@@ -13,6 +13,7 @@ public class SurviverHealth : MonoBehaviourPun
     SurviverSound surviverSound;
     Animator anim;
     SurvivorShader shader;
+    SurvivorListManager listManager;
 
     public Transform rootCameraPosition;
 
@@ -39,10 +40,16 @@ public class SurviverHealth : MonoBehaviourPun
         if(State == HealthState.Healthy)
         {
             surviverAnimation.Injuerd = false;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Healthy;
         }
         else if(State == HealthState.Injured)
         {
             surviverAnimation.Injuerd = true;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
+        }
+        else if(State == HealthState.Down)
+        {
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Down;
         }
         else if(State == HealthState.Hook)
         {
@@ -70,6 +77,8 @@ public class SurviverHealth : MonoBehaviourPun
     [Range(0, 2)]
     public int hook = 0;
 
+    public int survivorRoomIdx;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -78,6 +87,8 @@ public class SurviverHealth : MonoBehaviourPun
         surviverLookAt = GetComponent<SurviverLookAt>();
         surviverSound = GetComponent<SurviverSound>();
         interaction = GetComponent<SurvivorInteraction>();
+        shader = GetComponent<SurvivorShader>();
+        listManager = SurvivorListManager.instance;
     }
 
     private void Update()
@@ -130,10 +141,9 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeDown()
     {
         surviverLookAt.LookAt = false;
-        shader.OnRedXray();
+        shader.RedXray = true;
         State = HealthState.Down;
         controller.Crawl = true;
-        surviverLookAt.isLookAt = false;
         surviverSound.PlayDownSound();
         surviverAnimation.PlayStandToCrawl();
     }

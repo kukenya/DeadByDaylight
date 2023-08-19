@@ -130,5 +130,5 @@ public class SurviverUI : MonoBehaviour
     {
         spaceBar.gameObject.SetActive(false);
         spaceText.gameObject.SetActive(false);
-    }  
+    }
 }

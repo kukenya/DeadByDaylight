@@ -24,49 +24,17 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public InteractiveType Type { get { return interactiveType; } set {
             interactiveType = value;
-            switch (interactiveType)
-            {
-                case InteractiveType.None:
-                    window = null;
-                    pallet = null;
-                    generator = null;
-                    exit = null;
-                    camperHealing = null;
-                    break;
-                case InteractiveType.Window:
-                    pallet = null;
-                    generator = null;
-                    exit = null;
-                    break;
-                case InteractiveType.Pallet:
-                    window = null;
-                    generator = null;
-                    exit = null;
-                    break;
-                case InteractiveType.Generator:
-                    window = null;
-                    pallet = null;
-                    exit = null;
-                    break;
-                case InteractiveType.ExitLever:
-                    window = null;
-                    generator = null;
-                    pallet = null;
-                    break;
-            }
         } 
     }
 
     SurviverHealing surviverHealing;
     SurviverAnimation surviverAnimation;
     CharacterController controller;
-    public bool Controller { get { return controller.enabled; } set { photonView.RPC(nameof(SetController), RpcTarget.All, value); } }
 
     [PunRPC]
     void SetController(bool value)
     {
         controller.enabled = value; 
-        //surviverController.anim = !value;
     }
 
     SurviverController surviverController;
@@ -75,19 +43,33 @@ public class SurvivorInteraction : MonoBehaviourPun
     SurviverUI ui;
     SurviverHealth health;
 
-    public Pallet pallet;
     public Window window;
+    public Pallet pallet;
     public Generator generator;
     public Exit exit;
     public SurviverHealing camperHealing;
 
-    public Pallet Pallet { get { return pallet; } set { if (pallet == value) return; pallet = value; Type = InteractiveType.Pallet; } }
-    public Window Window { get { return window; } set { if (window == value) return; window = value; Type = InteractiveType.Window; } }
-    public Generator Generator { get { return generator; } set { if (generator == value) return; generator = value; Type = InteractiveType.Generator; } }
-    public Exit Exit { get { return exit; } set { if (exit == value) return; exit = value; Type = InteractiveType.ExitLever; } }
-    public SurviverHealing CamperHealing { get { return camperHealing; } set { if (camperHealing == value) return; camperHealing = value; Type = InteractiveType.HealCamper; } }
+    bool activate = false;
+    public bool Activate { get { return activate; } set {
+            activate = value;
+            if(value == true)
+            {
+                surviverLookAt.LookAt = false;
+            }
+            else
+            {
+                surviverLookAt.LookAt = true;
+            }
+        } 
+    }
 
-    public bool activate = false;
+    public void NullInteractScript()
+    {
+        if(window != null) window = null;
+        if(pallet != null) pallet = null;
+        if(generator != null) generator = null;
+        if(camperHealing != null) camperHealing = null;
+    }
 
     #region 유니티
     private void Start()
@@ -151,7 +133,7 @@ public class SurvivorInteraction : MonoBehaviourPun
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "탈출");
                 break;
             case InteractiveType.HealCamper:
-                if (CamperHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
+                if (camperHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "치료");
                 break;
         }
@@ -177,7 +159,7 @@ public class SurvivorInteraction : MonoBehaviourPun
     {
         if (photonView.IsMine == false) return;
 
-        if (activate == true) return;
+        if (Activate == true) return;
 
         switch (interactiveType)
         {
@@ -187,14 +169,12 @@ public class SurvivorInteraction : MonoBehaviourPun
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     StartJumpWindow();
-                    activate = true;
                 }
                 break;
             case InteractiveType.Pallet:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    InteractivePallet();
-                    activate = true;
+                    InteractivePallet(); 
                 }
                 break;
             case InteractiveType.Generator:
@@ -254,18 +234,17 @@ public class SurvivorInteraction : MonoBehaviourPun
     void FriendHealing()
     {
         StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
-            CamperHealing.OnFriendHeal, 
+            camperHealing.OnFriendHeal, 
             () => { surviverAnimation.Play("Heal_Camper"); },
             this,
-            CamperHealing.transform)
+            camperHealing.transform)
             );
     }
 
     public void OffFriendHealing()
     {
         surviverController.BanMove = false;
-        Controller = true;
-        CamperHealing.OffFriendHeal();
+        camperHealing.OffFriendHeal();
         surviverAnimation.AnimationChange();
     }
 
@@ -281,7 +260,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public void StartJumpWindow()
     {
-        surviverLookAt.LookAt = false;
+        Activate = true;
         Transform targetTrans = window.GetAnimPosition(transform);
         Vector3 targetDir = targetTrans.position - transform.position;
         float targetAngle = Vector3.Angle(transform.forward, new Vector3(targetDir.x, 0, targetDir.z));
@@ -297,16 +276,44 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public void InteractivePallet()
     {
-        surviverLookAt.LookAt = false;
+        Activate = true;
         Transform targetTrans = pallet.GetAnimPosition(transform.position);
         switch (pallet.state)
         {
             case Pallet.PalletState.Stand:
-                surviverAutoMove.OnAutoMove(targetTrans, PullDownPallet);
+                surviverAutoMove.OnAutoMove(targetTrans, 
+                    () => {
+                    surviverAnimation.Play("PullDownPalletRT");
+                    pallet.State = Pallet.PalletState.Ground;
+                    StartCoroutine(WaitAnimEnd("PullDownPalletRT"));
+                }
+                );
                 break;
             case Pallet.PalletState.Ground:
-                if (targetTrans.localEulerAngles.y == 90) surviverAutoMove.OnAutoMove(targetTrans, JumpPalletLT, true);
-                else surviverAutoMove.OnAutoMove(targetTrans, JumpPalletRT, true);
+                if (targetTrans.localEulerAngles.y == 90) surviverAutoMove.OnAutoMove(targetTrans, 
+                    () => {
+                        if (surviverController.Sprint == false)
+                        {
+                            surviverAnimation.Play("JumpPalletLT");
+                            StartCoroutine(WaitAnimEnd("JumpPalletLT"));
+                            return;
+                        }
+
+                    surviverAnimation.Play("JumpPalletFastLT");
+                    StartCoroutine(WaitAnimEnd("JumpPalletFastLT"));
+                }, true);
+                else surviverAutoMove.OnAutoMove(targetTrans, 
+                    () => {
+                        if (surviverController.Sprint == false)
+                        {
+                            surviverAnimation.Play("JumpPalletRT");
+                            StartCoroutine(WaitAnimEnd("JumpPalletRT"));
+                            return;
+                        }
+
+                    surviverAnimation.Play("JumpPalletFastRT");
+                    StartCoroutine(WaitAnimEnd("JumpPalletFastRT"));
+                }, true);
                 break;
         }
     }
@@ -317,10 +324,6 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     void JumpWindow(float targetAngle)
     {
-        Controller = false;
-        print(surviverController.anim);
-        if (photonView.IsMine == false) 
-
         if (surviverController.sprintTime == 0)
         {
             surviverAnimation.Play("WindowIn");
@@ -337,51 +340,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
         surviverAnimation.Play("WindowMid");
         StartCoroutine(WaitAnimEnd("WindowMid"));
-
-        
-        //else if (targetAngle < midJumpAngle)
-        //{
-        //    surviverAnimation.Play("WindowMid");
-        //    StartCoroutine(WaitAnimEnd("WindowMid"));
-        //}
     }
-
-    void JumpPalletRT()
-    {
-        Controller = false;
-        if (surviverController.Sprint == false)
-        {
-            surviverAnimation.Play("JumpPalletRT");
-            StartCoroutine(WaitAnimEnd("JumpPalletRT"));
-            return;
-        }
-
-        surviverAnimation.Play("JumpPalletFastRT");
-        StartCoroutine(WaitAnimEnd("JumpPalletFastRT"));
-    }
-
-    void JumpPalletLT()
-    {
-        Controller = false;
-        if (surviverController.Sprint == false)
-        {
-            surviverAnimation.Play("JumpPalletLT");
-            StartCoroutine(WaitAnimEnd("JumpPalletLT"));
-            return;
-        }
-
-        surviverAnimation.Play("JumpPalletFastLT");
-        StartCoroutine(WaitAnimEnd("JumpPalletFastLT"));
-    }
-
-    void PullDownPallet()
-    {
-        surviverAnimation.Play("PullDownPalletRT");
-        pallet.State = Pallet.PalletState.Ground;
-        StartCoroutine(WaitAnimEnd("PullDownPalletRT"));
-    }
-
-    public float a;
 
     Coroutine cor;
 
@@ -422,10 +381,8 @@ public class SurvivorInteraction : MonoBehaviourPun
             yield return null;
         }
         surviverController.BanMove = false;
-        Controller = true;
         surviverAnimation.AnimationChange();
-        activate = false;
-        surviverLookAt.LookAt = true;
+        Activate = false;
     }
 
 
@@ -434,49 +391,37 @@ public class SurvivorInteraction : MonoBehaviourPun
     public void OnRepairGen()
     {
         Transform targetTrans = generator.GetAnimationPos(transform.position);
-        surviverAutoMove.OnAutoMove(targetTrans, OnRepairAnim);
-        surviverLookAt.LookAt = false;
-    }
-
-    public void OnRepairAnim()
-    {
-        surviverController.BanMove = true;
-        generator.Repair = true;
-        generator.interaction = this;
-        surviverAnimation.Play("Generator_Idle_FT");
+        surviverAutoMove.OnAutoMove(targetTrans, () => {
+            surviverController.BanMove = true;
+            generator.Repair = true;
+            generator.interaction = this;
+            surviverAnimation.Play("Generator_Idle_FT");
+        });
     }
 
     public void OffRepairGen()
     {
         surviverAutoMove.StopCoroutine();
         surviverController.BanMove = false;
-        Controller = true;
         generator.Repair = false;
         generator.interaction = null;
-        surviverLookAt.LookAt = true;
     }
 
     public void ActivateExit()
     {
         Transform targetTrans = exit.GetAnimationPos(transform.position);
         exit.interaction = this;
-        surviverAutoMove.OnAutoMove(targetTrans, ActivateExitAnim);
-        surviverLookAt.LookAt = false;
-    }
-
-    public void ActivateExitAnim()
-    {
-        surviverController.BanMove = true;
-        surviverAnimation.Play("UnlockExit");
-        exit.OnSwitch();
+        surviverAutoMove.OnAutoMove(targetTrans, () => {
+            surviverController.BanMove = true;
+            surviverAnimation.Play("UnlockExit");
+            exit.OnSwitch();
+        });
     }
 
     public void DeActivateExit()
     {
         surviverAutoMove.StopCoroutine();
         surviverController.BanMove = false;
-        Controller = true;
-        surviverLookAt.LookAt = true;
         exit.OffSwitch();
     }
 
