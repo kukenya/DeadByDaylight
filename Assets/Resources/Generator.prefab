@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 1930286635}
   - component: {fileID: 1930286636}
   - component: {fileID: 1930286637}
+  - component: {fileID: 3394735650492183414}
   m_Layer: 7
   m_Name: EnableCollider
   m_TagString: Untagged
@@ -443,6 +444,8 @@ MonoBehaviour:
   sparkParticlePos:
   - {fileID: 978811058}
   failAudio: {fileID: 1323331915}
+  blackHoleGO: {fileID: 4203309697800615128, guid: 6ca2b255ae3a3b64cae817e26e22fd28, type: 3}
+  blackHoleEase: 33
   hardValue: 10
   normalValue: 5
   failValue: -10
@@ -472,10 +475,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  window: {fileID: 0}
-  pallet: {fileID: 0}
-  generator: {fileID: 0}
-  exit: {fileID: 0}
+  interactScript: {fileID: 0}
+--- !u!114 &3394735650492183414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930286633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1930286635}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &5248924451208021544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1325,7 +1348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7122d1e0faf5f294ca84fc1eaef21e12, type: 3}
       propertyPath: m_Name
-      value: GeneratorMade
+      value: Generator
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7122d1e0faf5f294ca84fc1eaef21e12, type: 3}
       propertyPath: m_Layer

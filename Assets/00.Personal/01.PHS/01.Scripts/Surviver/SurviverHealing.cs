@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class SurviverHealing : MonoBehaviour
 {
+    public enum HealingTarget
+    {
+        Self,
+        Being
+    }
+
+    public HealingTarget target = HealingTarget.Self;
+
     SurviverController surviverController;
     SurviverAnimation surviverAnimation;
     SurviverHealth health;
@@ -69,7 +77,15 @@ public class SurviverHealing : MonoBehaviour
 
         if (Prograss >= maxPrograssTime)
         {
-            OffSelfHeal();
+            switch (target)
+            {
+                case HealingTarget.Self:
+                    OffSelfHeal();
+                    break;
+                case HealingTarget.Being:
+                    interaction.OffFriendHealing();
+                    break;
+            }
             health.State = SurviverHealth.HealthState.Healthy;
             return;
         }
@@ -81,6 +97,7 @@ public class SurviverHealing : MonoBehaviour
     public void OnSelfHeal(SurvivorInteraction interaction)
     {
         this.interaction = interaction;
+        target = HealingTarget.Self;
         surviverController.BanMove = true;
         surviverAnimation.Play("Healing_Self");
         Heal = true;
@@ -95,6 +112,7 @@ public class SurviverHealing : MonoBehaviour
     public void OnFriendHeal(SurvivorInteraction interaction)
     {
         this.interaction = interaction;
+        target = HealingTarget.Being;
         surviverController.BanMove = true;
         surviverAnimation.Play("Being_Heal");
         Heal = true;
@@ -112,6 +130,15 @@ public class SurviverHealing : MonoBehaviour
     {
         Prograss += failValue;
         //failAudio.Play();
-        surviverAnimation.Play("Healing_Self_Fail");
+        switch (target)
+        {
+            case HealingTarget.Self:
+                surviverAnimation.Play("Healing_Self_Fail");
+                break;
+            case HealingTarget.Being:
+                surviverAnimation.Play("Being_Heal_Fail");
+                break;
+        }
+        
     }
 }

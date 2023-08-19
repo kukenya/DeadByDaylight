@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: b216316d-e531-40cc-92eb-a6b29ca14ca8
+    AppIdRealtime: 6cdd1d3d-439e-4b1d-9d28-1f75eecc001f
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.00
+    AppVersion: 
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -39,23 +39,33 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - OnPhotonSerializeView
-  - SetBoolFalseRpc
-  - SetBoolTrueRpc
-  - SetTriggerRpc
-  - AnimationChange
-  - AnimationWeight
-  - AnimPlay
-  - LookAtLayer
-  - PlayAnimationRPC
-  - SetController
-  - SetHealthState
-  - SetInjuerdRPC
-  - SetLookAt
+  - AnimationChangeRPC
+  - SetMoveState
   - SetMoveStateRPC
   - SetPoseRPC
+  - SetInjuerdRPC
+  - AnimationChange
+  - SetHealthState
+  - PlayAnimationRPC
+  - LookAtRPC
+  - LookAtLayer
+  - AnimPlay
+  - PlayAnim
   - SetState
-  - SetBoolRpc
+  - SetController
+  - AnimationWeight
+  - SetLookAt
+  - SetHealthStateNA
+  - SetIntSurvivor
+  - SkillCheckFail
+  - SetFail
+  - SurvivorDecrease
+  - SurvivorIncrease
+  - SetRedXray
+  - GenerateBlackHole
+  - UpdateSurvivorAmount
+  - LoadSceneRPC
+  - UpdateSurvivorList
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1

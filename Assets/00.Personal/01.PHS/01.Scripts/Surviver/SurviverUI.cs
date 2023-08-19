@@ -30,6 +30,7 @@ public class SurviverUI : MonoBehaviour
     public Image prograssBar;
     public TextMeshProUGUI prograssText;
     public Image handImage;
+    public Sprite[] bars;
 
     [Header("진행바 아래 튜토리얼 UI")]
     public Image leftMouseClick;
@@ -55,6 +56,13 @@ public class SurviverUI : MonoBehaviour
                 OnProgressUI(text);
                 break;
         }
+    }
+
+    public void ChangePrograssBarSprite(int idx)
+    {
+        idx--;
+        idx = Mathf.Clamp(idx, 0, 2);
+        prograssBar.sprite = bars[idx];
     }
 
     public void FocusProgressUI(string text)
@@ -122,5 +130,5 @@ public class SurviverUI : MonoBehaviour
     {
         spaceBar.gameObject.SetActive(false);
         spaceText.gameObject.SetActive(false);
-    }  
+    }
 }

@@ -10,16 +10,41 @@ public class SurvivorCheckArround : MonoBehaviourPun
     public Collider[] checkColliders = new Collider[10];
 
     public LayerMask checkLayer;
-
-    public Window window;
-    public Pallet pallet;
-    public Generator generator;
-    public Exit exit;
     public GameObject childCollider;
 
     SurvivorInteraction interaction;
     SurviverHealth health;
     SurviverController controller;
+
+    MonoBehaviour interactScript;
+    public MonoBehaviour InteractScript { get { return interactScript; } set {
+            interactScript = value;
+            interaction.NullInteractScript();
+            switch (type)
+            {
+                case InteractiveObject.Type.Window:
+                    interaction.Type = SurvivorInteraction.InteractiveType.Window;
+                    interaction.window = (Window)InteractScript;
+                    break;
+                case InteractiveObject.Type.Pallet:
+                    interaction.Type = SurvivorInteraction.InteractiveType.Pallet;
+                    interaction.pallet = (Pallet)InteractScript;
+                    break;
+                case InteractiveObject.Type.Generator:
+                    interaction.Type = SurvivorInteraction.InteractiveType.Generator;
+                    interaction.generator = (Generator)InteractScript;
+                    break;
+                case InteractiveObject.Type.Exit:
+                    interaction.Type = SurvivorInteraction.InteractiveType.ExitLever;
+                    interaction.exit = (Exit)InteractScript;
+                    break;
+                case InteractiveObject.Type.Survivor:
+                    interaction.Type = SurvivorInteraction.InteractiveType.HealCamper;
+                    interaction.camperHealing = (SurviverHealing)InteractScript;
+                    break;
+            }
+        }
+    }
 
     private void Start()
     {
@@ -50,9 +75,18 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 continue;
             }
 
-            if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+            if (checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
             {
-                checkColliders[i] = null; 
+                if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+                {
+                    checkColliders[i] = null;
+                    continue;
+                }
+            }
+
+            if (health.State == SurviverHealth.HealthState.Hook)
+            {
+                checkColliders[i] = null;
                 continue;
             }
 
@@ -65,9 +99,10 @@ public class SurvivorCheckArround : MonoBehaviourPun
         //checkColliders.Sort(ColliderListSortComparer);
         System.Array.Sort(checkColliders, ColliderListSortComparer);
 
-        if (checkColliders[0] == null) 
+        if (checkColliders.Length == 0 || checkColliders[0] == null) 
         {
-            if(health.State == SurviverHealth.HealthState.Injured && controller.Moving == false)
+            interaction.NullInteractScript();
+            if (health.State == SurviverHealth.HealthState.Injured && controller.Moving == false)
             {
                 interaction.Type = SurvivorInteraction.InteractiveType.SelfHeal;
             }
@@ -82,28 +117,13 @@ public class SurvivorCheckArround : MonoBehaviourPun
         }
         else
         {
-            if (checkColliders[0] == null) { return; }
-            InteractiveObject obj = checkColliders[0].GetComponent<InteractiveObject>();
-            switch (obj.type)
-            {
-                case InteractiveObject.Type.Window:
-                    interaction.Window = obj.window;
-                    break;
-                case InteractiveObject.Type.Pallet:
-                    interaction.Pallet = obj.pallet;
-                    break;
-                case InteractiveObject.Type.Generator:
-                    interaction.Generator = obj.generator;
-                    break;
-                case InteractiveObject.Type.Exit:
-                    interaction.Exit = obj.exit;
-                    break;
-                case InteractiveObject.Type.Survivor:            
-                    interaction.CamperHealing = obj.healing;
-                    break;
-            }
+            InteractiveObject ob = checkColliders[0].GetComponent<InteractiveObject>();
+            type = ob.type;
+            InteractScript = ob.interactScript;
         }
     }
+
+    public InteractiveObject.Type type;
 
 
 

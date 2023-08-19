@@ -2,6 +2,8 @@ using Cinemachine;
 using DG.Tweening;
 using Photon.Pun;
 using Photon.Pun.Demo.Cockpit;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,17 +19,23 @@ public class GameManager : MonoBehaviourPun
     public TextMeshProUGUI subText;
     public Image lineImage;
 
+    public TextMeshProUGUI generatorText;
+    int maxGenerator = 4;
+    public int Generator { get { return maxGenerator; } set { maxGenerator = value; generatorText.text = maxGenerator.ToString(); } }
+
     public CinemachineVirtualCamera survivorCamera1;
 
     public List<Transform> spawnPos;
+    public List<Transform> generatorSpawnPos;
+    public int playerListIdx = 0;
 
     public string survivorName;
 
-    public bool multiplay = false;
+    public SurvivorListManager listManager;
 
     private void Awake()
     {
-        if (Instance == null)
+        if(Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -43,32 +51,57 @@ public class GameManager : MonoBehaviourPun
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            spawnPos.Add(transform.GetChild(i));
-        }
-
         //RPC È£Ãâ ºóµµ
         PhotonNetwork.SendRate = 60;
 
         //OnPhotonSerializeView È£Ãâ ºóµµ
         PhotonNetwork.SerializationRate = 60;
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (Transform tr in generatorSpawnPos)
+            {
+                PhotonNetwork.Instantiate("Generator", tr.position, tr.rotation);
+            }
+        }
+
         GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
         survivorCamera1.Follow = survivor.transform.GetChild(0);
+        listManager.SurvivorsAdd = survivor;
+        photonView.RPC(nameof(UpdateSurvivorList), RpcTarget.All);
+
+        foreach(Player player in PhotonNetwork.PlayerList)
+        {
+            print(PhotonNetwork.NickName);
+            if (player.NickName.Equals(PhotonNetwork.NickName))
+            {
+                break;
+            }
+            playerListIdx++;
+        }
+        yield return new WaitForSeconds(0.1f);
 
         OffCursor();
+        generatorText.text = maxGenerator.ToString();
         yield return new WaitForSeconds(textFadeOffset);
         titleText.DOFade(0, textFadeTime);
         subText.DOFade(0, textFadeTime);
         lineImage.DOFade(0, textFadeTime);
+        generatorText.DOFade(1, textFadeTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    [PunRPC]
+    void UpdateSurvivorList()
     {
-
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Survivor");
+        foreach( GameObject go2 in go)
+        {
+            if (listManager.Survivors.Contains(go2)) continue;
+            listManager.SurvivorsAdd = go2;
+            go2.GetComponent<SurviverHealth>().survivorRoomIdx = listManager.Survivors.IndexOf(go2);
+        }
     }
+
 
 
     void OnCursor()

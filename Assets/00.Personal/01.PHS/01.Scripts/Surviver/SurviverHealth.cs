@@ -12,6 +12,8 @@ public class SurviverHealth : MonoBehaviourPun
     SurvivorInteraction interaction;
     SurviverSound surviverSound;
     Animator anim;
+    SurvivorShader shader;
+    SurvivorListManager listManager;
 
     public Transform rootCameraPosition;
 
@@ -38,21 +40,44 @@ public class SurviverHealth : MonoBehaviourPun
         if(State == HealthState.Healthy)
         {
             surviverAnimation.Injuerd = false;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Healthy;
         }
         else if(State == HealthState.Injured)
         {
             surviverAnimation.Injuerd = true;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
+        }
+        else if(State == HealthState.Down)
+        {
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Down;
         }
         else if(State == HealthState.Hook)
         {
             Prograss = 0;
         }
+        
         surviverAnimation.AnimationChange();
+    }
+
+    public HealthState StateNA { get { return state; } set {
+            photonView.RPC(nameof(SetHealthStateNA), RpcTarget.All, value);
+        }
+    }
+
+    [PunRPC]
+    void SetHealthStateNA(HealthState value)
+    {
+        state = value;
+        if (state == HealthState.Injured) surviverAnimation.Injuerd = true;
+        if (state == HealthState.Healthy) surviverAnimation.Injuerd = false;
+        if (state == HealthState.Hook) Prograss = 0;
     }
 
     // 플레이어 갈고리 걸린 횟수 관련 변수
     [Range(0, 2)]
     public int hook = 0;
+
+    public int survivorRoomIdx;
 
     private void Start()
     {
@@ -62,6 +87,8 @@ public class SurviverHealth : MonoBehaviourPun
         surviverLookAt = GetComponent<SurviverLookAt>();
         surviverSound = GetComponent<SurviverSound>();
         interaction = GetComponent<SurvivorInteraction>();
+        shader = GetComponent<SurvivorShader>();
+        listManager = SurvivorListManager.instance;
     }
 
     private void Update()
@@ -92,9 +119,8 @@ public class SurviverHealth : MonoBehaviourPun
 
     void ChangeInjuerd()
     {
-        state = HealthState.Injured;
-        surviverAnimation.Injuerd = true;
-        surviverAnimation.Play("Hit", 0.25f, 2);
+        State = HealthState.Injured;
+        photonView.RPC("PlayAnimationRPC", RpcTarget.All, "Hit", 0.25f, 2);
         surviverSound.PlayInjSound();
         StartCoroutine(HitSpeed());
     }
@@ -115,9 +141,9 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeDown()
     {
         surviverLookAt.LookAt = false;
+        shader.RedXray = true;
         State = HealthState.Down;
         controller.Crawl = true;
-        surviverLookAt.isLookAt = false;
         surviverSound.PlayDownSound();
         surviverAnimation.PlayStandToCrawl();
     }
@@ -132,7 +158,7 @@ public class SurviverHealth : MonoBehaviourPun
         else
         {
             controller.BanMove = true;
-            state = HealthState.Carrying;
+            State = HealthState.Carrying;
             surviverAnimation.Play("PickUp_IN");
         }
     }
@@ -155,7 +181,7 @@ public class SurviverHealth : MonoBehaviourPun
             if (surviverAnimation.IsAnimEnd("Hook_OUT")) break;
             yield return null;
         }
-        state = HealthState.Hook;
+        StateNA = HealthState.Hook;
         surviverAnimation.Play("Hook_Idle");
     }
 
@@ -171,6 +197,8 @@ public class SurviverHealth : MonoBehaviourPun
 
     public float hookAnimationChangeRate = 2;
 
+    Coroutine hookCor;
+
     void HookEscape()
     {
         if (State != HealthState.Hook) return;
@@ -178,7 +206,10 @@ public class SurviverHealth : MonoBehaviourPun
 
         if(Prograss >= maxPrograssTime)
         {
-            StartCoroutine(WaitHook());
+            if(hookCor == null)
+            {
+                hookCor = StartCoroutine(WaitHook());
+            }
         }
         if(escaping) { Prograss += Time.deltaTime; AnimationPrograss += Time.deltaTime * hookAnimationChangeRate; }
         else { Prograss -= Time.deltaTime; AnimationPrograss -= Time.deltaTime * hookAnimationChangeRate; }
@@ -194,8 +225,6 @@ public class SurviverHealth : MonoBehaviourPun
 
     IEnumerator WaitHook()
     {
-        state = HealthState.Injured;
-        surviverAnimation.Injuerd = true;
         rootCameraPosition.position -= new Vector3(0, yOffset, 0);
         surviverAnimation.Play("Hook_Free");
         photonView.RPC(nameof(AnimationWeight), RpcTarget.All, (float)0);
@@ -205,5 +234,7 @@ public class SurviverHealth : MonoBehaviourPun
             yield return null;
         }
         controller.BanMove = false;
+        State = HealthState.Injured;
+        hookCor = null;
     }
 }

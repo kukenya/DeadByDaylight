@@ -11,12 +11,10 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     Transform targetTrans;
     SurviverController surviverController;
-    CharacterController controller;
 
     private void Start()
     {
         surviverController = GetComponent<SurviverController>();
-        controller = GetComponent<CharacterController>();
     }
 
     Coroutine cor;
@@ -40,7 +38,6 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     IEnumerator AutoMoveCor(System.Action<float> action, float targetAngle)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
@@ -60,10 +57,10 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     IEnumerator AutoMoveCor(System.Action action, bool reverse)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
+            print(1);
             float targetAngle = reverse == false ? targetTrans.eulerAngles.y : targetTrans.eulerAngles.y - 180;
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
             if (Vector3.Distance(
@@ -82,25 +79,24 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     public float friendHealAutoStopDist = 0.5f;
 
-    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, SurvivorInteraction survivorInteraction)
+    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, System.Action action2, SurvivorInteraction survivorInteraction, Transform moveTrans)
     {
-        controller.enabled = false;
         surviverController.BanMove = true;
         while (true)
         {
-            float targetAngle = targetTrans.eulerAngles.y;
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+            transform.rotation = Quaternion.LookRotation(moveTrans.position - transform.position);
             if (Vector3.Distance(
-                new Vector3(targetTrans.position.x, 0, targetTrans.position.z),
+                new Vector3(moveTrans.position.x, 0, moveTrans.position.z),
                 new Vector3(transform.position.x, 0, transform.position.z)) < friendHealAutoStopDist) break;
 
             transform.position = Vector3.MoveTowards(
                    transform.position,
-                   new Vector3(targetTrans.position.x, transform.position.y, targetTrans.position.z),
+                   new Vector3(moveTrans.position.x, transform.position.y, moveTrans.position.z),
                    Time.deltaTime * autoMoveSpeed);
 
             yield return null;
         }
         action?.Invoke(survivorInteraction);
+        action2?.Invoke();
     }
 }
