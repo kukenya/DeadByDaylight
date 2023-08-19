@@ -195,9 +195,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 rotY += my * rotSpeed * Time.deltaTime;
 
                 // 회전값을 적용
-                transform.eulerAngles = new Vector3(0, rotX, 0);        // Horizontal
-                cam.eulerAngles = new Vector3(-rotY, rotX, 0);          // Vertical
-                                                                        // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
+                transform.eulerAngles = new Vector3(0, rotX, 0);
+                cam.eulerAngles = new Vector3(-rotY, rotX, 0);
 
                 // Y 회전값 35도로 고정
                 rotY = Mathf.Clamp(rotY, -35, 35);
@@ -863,7 +862,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
 
 
-    #region Pun
+    #region PunRPC
 
     [PunRPC]
     void SetTriggerRPC(string parameter)        // 애니메이션 SetTrigger
@@ -884,7 +883,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         axe.transform.position = throwPos;
         axe.transform.forward = throwForward;
     }
-
+    #endregion
 
     #region OnPhotonSerializeView
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -912,7 +911,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             receivePos = (Vector3)stream.ReceiveNext();
 
             // 회전 값을 받는다.
-            float y = transform.rotation.y;
             receiveRot = (Quaternion)stream.ReceiveNext();
 
             // h 값을 받는다
@@ -924,5 +922,4 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
-    #endregion
 }

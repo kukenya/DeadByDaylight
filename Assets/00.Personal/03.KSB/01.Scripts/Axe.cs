@@ -10,7 +10,6 @@ public class Axe : MonoBehaviour
 
     private void Start()
     {
-
         survivor = GameObject.Find("Survivor");
 
         // 리지드바디의 chargingForce 로 던진다.
