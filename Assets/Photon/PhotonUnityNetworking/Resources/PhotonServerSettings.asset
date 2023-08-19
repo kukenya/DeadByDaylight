@@ -66,6 +66,9 @@ MonoBehaviour:
   - UpdateSurvivorAmount
   - LoadSceneRPC
   - UpdateSurvivorList
+  - SetBoolRPC
+  - SetTriggerRPC
+  - ThrowAxeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
