@@ -643,7 +643,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         photonView.RPC(nameof(SurvivorCarry), RpcTarget.All);
-                                                         
+
                         photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup"); // 생존자를 들어올린다.
 
                         state = State.Carry;                                            // 상태를 Carry 로 바꾼다.
