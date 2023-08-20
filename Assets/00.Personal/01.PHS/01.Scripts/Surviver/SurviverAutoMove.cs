@@ -79,7 +79,7 @@ public class SurviverAutoMove : MonoBehaviourPun
 
     public float friendHealAutoStopDist = 0.5f;
 
-    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, System.Action action2, SurvivorInteraction survivorInteraction, Transform moveTrans)
+    public IEnumerator FriendHealingAutoMoveCor(System.Action<SurvivorInteraction> action, System.Action action2, SurvivorInteraction interaction, Transform moveTrans)
     {
         surviverController.BanMove = true;
         while (true)
@@ -96,7 +96,7 @@ public class SurviverAutoMove : MonoBehaviourPun
 
             yield return null;
         }
-        action?.Invoke(survivorInteraction);
+        action?.Invoke(interaction);
         action2?.Invoke();
     }
 }

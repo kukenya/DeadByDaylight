@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class SurvivorInteraction : MonoBehaviourPun
 {
@@ -29,14 +30,6 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     SurviverHealing surviverHealing;
     SurviverAnimation surviverAnimation;
-    CharacterController controller;
-
-    [PunRPC]
-    void SetController(bool value)
-    {
-        controller.enabled = value; 
-    }
-
     SurviverController surviverController;
     SurviverAutoMove surviverAutoMove;
     SurviverLookAt surviverLookAt;
@@ -76,7 +69,6 @@ public class SurvivorInteraction : MonoBehaviourPun
     {
         health = GetComponent<SurviverHealth>();
         surviverAnimation = GetComponent<SurviverAnimation>();
-        controller = GetComponent<CharacterController>();
         surviverController = GetComponent<SurviverController>();
         surviverAutoMove = GetComponent<SurviverAutoMove>();
         surviverLookAt = GetComponent<SurviverLookAt>();
@@ -135,6 +127,7 @@ public class SurvivorInteraction : MonoBehaviourPun
             case InteractiveType.HealCamper:
                 if (camperHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "치료");
+                ui.prograssBar.fillAmount = camperHealing.Prograss / camperHealing.maxPrograssTime;
                 break;
         }
     }
@@ -200,7 +193,7 @@ public class SurvivorInteraction : MonoBehaviourPun
             case InteractiveType.SelfHeal:
                 if (Input.GetMouseButtonDown(0))
                 {
-                    surviverHealing.OnSelfHeal(this);
+                    surviverHealing.OnSelfHeal();
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
@@ -221,6 +214,13 @@ public class SurvivorInteraction : MonoBehaviourPun
                 if (Input.GetMouseButtonDown(0))
                 {
                     FriendHealing();
+                }
+                else if (Input.GetMouseButton(0))
+                {
+                    if(camperHealing.Prograss >= camperHealing.maxPrograssTime)
+                    {
+                        OffFriendHealing();
+                    }
                 }
                 else if (Input.GetMouseButtonUp(0))
                 {
@@ -434,12 +434,11 @@ public class SurvivorInteraction : MonoBehaviourPun
     {
         generator.Fail = true;
         surviverAnimation.Play("Generator_Fail_FT", 0.1f, 0, true);
-        while (true)
-        {
-            if (surviverAnimation.IsAnimEnd("Generator_Fail_FT")) break;
-            yield return null;
-        }
+        yield return new WaitForSeconds(3.25f);
         generator.Fail = false;
-        surviverAnimation.Play("Generator_Idle_FT");
+        if(generator.Repair)
+        {
+            surviverAnimation.Play("Generator_Idle_FT");
+        }
     }
 }

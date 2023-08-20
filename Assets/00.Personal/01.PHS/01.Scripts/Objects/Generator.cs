@@ -22,17 +22,17 @@ public class Generator : MonoBehaviourPun, IPunObservable
             
             if (value == false && repairing != value)
             {
-                skillCheck.EndRandomSkillCheck();
+                skillCheck.enabled = false;
                 RepairingSurvivor--;
                 repairing = value;
             }
             else if(value == true && repairing != value)
             {
-                skillCheck.StartRandomSkillCheck(GetSkillCheckValue);
+                skillCheck.enabled = true;
+                skillCheck.InputAction(GetSkillCheckValue);
                 RepairingSurvivor++;
                 repairing = value;
             }
-            
         } 
     }
 
@@ -49,22 +49,6 @@ public class Generator : MonoBehaviourPun, IPunObservable
     [Header("플레이어 수")]
     int intSurvivor = 0;
     public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
-
-    [PunRPC]
-    void SurvivorIncrease()
-    {
-        intSurvivor++;
-        SetMultiplayIncrease();
-        
-    }
-
-    [PunRPC]
-    void SurvivorDecrease()
-    {
-        intSurvivor--;
-        SetMultiplayIncrease();
-        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
-    }
 
     [PunRPC]
     void SetIntSurvivor(int value)
@@ -120,11 +104,22 @@ public class Generator : MonoBehaviourPun, IPunObservable
     public GameObject blackHoleGO;
     public Ease blackHoleEase;
 
+    public float blackHoleGenerateDist = 10f;
+
+    public GameObject generatorMesh1;
+    public GameObject generatorMesh2;
+
     [PunRPC]
     void GenerateBlackHole()
     {
-        GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
-        go.transform.DOScale(0, 10).SetDelay(4).SetEase(blackHoleEase).SetAutoKill();
+        if(Vector3.Distance(Camera.main.transform.position, transform.position) >= blackHoleGenerateDist)
+        {
+            generatorMesh1.layer = 11;
+            generatorMesh2.layer = 11;
+            GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
+            go.GetComponent<BlackHoleEffect>().action = () => { generatorMesh1.layer = 0; generatorMesh2.layer = 0; };
+            //go.transform.DOScale(0, 10).SetDelay(4).SetEase(blackHoleEase).SetAutoKill();
+        }
     }
 
     
@@ -138,12 +133,13 @@ public class Generator : MonoBehaviourPun, IPunObservable
         Transform sparkTrans = animPos[0].GetChild(0).transform;
         Instantiate(spark, sparkTrans.position, sparkTrans.rotation);
         failAudio.Play();
-        if(interaction != null) interaction.GeneratorFail();
     }
 
 
     void GenRepair()
     {
+        if(repaierd) { return; }
+
         if(Prograss >= maxPrograssTime)
         {
             Repair = false;
@@ -177,16 +173,24 @@ public class Generator : MonoBehaviourPun, IPunObservable
         {
             case 0:
                 photonView.RPC(nameof(SkillCheckFail), RpcTarget.All);
+                if (interaction != null) interaction.GeneratorFail();
                 break;
             case 1:
-                Prograss += normalValue;
+                photonView.RPC(nameof(SKillCheckIncrease), RpcTarget.All, normalValue);
                 break;
             case 2:
-                Prograss += hardValue;
+                photonView.RPC(nameof(SKillCheckIncrease), RpcTarget.All, hardValue);
                 break;
         }
     }
     Vector3 playerPos;
+
+    [PunRPC]
+    void SKillCheckIncrease(float value)
+    {
+        Prograss += value;
+    }
+
 
     int TransformListSortComparer(Transform A, Transform B)
     {
