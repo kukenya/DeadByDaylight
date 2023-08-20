@@ -107,6 +107,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
             }
             else
             {
+                currentSpeed = 0;
                 lookAt.LookAt = false;
                 controller.enabled = false;
             }

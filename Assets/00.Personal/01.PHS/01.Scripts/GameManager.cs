@@ -51,6 +51,12 @@ public class GameManager : MonoBehaviourPun
     public GameObject survivorCanvas;
     public GameObject mudererCanvas;
 
+    public GameObject ratio219;
+    public Image fadeImage;
+
+    public GameObject perks;
+    public GameObject LeftDown;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -93,15 +99,69 @@ public class GameManager : MonoBehaviourPun
                 }
                 playerListIdx++;
             }
-            yield return new WaitForSeconds(0.1f);
-
+            yield return null;
+            Set0AllUI(LeftDown);
+            Set0AllUI(perks);
             OffCursor();
             generatorText.text = maxGenerator.ToString();
+
+            fadeImage.DOFade(0, 0.8f);
+
             yield return new WaitForSeconds(textFadeOffset);
             titleText.DOFade(0, textFadeTime);
             subText.DOFade(0, textFadeTime);
             lineImage.DOFade(0, textFadeTime);
-            generatorText.DOFade(1, textFadeTime);
+            yield return new WaitForSeconds(2);
+            ratio219.SetActive(false);
+
+            for(int i = 0; i < perks.transform.childCount; i++)
+            {
+                perks.transform.GetChild(i).GetComponent<Image>().DOFade(1, 2);
+            }
+
+            FindAllUIInChild(LeftDown);
+        }
+    }
+
+    void Set0AllUI(GameObject gameObject)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            if (gameObject.transform.GetChild(i).childCount > 0)
+            {
+                Set0AllUI(gameObject.transform.GetChild(i).gameObject);
+            }
+
+            if (gameObject.transform.GetChild(i).GetComponent<Image>() != null)
+            {
+                gameObject.transform.GetChild(i).GetComponent<Image>().DOFade(0, 0);
+            }
+
+            if (gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>() != null)
+            {
+                gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>().DOFade(0, 0);
+            }
+        }
+    }
+
+    void FindAllUIInChild(GameObject gameObject)
+    {
+        for(int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            if(gameObject.transform.GetChild(i).childCount > 0)
+            {
+                FindAllUIInChild(gameObject.transform.GetChild(i).gameObject);
+            }
+
+            if(gameObject.transform.GetChild(i).GetComponent<Image>() != null)
+            {
+                gameObject.transform.GetChild(i).GetComponent<Image>().DOFade(1, 1);
+            }
+
+            if (gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>() != null)
+            {
+                gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>().DOFade(1, 1);
+            }
         }
     }
 

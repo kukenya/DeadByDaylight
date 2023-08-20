@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEditor.Build.Content;
 
 public class SimpleConnectionMgr : MonoBehaviourPunCallbacks
 {

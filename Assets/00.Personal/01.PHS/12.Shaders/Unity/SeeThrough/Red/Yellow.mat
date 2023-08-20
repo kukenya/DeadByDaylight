@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedX-Ray
+  m_Name: Yellow
   m_Shader: {fileID: -6465566751694194690, guid: 53608af8f1e22e740b9d4ac1d8f09324, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
