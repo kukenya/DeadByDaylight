@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviourPun
         {
             PhotonNetwork.Instantiate("AnnaAnimation", spawnPos[0].position, Quaternion.identity);
             OffCursor();
+            survivorCamera1.gameObject.SetActive(false);
             survivorCanvas.SetActive(false);
             mudererCanvas.SetActive(true); 
         }

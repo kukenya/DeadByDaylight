@@ -164,7 +164,7 @@ public class SurviverHealth : MonoBehaviourPun
         else if(State == HealthState.Down)
         {
             controller.BanMove = true;
-            State = HealthState.Carrying;
+            StateNA = HealthState.Carrying;
             surviverAnimation.Play("PickUp_IN");
         }
     }
@@ -242,6 +242,7 @@ public class SurviverHealth : MonoBehaviourPun
         }
         controller.BanMove = false;
         State = HealthState.Injured;
+        surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
         hookCor = null;
     }
 }

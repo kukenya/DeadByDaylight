@@ -116,6 +116,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     public bool HaxMode = false;
 
+    public GameObject go;
+
+    public Vector3 cameraOffset;
+
     #region Start
     void Start()
     {
@@ -165,12 +169,21 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     private void LateUpdate()
     {
-        Vector3 rot = cam.transform.localEulerAngles;
-        rot.z = rotY;
-        cam.transform.localEulerAngles = rot; // new Vector3(rotY, 0.022f, -2.476f);
-        rotY = Mathf.Clamp(rotY, -35, 35);
+        go.transform.localPosition = cameraOffset;
+        //Vector3 rot = cam.transform.localEulerAngles;
+        //rot.z = rotY;
+        //cam.transform.localEulerAngles = rot; // new Vector3(rotY, 0.022f, -2.476f);
+        //rotY = Mathf.Clamp(rotY, -35, 35);
 
         //Camera.main.transform.eulerAngles = new Vector3(Camera.main.transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, 0);
+    }
+
+    [PunRPC]
+    void Hook()
+    {
+        survivor.GetComponent<SurviverHealth>().ChangeCarring();
+
+        survivor.transform.parent = null;   // 생존자와의 부모자식 관계를 끊는다.
     }
 
     #region Update
@@ -206,7 +219,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                 // 회전값을 적용
                 transform.eulerAngles = new Vector3(0, rotX, 0);                        // Horizontal
-                // cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
+                cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
                 // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
                 // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
                 // Y 회전값 35도로 고정
@@ -371,11 +384,13 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                 anim.SetTrigger("Hook");            // 생존자를 갈고리에 거는 애니메이션 실행한다.
 
+
+                photonView.RPC(nameof(Hook), RpcTarget.All);
                 // 갈고리에 거는 UI 게이지가 찬다.
 
                 // 다 차면 UI 끈다.
 
-                survivor.transform.parent = null;   // 생존자와의 부모자식 관계를 끊는다.
+               
             }
         }
         #endregion
@@ -516,9 +531,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 break;
             }
+            yield return null;
         }
 
-        yield return null;
     }
 
     // 생존자 들기

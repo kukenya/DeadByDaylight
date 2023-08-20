@@ -73,6 +73,7 @@ MonoBehaviour:
   - OffFriendHealRPC
   - OnFriendHealRPC
   - SurvivorCarry
+  - Hook
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
