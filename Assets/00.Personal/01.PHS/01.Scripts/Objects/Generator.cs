@@ -1,12 +1,13 @@
+using DG.Tweening;
+using Photon.Pun;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Generator : MonoBehaviour
+public class Generator : MonoBehaviourPun, IPunObservable
 {
     public bool repaierd = false;
     public Transform[] animPos;
-    Transform compareTrans;
     float prograss = 0;
 
     public float Prograss { get { return  prograss; } set {
@@ -18,18 +19,26 @@ public class Generator : MonoBehaviour
     bool repairing = false;
 
     public bool Repair { get { return repairing; } set {
-            repairing = value;
-            if (repairing == false) skillCheck.EndRandomSkillCheck();
-            else skillCheck.StartRandomSkillCheck(GetSkillCheckValue);
+            
+            if (value == false && repairing != value)
+            {
+                skillCheck.enabled = false;
+                RepairingSurvivor--;
+                repairing = value;
+            }
+            else if(value == true && repairing != value)
+            {
+                skillCheck.enabled = true;
+                skillCheck.InputAction(GetSkillCheckValue);
+                RepairingSurvivor++;
+                repairing = value;
+            }
         } 
     }
 
-    SurviverUI ui;
-    SurvivorInteraction interaction;
+    public SurvivorInteraction interaction;
     SkillCheck skillCheck;
     Animator anim;
-
-    float animationChangeTime;
 
     [Header("스파크 파티클")]
     public ParticleSystem spark;
@@ -37,11 +46,49 @@ public class Generator : MonoBehaviour
 
     public AudioSource failAudio;
 
+    [Header("플레이어 수")]
+    int intSurvivor = 0;
+    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+
+    [PunRPC]
+    void SetIntSurvivor(int value)
+    {
+        intSurvivor = value; 
+        SetMultiplayIncrease();
+        SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
+    }
+    float multiplyIncrease = 0;
+
+    void SetMultiplayIncrease()
+    {
+        switch (intSurvivor)
+        {
+            case 0:
+                multiplyIncrease = 0;
+                break;
+            case 1:
+                multiplyIncrease = 1;
+                break;
+            case 2:
+                multiplyIncrease = 1.5f;
+                break;
+            case 3:
+                multiplyIncrease = 2;
+                break;
+        }
+    }
+
+    bool fail = false;
+    public bool Fail { get { return fail; } set { photonView.RPC(nameof(SetFail), RpcTarget.All, value); } }
+    [PunRPC]
+    void SetFail(bool value)
+    {
+        fail = value;
+    }
+
     private void Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
-        animationChangeTime = maxPrograssTime / 4;
-        ui = SurviverUI.instance;
         skillCheck = SkillCheck.Instance;
     }
 
@@ -49,34 +96,64 @@ public class Generator : MonoBehaviour
     {
         GenRepair();
         UpdateAnim();
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            photonView.RPC(nameof(GenerateBlackHole), RpcTarget.All);
+        }
+    }
+    public GameObject blackHoleGO;
+    public Ease blackHoleEase;
+
+    public float blackHoleGenerateDist = 10f;
+
+    public GameObject generatorMesh1;
+    public GameObject generatorMesh2;
+
+    [PunRPC]
+    void GenerateBlackHole()
+    {
+        if(Vector3.Distance(Camera.main.transform.position, transform.position) >= blackHoleGenerateDist)
+        {
+            generatorMesh1.layer = 11;
+            generatorMesh2.layer = 11;
+            GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
+            go.GetComponent<BlackHoleEffect>().action = () => { generatorMesh1.layer = 0; generatorMesh2.layer = 0; };
+            //go.transform.DOScale(0, 10).SetDelay(4).SetEase(blackHoleEase).SetAutoKill();
+        }
     }
 
+    
+
+    [PunRPC]
     void SkillCheckFail()
     {
         Prograss += failValue;
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
         anim.CrossFadeInFixedTime("Fail", 0.25f);
 
         Transform sparkTrans = animPos[0].GetChild(0).transform;
         Instantiate(spark, sparkTrans.position, sparkTrans.rotation);
         failAudio.Play();
-        interaction.GeneratorFail();
     }
+
 
     void GenRepair()
     {
-        if (repairing == false) return;
+        if(repaierd) { return; }
+
         if(Prograss >= maxPrograssTime)
         {
+            Repair = false;
             repaierd = true;
+            GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayGeneratorClear();
-            ui.UnFocusProgressUI();
-            interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            gameObject.layer = 0;
         }
 
-        Prograss += Time.deltaTime;
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
-        ui.OnProgressUI();
+        if(photonView.IsMine && fail == false)
+        {
+            Prograss += Time.deltaTime * multiplyIncrease;
+        }
     }
 
     void UpdateAnim()
@@ -95,51 +172,48 @@ public class Generator : MonoBehaviour
         switch (value)
         {
             case 0:
-                SkillCheckFail();
+                photonView.RPC(nameof(SkillCheckFail), RpcTarget.All);
+                if (interaction != null) interaction.GeneratorFail();
                 break;
             case 1:
-                Prograss += normalValue;
+                photonView.RPC(nameof(SKillCheckIncrease), RpcTarget.All, normalValue);
                 break;
             case 2:
-                Prograss += hardValue;
+                photonView.RPC(nameof(SKillCheckIncrease), RpcTarget.All, hardValue);
                 break;
         }
     }
+    Vector3 playerPos;
 
-    private void OnTriggerEnter(Collider other)
+    [PunRPC]
+    void SKillCheckIncrease(float value)
     {
-        if (repaierd) return;
-
-        interaction = other.GetComponent<SurvivorInteraction>();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.Generator, this, this.transform);
-
-        compareTrans = other.transform;
-        ui.FocusProgressUI("수리");
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+        Prograss += value;
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (repaierd) return;
-
-        System.Array.Sort(animPos, TransformListSortComparer);
-        interaction.Position = animPos[0];
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (repaierd) return;
-
-        ui.UnFocusProgressUI();
-        interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
-    }
-
-
 
 
     int TransformListSortComparer(Transform A, Transform B)
     {
-        return Vector3.Distance(new Vector3(compareTrans.position.x, 0, compareTrans.position.z), new Vector3(A.transform.position.x, 0, A.transform.position.z))
-                .CompareTo(Vector3.Distance(new Vector3(compareTrans.position.x, 0, compareTrans.position.z), new Vector3(B.transform.position.x, 0, B.transform.position.z)));
+        return Vector3.Distance(new Vector3(playerPos.x, 0, playerPos.z), new Vector3(A.transform.position.x, 0, A.transform.position.z))
+                .CompareTo(Vector3.Distance(new Vector3(playerPos.x, 0, playerPos.z), new Vector3(B.transform.position.x, 0, B.transform.position.z)));
+    }
+
+    public Transform GetAnimationPos(Vector3 position)
+    {
+        playerPos = position;
+        System.Array.Sort(animPos, TransformListSortComparer);
+        return animPos[0];
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(Prograss);
+        }
+        else
+        {
+            Prograss = (float)stream.ReceiveNext();
+        }
     }
 }

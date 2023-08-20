@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bullet
+  - Survivor
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,10 @@ TagManager:
   - UI
   - Survivor
   - Interactive
-  - YelloXRay
+  - YelloX-Ray
+  - RedX-Ray
+  - BlackHole
+  - ClearX-Ray
   - 
   - 
   - 
@@ -22,13 +27,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Anna
+  - TwoHandAxe
+  - OneHandAxe
+  - CamExclusive
   - 
   - 
   - 

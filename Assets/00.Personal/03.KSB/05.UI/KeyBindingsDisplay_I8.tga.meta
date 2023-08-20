@@ -1,0 +1,717 @@
+fileFormatVersion: 2
+guid: a0e68bd97a13bdd41ae98e270ba28446
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 396
+        width: 85
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61ce547277ece7440839a6fe05846beb
+      internalID: -578127743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_1
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 396
+        width: 88
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533dd86a55f1243419bcb98f5ac04298
+      internalID: -1310452508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_2
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 396
+        width: 85
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6752f983ebe1be4b9424035b9c76ee1
+      internalID: -1399653371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_3
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 396
+        width: 88
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbee32044b5f9a40b8e38580967e7a7
+      internalID: -462990865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_4
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 422
+        width: 84
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d41237e7df3ad8e40a5c31e070aec7f2
+      internalID: -2038164781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_5
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 420
+        width: 94
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f71bd1f8b05cb40b353a110138f3de
+      internalID: 196093848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_6
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 429
+        width: 16
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b618c3527c432e408867c8ec390710e
+      internalID: -606487686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_7
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 429
+        width: 16
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 905f56ec17a12834aa9530b396baa01e
+      internalID: 1498233071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_8
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 429
+        width: 16
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 083ffc91ac1fd0241b478a0d1d26b79c
+      internalID: -1615796602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_9
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 429
+        width: 16
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f2062062c0bd234c8af16369ea9cd07
+      internalID: -1066345581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_10
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 450
+        width: 46
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c384ca09d0483b4eb484e6665a5bf6d
+      internalID: 561210990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_11
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 484
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3465469e079da454da543fdd42199fee
+      internalID: -1365780502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_12
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 456
+        width: 41
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cd280f9e59c494438ca51fc3566a720
+      internalID: 790128893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_13
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 436
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7af28218b6be264286dffb1da8d9e28
+      internalID: -2115408060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_14
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 436
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8431af6720b2b1644a3d16ce6d416ebd
+      internalID: 1432044696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 314
+        width: 396
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4bc6f343fa25b34c9f68b7ede39b642
+      internalID: -1364660015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_16
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 316
+        width: 396
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49c06b98724fbe9458a33ae1aa3e78af
+      internalID: 798077680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 244
+        width: 396
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 147647ac80e0be64991c28c51504b8a2
+      internalID: -829560727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_18
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 244
+        width: 396
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0983a04df069e5d42a4aaa49869a5734
+      internalID: 1543839957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_19
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 176
+        width: 395
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877a29e519cac4a4d9d607acf47a9529
+      internalID: -82416505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_20
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 174
+        width: 396
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f90463330028434f8475744d3c1d3bd
+      internalID: 1326750031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_21
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 105
+        width: 226
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188e9e2a36d8eba409b54c7841898ec3
+      internalID: -1346881190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_22
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 107
+        width: 223
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29ab9c28c1e188943a40273c4ecc3b4f
+      internalID: 196874461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_23
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 107
+        width: 223
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 820e0f43a4633c8419a66e1dd18d72c2
+      internalID: -1280821550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_24
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 107
+        width: 223
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9217b121156f6df4b98d32ca6fdf97c6
+      internalID: -1331692331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_25
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 36
+        width: 224
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae67747c4fdd91a409f5ee27fdb3c8e0
+      internalID: -1066286103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyBindingsDisplay_I8_26
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 36
+        width: 226
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 747b5c81412bdd8409b6ff3e9c182b5c
+      internalID: 129348094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      KeyBindingsDisplay_I8_0: -578127743
+      KeyBindingsDisplay_I8_1: -1310452508
+      KeyBindingsDisplay_I8_10: 561210990
+      KeyBindingsDisplay_I8_11: -1365780502
+      KeyBindingsDisplay_I8_12: 790128893
+      KeyBindingsDisplay_I8_13: -2115408060
+      KeyBindingsDisplay_I8_14: 1432044696
+      KeyBindingsDisplay_I8_15: -1364660015
+      KeyBindingsDisplay_I8_16: 798077680
+      KeyBindingsDisplay_I8_17: -829560727
+      KeyBindingsDisplay_I8_18: 1543839957
+      KeyBindingsDisplay_I8_19: -82416505
+      KeyBindingsDisplay_I8_2: -1399653371
+      KeyBindingsDisplay_I8_20: 1326750031
+      KeyBindingsDisplay_I8_21: -1346881190
+      KeyBindingsDisplay_I8_22: 196874461
+      KeyBindingsDisplay_I8_23: -1280821550
+      KeyBindingsDisplay_I8_24: -1331692331
+      KeyBindingsDisplay_I8_25: -1066286103
+      KeyBindingsDisplay_I8_26: 129348094
+      KeyBindingsDisplay_I8_3: -462990865
+      KeyBindingsDisplay_I8_4: -2038164781
+      KeyBindingsDisplay_I8_5: 196093848
+      KeyBindingsDisplay_I8_6: -606487686
+      KeyBindingsDisplay_I8_7: 1498233071
+      KeyBindingsDisplay_I8_8: -1615796602
+      KeyBindingsDisplay_I8_9: -1066345581
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

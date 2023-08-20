@@ -14,6 +14,15 @@ public class SurviverUI : MonoBehaviour
         instance = this;
     }
 
+    public enum PrograssUI
+    {
+        None,
+        Focus,
+        On
+    }
+
+    public PrograssUI prograssUI = PrograssUI.None;
+
     public float uiAlpha = 0.3f;
 
     [Header("진행바")]
@@ -21,6 +30,7 @@ public class SurviverUI : MonoBehaviour
     public Image prograssBar;
     public TextMeshProUGUI prograssText;
     public Image handImage;
+    public Sprite[] bars;
 
     [Header("진행바 아래 튜토리얼 UI")]
     public Image leftMouseClick;
@@ -30,9 +40,33 @@ public class SurviverUI : MonoBehaviour
     public Image spaceBar;
     public TextMeshProUGUI spaceText;
 
+
+    public void ChangePrograssUI(PrograssUI prograssUI, string text = null)
+    {
+        this.prograssUI = prograssUI;
+        OffFocusProgressUI();
+        switch (this.prograssUI)
+        {
+            case PrograssUI.None:
+                break;
+            case PrograssUI.Focus:
+                FocusProgressUI(text);
+                break;
+            case PrograssUI.On:
+                OnProgressUI(text);
+                break;
+        }
+    }
+
+    public void ChangePrograssBarSprite(int idx)
+    {
+        idx--;
+        idx = Mathf.Clamp(idx, 0, 2);
+        prograssBar.sprite = bars[idx];
+    }
+
     public void FocusProgressUI(string text)
     {
-        handImage.gameObject.SetActive(false);
         prograssText.text = text;
         mouseClickText.text = text;
 
@@ -56,10 +90,12 @@ public class SurviverUI : MonoBehaviour
         prograssBG.color = colors[2];
     }
 
-    public void OnProgressUI()
+    public void OnProgressUI(string text)
     {
         handImage.gameObject.SetActive(true);
-        leftMouseClick.gameObject.SetActive(false);
+        prograssBG.gameObject.SetActive(true);
+        prograssText.text = text;
+
         Color[] colors = new Color[3];
 
         colors[0] = prograssBar.color;
@@ -77,8 +113,9 @@ public class SurviverUI : MonoBehaviour
         prograssBG.color = colors[2];
     }
 
-    public void UnFocusProgressUI()
+    public void OffFocusProgressUI()
     {
+        handImage.gameObject.SetActive(false);
         prograssBG.gameObject.SetActive(false);
         leftMouseClick.gameObject.SetActive(false);
     }
@@ -93,5 +130,5 @@ public class SurviverUI : MonoBehaviour
     {
         spaceBar.gameObject.SetActive(false);
         spaceText.gameObject.SetActive(false);
-    }  
+    }
 }

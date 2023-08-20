@@ -93623,8 +93623,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: OffRotate
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 2.7916667
-    functionName: OnCC
+    functionName: OnRotate
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
