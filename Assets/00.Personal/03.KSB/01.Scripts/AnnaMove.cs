@@ -8,13 +8,7 @@ using Photon.Pun;
 
 public class AnnaMove : MonoBehaviourPun, IPunObservable
 {
-    #region 싱글톤 및 상태
-    public static AnnaMove instance;
-    private void Awake()
-    {
-        instance = this;
-    }
-
+    #region 상태
     public enum State
     {
         Idle, Move, NormalAttack, ThrowingAttack, CoolTime, Carry, CarryAttack, Stunned
@@ -30,6 +24,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public AnimatorOverrideController animOC;   // 살인마 애니메이터 (네트워크)
     public Camera cineCam;                      // 시네머신 카메라
     public Transform playCamera;                // 플레이 카메라
+    public Transform foward;
+    
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -124,6 +120,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     void Start()
     {
         if (HaxMode) maxAxeCount = 999;
+
         // 공통
         anim = GetComponent<Animator>();    // 안나 Animator 컴포넌트 가져온다.
         smallAxe.SetActive(false);          // 왼손에 들고 있는 한손도끼 렌더러 비활성화한다.
@@ -166,6 +163,16 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
+    private void LateUpdate()
+    {
+        Vector3 rot = cam.transform.localEulerAngles;
+        rot.z = rotY;
+        cam.transform.localEulerAngles = rot; // new Vector3(rotY, 0.022f, -2.476f);
+        rotY = Mathf.Clamp(rotY, -35, 35);
+
+        //Camera.main.transform.eulerAngles = new Vector3(Camera.main.transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, 0);
+    }
+
     #region Update
     void Update()
     {
@@ -198,12 +205,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 rotY += my * rotSpeed * Time.deltaTime;
 
                 // 회전값을 적용
-                transform.eulerAngles = new Vector3(0, rotX, 0);        // Horizontal
-                cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);        // Vertical
-                                                                        // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
-
+                transform.eulerAngles = new Vector3(0, rotX, 0);                        // Horizontal
+                // cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
+                // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
+                // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
                 // Y 회전값 35도로 고정
-                rotY = Mathf.Clamp(rotY, -35, 35);
+
             }
             #endregion
 
@@ -293,6 +300,19 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 }
             }
             #endregion
+
+            #region 판자 부수기
+            if (canDestroyPallet == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    cc.enabled = false;             // 움직임 멈춤
+                    //anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");
+                                                    // 판자가 부서지는 애니메이션 실행
+                }
+            }
+            #endregion
         }
 
         // 나의 Anna 가 아닐 때
@@ -337,17 +357,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         #endregion
 
 
-        #region 판자 부수기
-        if (canDestroyPallet == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                cc.enabled = false;             // 움직임 멈춤
-                anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
-                                                // 판자가 부서지는 애니메이션 실행
-            }
-        }
-        #endregion
+        
 
         #region 갈고리 걸기
         if (state == State.Carry && canHook)
@@ -382,8 +392,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         for (int i = 0; i < hitcolliders.Length; i++)
         {
             print(hitcolliders[i].transform.gameObject.name);
-            // Surviver 생존자
-            if (hitcolliders[i].transform.gameObject.name.Contains("Surviver"))
+            // Survivor 생존자
+            //if (hitcolliders[i].transform.gameObject.name.Contains("Survivor"))
+            if (hitcolliders[i].transform.gameObject.name.Contains("Survivor"))
             {
                 // 상태가 Healthy 인 생존자가 1명 이상이라면 chase BG이 나오게 한다.
 
@@ -404,7 +415,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             }
 
             // Generator 발전기
-            if (hitcolliders[i].transform.gameObject.name.Contains("Generator"))
+            if (hitcolliders[i].transform.gameObject.name == "EnableCollider")
             {
                 canDestroyGenerator = true;
 
@@ -541,17 +552,22 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
             // 게임이 시작하고 5초 뒤에 상태를 Move 로 바꾼다.
             currentTime += Time.deltaTime;
+            //if (currentTime >= gameStartTime)
             if (currentTime >= gameStartTime)
             {
                 throwUI.SetActive(true);
                 cineCam.enabled = false;
                 cc.enabled = true;
                 state = State.Move;
-                anim.SetBool("Move", true);
+                //anim.SetBool("Move", true);
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Move", true);
                 currentTime = 0;
             }
         }
+        //else
+        //{
+        //    state = State.Move;
+        //}
     }
     #endregion
 
@@ -620,31 +636,36 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 만약 사정거리 안에 생존자가 쓰러져있다면
             if (canCarry && state != State.Carry)
             {
-                // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (photonView.IsMine)
                 {
-                    survivor.GetComponent<SurviverHealth>().ChangeCarring();    // 생존자의 상태를 바꾸는 함수를 호출
+                    // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출
 
-                    anim.SetTrigger("Pickup");                                  // 생존자를 들어올린다.
+                        anim.SetTrigger("Pickup");                                      // 생존자를 들어올린다.
 
-                    state = State.Carry;                                        // 상태를 Carry 로 바꾼다.
+                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup"); //
 
-                    canCarry = false;                                           // 들 수 있는 상태가 아님
+                        state = State.Carry;                                            // 상태를 Carry 로 바꾼다.
 
-                    transform.forward = survivor.transform.forward;             // 내 앞방향을 생존자의 앞방향으로 설정한다.
+                        canCarry = false;                                               // 들 수 있는 상태가 아님
 
-                    StartCoroutine("LerptoSurvivor");                           // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
+                        transform.forward = survivor.transform.forward;                 // 내 앞방향을 생존자의 앞방향으로 설정한다.
 
-                    survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
+                        StartCoroutine("LerptoSurvivor");                               // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
+
+                        survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
 
 
-                    // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
-                    // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
-                    survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
-                    survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
-                    // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
-                    // survivor.transform.localPosition = new Vector3(0,0,0);
-                    // survivor.transform.localRotation = new Quaternion(0,0,0,0);
+                        // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
+                        // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
+                        survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
+                        survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
+                        // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
+                        // survivor.transform.localPosition = new Vector3(0,0,0);
+                        // survivor.transform.localRotation = new Quaternion(0,0,0,0);
+                    }
                 }
             }
             #endregion
@@ -667,35 +688,38 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     // 도끼 차징
     void Charging()
     {
-        if (playingchargingsound == false)
+        if (photonView.IsMine)
         {
-            // 차징 사운드 재생
-            SoundManager.instance.PlaySmallAxeSounds(0);
-            playingchargingsound = true;
+            if (playingchargingsound == false)
+            {
+                // 차징 사운드 재생
+                SoundManager.instance.PlaySmallAxeSounds(0);
+                playingchargingsound = true;
+            }
+
+            #region 시간에 따라 누적되는 투사체 던지는 힘
+            // 시간을 누적시킨다.
+            currentChargingTime += Time.deltaTime;
+
+            // 시간이 누적됨에 따라 chargingForce 를 증가시킨다.
+            chargingForce = Mathf.Lerp(minAxePower, maxAxePower, (currentChargingTime - 1.25f) / 1.75f);
+            // print("aaa : " + chargingForce);
+            // 1.25초 전까지는 던지는 힘을 주지 않는다.
+            // if (currentChargingTime < minimumChargingTime) return;
+
+            // 최대 차지 시간보다 차지시간이 길어지면
+            if (currentChargingTime > maximumChargingTime && playingfullchargingsound == false)
+            {
+                playingfullchargingsound = true;
+
+                // 최대 차징 사운드를 재생
+                SoundManager.instance.PlaySmallAxeSounds(1);
+
+                //  최대힘으로 유지한다.
+                chargingForce = maxAxePower;
+            }
+            #endregion
         }
-
-        #region 시간에 따라 누적되는 투사체 던지는 힘
-        // 시간을 누적시킨다.
-        currentChargingTime += Time.deltaTime;
-
-        // 시간이 누적됨에 따라 chargingForce 를 증가시킨다.
-        chargingForce = Mathf.Lerp(minAxePower, maxAxePower, (currentChargingTime - 1.25f) / 1.75f);
-
-        // 1.25초 전까지는 던지는 힘을 주지 않는다.
-        // if (currentChargingTime < minimumChargingTime) return;
-
-        // 최대 차지 시간보다 차지시간이 길어지면
-        if (currentChargingTime > maximumChargingTime && playingfullchargingsound == false)
-        {
-            playingfullchargingsound = true;
-
-            // 최대 차징 사운드를 재생
-            SoundManager.instance.PlaySmallAxeSounds(1);
-
-            //  최대힘으로 유지한다.
-            chargingForce = maxAxePower;
-        }
-        #endregion
     }
 
     // 도끼 차징 캔슬
@@ -709,24 +733,30 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     // 도끼 던짐
     private void ThrowingAttack()
     {
-        if (isThrowing == true) return;                                 // 만약 isThrowing 라면 리턴
+        if (photonView.IsMine)
+        {
+            if (isThrowing == true) return;                                 // 만약 isThrowing 라면 리턴
 
-        isThrowing = true;
-        isCharging = false;                                             // 차징 중이 아님
-        playingchargingsound = false;                                   // 차징하는 사운드 재생할 수 있는 상태
-        playingfullchargingsound = false;
+            isThrowing = true;
+            isCharging = false;                                             // 차징 중이 아님
+            playingchargingsound = false;                                   // 차징하는 사운드 재생할 수 있는 상태
+            playingfullchargingsound = false;
 
-        GameObject smallaxe = Instantiate(smallAxeFactory);             // 한손도끼를 만든다.
-        smallaxe.transform.position = throwingSpot.position;            // 만든 한손도끼의 위치를 왼손에 배치한다.
-        smallaxe.transform.forward = Camera.main.transform.forward;     // 만든 한손도끼의 앞방향을 카메라의 앞방향으로 한다
+            //GameObject smallaxe = Instantiate(smallAxeFactory);             // 한손도끼를 만든다.
+            //smallaxe.transform.position = throwingSpot.position;            // 만든 한손도끼의 위치를 왼손에 배치한다.
+            //smallaxe.transform.forward = Camera.main.transform.forward;     // 만든 한손도끼의 앞방향을 카메라의 앞방향으로 한다
 
-        ThrowAxeRPC(throwingSpot.position, Camera.main.transform.position);
+            Vector3 pos = throwingSpot.position;
+            Vector3 forward = Camera.main.transform.forward;
 
-        currentAxeCount--;                                              // 도끼 갯수를 줄인다
-        axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
-        print(currentAxeCount);
+            photonView.RPC(nameof(ThrowAxeRPC), RpcTarget.All, pos, forward, chargingForce);
 
-        state = State.CoolTime;                                         // 상태를 CoolTime 으로 바꾼다
+            currentAxeCount--;                                              // 도끼 갯수를 줄인다
+            axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
+            print(currentAxeCount);
+
+            state = State.CoolTime;                                         // 상태를 CoolTime 으로 바꾼다
+        }        
     }
 
     // 2초 쿨타임
@@ -817,12 +847,14 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     {
         bigAxeCollider.enabled = true;
     }
+
     public void OffAxe()
     {
         bigAxeCollider.enabled = false;
     }
 
-    void OnMyReset()            // State 를 Move 로 초기화하는 함수
+    // 초기화 함수
+    void OnMyReset()
     {
         state = State.Move;
 
@@ -864,28 +896,26 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
-
-
     #region PunRPC
-
     [PunRPC]
-    void SetTriggerRPC(string parameter)        // 애니메이션 SetTrigger
+    void SetTriggerRPC(string parameter)
     {
         anim.SetTrigger(parameter);
     }
 
     [PunRPC]
-    void SetBoolRPC(string parameter, bool boolean)       // 애니메이션 SetBool -> true
+    void SetBoolRPC(string parameter, bool boolean)
     {
         anim.SetBool(parameter, boolean);
     }
 
     [PunRPC]
-    void ThrowAxeRPC(Vector3 throwPos, Vector3 throwForward)
+    void ThrowAxeRPC(Vector3 throwPos, Vector3 throwForward, float force)
     {
         GameObject axe = Instantiate(smallAxeFactory);
-        axe.transform.position = throwPos;
-        axe.transform.forward = throwForward;
+        axe.transform.position = throwPos;      // 도끼 던지는 위치
+        axe.transform.forward = throwForward;   // 도끼 앞 방향
+        axe.GetComponent<Axe>().flying(force);  // 도끼 던지는 힘
     }
     #endregion
 
@@ -898,7 +928,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 나의 위치 값을 보낸다.
             stream.SendNext(transform.position);
 
-            // 회전 값을 보낸다.
+            // Y 회전 값을 보낸다.
             stream.SendNext(new Vector3(0, transform.eulerAngles.y, 0));
 
             // h 값을 보낸다
@@ -914,7 +944,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 그의 위치 값을 받는다.
             receivePos = (Vector3)stream.ReceiveNext();
 
-            // 회전 값을 받는다.
+            // Y 회전 값을 받는다.
             receiveRot = Quaternion.Euler((Vector3)stream.ReceiveNext());
 
             // h 값을 받는다
@@ -925,5 +955,4 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
     }
     #endregion
-
 }
