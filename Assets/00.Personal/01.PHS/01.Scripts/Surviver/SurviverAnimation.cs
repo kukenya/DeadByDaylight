@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SurviverAnimation : MonoBehaviourPun
 {

@@ -400,9 +400,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
 
                 // 상태가 Down 이라면 canCarry 을 true 로 바꾼다.
-                if (survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
+                if (hitcolliders[i].GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
                 {
                     canCarry = true;
+                    survivor = hitcolliders[i].gameObject;
                 }
             }
             else
@@ -459,7 +460,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             }
 
             // Hook 갈고리 // 만약 내 상태가 Carry라면
-            if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && survivor.GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Carrying)
+            if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && state == State.Carry)
             {
                 // canHook -> true
                 canHook = true;
@@ -531,8 +532,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 break;
             }
+            yield return null;
         }
-        yield return null;
     }
 
     // 발전기
@@ -641,11 +642,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출
-
-                        anim.SetTrigger("Pickup");                                      // 생존자를 들어올린다.
-
-                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup"); //
+                        photonView.RPC(nameof(SurvivorCarry), RpcTarget.All);
+                                                         
+                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup"); // 생존자를 들어올린다.
 
                         state = State.Carry;                                            // 상태를 Carry 로 바꾼다.
 
@@ -655,13 +654,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                         StartCoroutine("LerptoSurvivor");                               // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
 
-                        survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
-
-
                         // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
                         // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
-                        survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
-                        survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
+                        
                         // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
                         // survivor.transform.localPosition = new Vector3(0,0,0);
                         // survivor.transform.localRotation = new Quaternion(0,0,0,0);
@@ -672,6 +667,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
     }
     #endregion
+
+    [PunRPC]
+    void SurvivorCarry()
+    {
+        survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출 
+
+        survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
+
+        survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
+        survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
+    }
 
     #region 일반공격
     private void NormalAttack()
