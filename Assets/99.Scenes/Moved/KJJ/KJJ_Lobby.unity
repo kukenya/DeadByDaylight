@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012900375, g: 0.001996361, b: 0.0026881145, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012900415, g: 0.001996414, b: 0.002686468, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2312,7 +2312,7 @@ GameObject:
   - component: {fileID: 246142290}
   - component: {fileID: 246142289}
   m_Layer: 5
-  m_Name: Ready
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6307,7 +6307,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: JoinCreateRoom
+        m_MethodName: JoinRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7033,14 +7033,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655807884}
-  m_LocalRotation: {x: -0, y: 0.9638633, z: -0, w: 0.2663973}
-  m_LocalPosition: {x: 6.24, y: 1, z: 110.99}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.9677092, z: -0, w: 0.25206935}
+  m_LocalPosition: {x: 6.24, y: 0, z: 110.99}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 149.1, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 150.8, z: 0}
 --- !u!1 &659602782
 GameObject:
   m_ObjectHideFlags: 0
@@ -10067,7 +10067,7 @@ GameObject:
   - component: {fileID: 936739410}
   - component: {fileID: 936739409}
   m_Layer: 5
-  m_Name: Ready
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10234,7 +10234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949846111}
   m_LocalRotation: {x: -0, y: 0.97886735, z: -0, w: 0.2044962}
-  m_LocalPosition: {x: 6.72, y: 1, z: 111.97}
+  m_LocalPosition: {x: 6.72, y: 0, z: 111.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11308,7 +11308,7 @@ GameObject:
   - component: {fileID: 1009087536}
   - component: {fileID: 1009087535}
   m_Layer: 5
-  m_Name: Ready
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16062,7 +16062,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Ready
+  m_Text: "\uC2DC \uC791"
 --- !u!222 &1198810908
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17234,6 +17234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811375dc5182d154eb8d77e4db19a1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 655807885}
+  playerObject: {fileID: 0}
 --- !u!4 &1318087719
 Transform:
   m_ObjectHideFlags: 0
@@ -20002,7 +20004,7 @@ GameObject:
   - component: {fileID: 1555560894}
   - component: {fileID: 1555560893}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20072,7 +20074,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1555560894}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1318087718}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: GameStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1555560894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20473,7 +20487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577188428}
   m_LocalRotation: {x: -0, y: 0.9931707, z: -0, w: 0.116670705}
-  m_LocalPosition: {x: 7.55, y: 1, z: 112.32}
+  m_LocalPosition: {x: 7.55, y: 0, z: 112.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22709,7 +22723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832637860}
   m_LocalRotation: {x: -0, y: 0.877983, z: -0, w: 0.47869185}
-  m_LocalPosition: {x: 5.06, y: 1, z: 110.87}
+  m_LocalPosition: {x: 5.06, y: 0, z: 110.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24346,7 +24360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2013435944
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,19 +7,24 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    // 게임시작 활성화
-    //public Button[] btnCreateRoom;
+    public Transform player;
 
+    public GameObject playerObject;
+
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true; // 방장이 플레이 씬으로 넘어가면 다른 플레이어도 플레이 씬으로 넘어가게
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void JoinCreateRoom()
@@ -34,6 +39,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 기본 로비에 방 참가 or 생성 요청 (방이름, 방 옵션, )
         PhotonNetwork.JoinOrCreateRoom("GameRoom", option, null);
     }
+
+    public void JoinRoom()
+    {
+        PhotonNetwork.JoinRoom("GameRoom");
+
+        // 플레이어 스폰
+        PlayerSpawn();
+    }
+
 
     // 방 생성 완료시 호출되는 함수
     public override void OnCreatedRoom()
@@ -67,7 +81,34 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 방 나가기
     public void LeaveRoom()
     {
+        PhotonNetwork.Destroy(playerObject.gameObject);
         PhotonNetwork.LeaveRoom();
         print("방을 떠났습니다.");
+    }
+
+    public void GameStart()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // GameScene으로 이동
+            PhotonNetwork.LoadLevel("PHS");
+        }
+    }
+
+    //public override void OnLeftRoom()
+    //{
+    //    base.OnLeftRoom();
+    //    print("OnLeftRoom");
+    //}
+
+    //public override void OnConnectedToMaster()
+    //{
+    //    base.OnConnectedToMaster();
+    //    print("OnConnectedToMaster");
+    //}
+
+    public void PlayerSpawn()
+    {
+        playerObject = PhotonNetwork.Instantiate("Player", player.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
     }
 }
