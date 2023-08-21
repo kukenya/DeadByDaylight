@@ -346,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480437736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 53.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4302,14 +4302,23 @@ MonoBehaviour:
   titleText: {fileID: 0}
   subText: {fileID: 0}
   lineImage: {fileID: 0}
+  generatorText: {fileID: 0}
   survivorCamera1: {fileID: 0}
   spawnPos:
   - {fileID: 1079232925}
   - {fileID: 1247316080}
+  generatorSpawnPos: []
+  playerListIdx: 0
   survivorName: Survivor
-  multiplay: 0
+  listManager: {fileID: 0}
   textFadeTime: 0
   textFadeOffset: 0
+  survivorCanvas: {fileID: 0}
+  mudererCanvas: {fileID: 0}
+  ratio219: {fileID: 0}
+  fadeImage: {fileID: 0}
+  perks: {fileID: 0}
+  LeftDown: {fileID: 0}
 --- !u!114 &808024828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4665,6 +4674,7 @@ MonoBehaviour:
   controller: {fileID: 1186254979}
   rootCameraPosition: {fileID: 0}
   hook: 0
+  survivorRoomIdx: 0
   yOffset: 2
   maxPrograssTime: 2
   hookAnimationChangeRate: 2
@@ -4681,6 +4691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1186254985}
+  currentState: 
   moveState: 0
   poseState: 0
   interactState: 0
@@ -4786,19 +4797,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveType: 0
-  pallet: {fileID: 0}
   window: {fileID: 0}
+  pallet: {fileID: 0}
   generator: {fileID: 0}
   exit: {fileID: 0}
   camperHealing: {fileID: 0}
-  activate: 0
   possibleAngle: 120
   autoMoverStopDistance: 0.2
   autoMoverSpeed: 8
   currentObstacleTrans: {fileID: 0}
   fastJumpAngle: 50
   midJumpAngle: 90
-  a: 0.48
 --- !u!114 &1186254997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4825,7 +4834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction: {fileID: 0}
+  target: 0
   maxPrograssTime: 0
   healing: 0
   healed: 0

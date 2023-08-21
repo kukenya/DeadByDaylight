@@ -21,12 +21,12 @@ public class SurviverLookAt : MonoBehaviourPun
     {
         if (value == true)
         {
-            anim.SetLayerWeight(1, 0);
+            anim?.SetLayerWeight(1, 0);
             isLookAt = value;
         }
         else
         {
-            anim.SetLayerWeight(1, 0);
+            anim?.SetLayerWeight(1, 0);
             isLookAt = value;
         }
     }

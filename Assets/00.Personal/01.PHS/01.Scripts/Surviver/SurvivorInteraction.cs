@@ -215,13 +215,6 @@ public class SurvivorInteraction : MonoBehaviourPun
                 {
                     FriendHealing();
                 }
-                else if (Input.GetMouseButton(0))
-                {
-                    if(camperHealing.Prograss >= camperHealing.maxPrograssTime)
-                    {
-                        OffFriendHealing();
-                    }
-                }
                 else if (Input.GetMouseButtonUp(0))
                 {
                     OffFriendHealing();

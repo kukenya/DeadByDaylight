@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ChaseorLullaby : MonoBehaviour
+public class ChaseorLullaby : MonoBehaviourPun
 {
     public static ChaseorLullaby instance;
     private void Awake()
@@ -25,9 +26,13 @@ public class ChaseorLullaby : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.gameObject.layer == 6 && isChasing == false)
+        if (other.transform.gameObject.name.Contains("Survivor") && isChasing == false)
         {
-            PlayChaseBG();
+            if (photonView.IsMine)
+            {
+                PlayChaseBG();
+            }
+            
             isChasing = true;
             isLullaby = false;
         }
@@ -35,7 +40,7 @@ public class ChaseorLullaby : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.gameObject.layer == 6 && isLullaby == false)
+        if (other.transform.gameObject.name.Contains("Survivor") && isLullaby == false)
         {
             PlayLullaby();
             isLullaby = true;

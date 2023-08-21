@@ -19,15 +19,15 @@ public class BigAxe : MonoBehaviourPun
 
     private void Start()
     {
-        if(photonView.IsMine== false)
+        if(photonView.IsMine== true)
         {
-            enabled = false;
+            goBloodImage = GameObject.Find("Blood");
+            bloodImage = goBloodImage.GetComponent<Image>();
+            color = bloodImage.GetComponent<Image>().color;
+            color.a = 0;
+            bloodImage.GetComponent<Image>().color = color;
         }
-        goBloodImage = GameObject.Find("Blood");
-        bloodImage = goBloodImage.GetComponent<Image>();
-        color = bloodImage.GetComponent<Image>().color;
-        color.a = 0;
-        bloodImage.GetComponent<Image>().color = color;
+
     }
 
     private void Update()
@@ -47,6 +47,7 @@ public class BigAxe : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+        print(other.gameObject.name);
         if (other.gameObject.name.Contains("Survivor"))
         {
             hit = true;                                                 // 1초 후에 코루틴 함수를 호출한다.

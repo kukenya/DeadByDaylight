@@ -19,8 +19,22 @@ public class GameManager : MonoBehaviourPun
     public Image lineImage;
 
     public TextMeshProUGUI generatorText;
-    int maxGenerator = 4;
-    public int Generator { get { return maxGenerator; } set { maxGenerator = value; generatorText.text = maxGenerator.ToString(); } }
+
+    public EndingLine endingLine;
+
+    public int maxGenerator = 4;
+    public int Generator { get { return maxGenerator; } 
+        set {
+            maxGenerator = value;
+            if(maxGenerator == 0)
+            {
+                generatorText.text = " ";
+                endingLine.enabled = true;
+                return;
+            }
+            generatorText.text = maxGenerator.ToString();
+        }
+    }
 
     public CinemachineVirtualCamera survivorCamera1;
 
@@ -76,8 +90,9 @@ public class GameManager : MonoBehaviourPun
 
         if(SelecterManager.Instance.IsSurvivor == false) 
         {
-            PhotonNetwork.Instantiate("AnnaAnimation", spawnPos[0].position, Quaternion.identity);
+            PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[0].position.x, 0, spawnPos[0].position.z), Quaternion.identity);
             OffCursor();
+            survivorCamera1.gameObject.SetActive(false);
             survivorCanvas.SetActive(false);
             mudererCanvas.SetActive(true); 
         }
@@ -132,15 +147,9 @@ public class GameManager : MonoBehaviourPun
                 Set0AllUI(gameObject.transform.GetChild(i).gameObject);
             }
 
-            if (gameObject.transform.GetChild(i).GetComponent<Image>() != null)
-            {
-                gameObject.transform.GetChild(i).GetComponent<Image>().DOFade(0, 0);
-            }
+            gameObject.transform.GetChild(i).GetComponent<Image>()?.DOFade(0, 0);
 
-            if (gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>() != null)
-            {
-                gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>().DOFade(0, 0);
-            }
+            gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>()?.DOFade(0, 0);
         }
     }
 
@@ -153,15 +162,9 @@ public class GameManager : MonoBehaviourPun
                 FindAllUIInChild(gameObject.transform.GetChild(i).gameObject);
             }
 
-            if(gameObject.transform.GetChild(i).GetComponent<Image>() != null)
-            {
-                gameObject.transform.GetChild(i).GetComponent<Image>().DOFade(1, 1);
-            }
+            gameObject.transform.GetChild(i).GetComponent<Image>()?.DOFade(1, 1);
 
-            if (gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>() != null)
-            {
-                gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>().DOFade(1, 1);
-            }
+            gameObject.transform.GetChild(i).GetComponent<TextMeshProUGUI>()?.DOFade(1, 1);
         }
     }
 

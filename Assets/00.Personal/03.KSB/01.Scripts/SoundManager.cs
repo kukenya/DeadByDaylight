@@ -28,8 +28,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlayHitSounds(int index)
     {
-        hitAudioSource.clip = hitSounds[index];
-        hitAudioSource.Play();
+        // hitAudioSource.clip = hitSounds[index];
+        hitAudioSource.PlayOneShot(hitSounds[index]);
     }
 
     #region ÆÇÀÚ

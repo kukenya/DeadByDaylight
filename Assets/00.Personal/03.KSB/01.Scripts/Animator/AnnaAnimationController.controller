@@ -1141,7 +1141,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -6091233902002215038}
-    m_Position: {x: 260, y: 120, z: 0}
+    m_Position: {x: 240, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3943789642867438936}
     m_Position: {x: 540, y: 120, z: 0}
@@ -1502,7 +1502,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 2ce1f7852bdf15a4c87618d89c52938f, type: 2}
+    m_Motion: {fileID: 7400000, guid: 00edc42ac0eae4747b5a3c91fa7fb1c6, type: 2}
     m_Threshold: 0.25
     m_Position: {x: 0, y: -1}
     m_TimeScale: 1

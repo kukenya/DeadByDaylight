@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SurviverHealth : MonoBehaviourPun
 {
-    public SurviverController controller;
+    SurviverController controller;
     SurviverAnimation surviverAnimation;
     SurviverLookAt surviverLookAt;
     SurvivorInteraction interaction;
@@ -51,9 +51,14 @@ public class SurviverHealth : MonoBehaviourPun
         {
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Down;
         }
+        else if(State == HealthState.Carrying)
+        {
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Carry;
+        }
         else if(State == HealthState.Hook)
         {
             Prograss = 0;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Hook;
         }
         
         surviverAnimation.AnimationChange();
@@ -68,9 +73,29 @@ public class SurviverHealth : MonoBehaviourPun
     void SetHealthStateNA(HealthState value)
     {
         state = value;
-        if (state == HealthState.Injured) surviverAnimation.Injuerd = true;
-        if (state == HealthState.Healthy) surviverAnimation.Injuerd = false;
-        if (state == HealthState.Hook) Prograss = 0;
+        if (State == HealthState.Healthy)
+        {
+            surviverAnimation.Injuerd = false;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Healthy;
+        }
+        else if (State == HealthState.Injured)
+        {
+            surviverAnimation.Injuerd = true;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
+        }
+        else if (State == HealthState.Down)
+        {
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Down;
+        }
+        else if (State == HealthState.Carrying)
+        {
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Carry;
+        }
+        else if (State == HealthState.Hook)
+        {
+            Prograss = 0;
+            listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Hook;
+        }
     }
 
     // 플레이어 갈고리 걸린 횟수 관련 변수
@@ -164,7 +189,7 @@ public class SurviverHealth : MonoBehaviourPun
         else if(State == HealthState.Down)
         {
             controller.BanMove = true;
-            State = HealthState.Carrying;
+            StateNA = HealthState.Carrying;
             surviverAnimation.Play("PickUp_IN");
         }
     }
@@ -242,6 +267,8 @@ public class SurviverHealth : MonoBehaviourPun
         }
         controller.BanMove = false;
         State = HealthState.Injured;
+        controller.Crawl = false;
+        surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
         hookCor = null;
     }
 }
