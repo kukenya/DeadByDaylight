@@ -17,8 +17,11 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: ff5053573e76d244982363b4128e96cf, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: a5f2f4242b0055a4881ac6f698e6ba44, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: e2b06042fde0b374396a64177ae681ed, type: 2}
+<<<<<<< Updated upstream
   - m_OriginalClip: {fileID: 7400000, guid: 2ce1f7852bdf15a4c87618d89c52938f, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 0e862ec343919c84dbf8450a40421967, type: 2}
+=======
+>>>>>>> Stashed changes
   - m_OriginalClip: {fileID: 7400000, guid: f34bdb460bf593c42be5f952731df77f, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 598f1604010e9ad409d1f1b719718e43, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 72425c5751ef2f24e81485871c348c34, type: 2}
@@ -75,3 +78,5 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: ec9a79ef51d94f24eaa479b70c13319c, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: fcf044ea805349249b435f923fa6d4ad, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: ccf77205443548b459b2785359984657, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 724b30fc6e1fa884db9f9641b5904881, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2217166dd4ce5e74d8ebede5ce62c598, type: 2}
