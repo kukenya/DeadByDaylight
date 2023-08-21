@@ -84,6 +84,7 @@ public class SurviverAutoMove : MonoBehaviourPun
         surviverController.BanMove = true;
         while (true)
         {
+            print("여기 돌고있음?");
             transform.rotation = Quaternion.LookRotation(moveTrans.position - transform.position);
             if (Vector3.Distance(
                 new Vector3(moveTrans.position.x, 0, moveTrans.position.z),

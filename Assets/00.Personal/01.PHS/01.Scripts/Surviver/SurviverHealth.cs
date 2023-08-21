@@ -268,7 +268,13 @@ public class SurviverHealth : MonoBehaviourPun
         controller.BanMove = false;
         State = HealthState.Injured;
         controller.Crawl = false;
-        surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
+        photonView.RPC(nameof(ChangePose), RpcTarget.All);
         hookCor = null;
+    }
+
+    [PunRPC]
+    void ChangePose()
+    {
+        surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
     }
 }

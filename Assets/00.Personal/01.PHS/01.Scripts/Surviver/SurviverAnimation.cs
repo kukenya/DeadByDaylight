@@ -75,6 +75,7 @@ public class SurviverAnimation : MonoBehaviourPun
         isInjuerd = value;
         AnimationChange();
         healing.Prograss = 0;
+        healing.healed = false;
     }
 
     private void Start()

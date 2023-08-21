@@ -894,7 +894,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 6445668696811590791}
   rotationSpeed: 410
   currentSpeed: 0
-  lerpSpeed: 5
+  lerpSpeed: 50
   anim: 0
   cameraDistMultiply: 0.1
 --- !u!114 &6445668696811590793
@@ -1056,9 +1056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: 0
   maxPrograssTime: 10
-  healing: 0
+  selfHeal: 0
+  otherHealing: 0
   healed: 0
   normalValue: 2
   hardValue: 5

@@ -951,12 +951,14 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     public void OnSmallAxe()    // 도끼 활성화
     {
-        smallAxe.SetActive(true);
+        // smallAxe.SetActive(true);
+        photonView.RPC(nameof(AxeRPC), RpcTarget.All, true);
     }
 
     public void OffSmallAxe()   // 도끼 비활성화
     {
-        smallAxe.SetActive(false);
+        // smallAxe.SetActive(false);
+        photonView.RPC(nameof(AxeRPC), RpcTarget.All, false);
     }
     #endregion
 
@@ -980,6 +982,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         axe.transform.position = throwPos;      // 도끼 던지는 위치
         axe.transform.forward = throwForward;   // 도끼 앞 방향
         axe.GetComponent<Axe>().flying(force);  // 도끼 던지는 힘
+    }
+
+    [PunRPC]
+    public void AxeRPC(Boolean axeBool)
+    {
+        smallAxe.SetActive(axeBool);
     }
     #endregion
 

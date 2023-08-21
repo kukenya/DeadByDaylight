@@ -75,6 +75,9 @@ MonoBehaviour:
   - SurvivorCarry
   - Hook
   - SkillCheckSuccess
+  - SetAnnaState
+  - ChangePose
+  - AxeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -89,7 +89,6 @@ public class SkillCheck : MonoBehaviour
         GameObject obj = skillCheckRange[Random.Range(0, skillCheckRange.Length)];
 
         float offsetAngle = Random.Range(200, 360);
-        print(offsetAngle);
         obj.transform.parent.rotation = Quaternion.Euler(0, 0, -offsetAngle);
 
         obj.SetActive(true);

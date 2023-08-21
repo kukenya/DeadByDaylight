@@ -1776,7 +1776,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427879883519561}
-  m_LocalRotation: {x: -0.000000007462639, y: 0.9771478, z: -0.21256112, w: -0.00000003430591}
+  m_LocalRotation: {x: -0.000000011120046, y: 0.9771478, z: -0.21256112, w: -0.000000051119084}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1861,7 +1861,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427880018934285}
-  m_LocalRotation: {x: 0.0005895619, y: 0.9965474, z: -0.08271982, w: 0.0071026077}
+  m_LocalRotation: {x: 0.0005895646, y: 0.9965474, z: -0.082719795, w: 0.007102642}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2458,8 +2458,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427881549103197}
-  m_LocalRotation: {x: 0.00058956054, y: 0.9965474, z: -0.08271984, w: 0.0071025896}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.38700423, y: 0.44638652, z: -0.22277525, w: 0.7754599}
+  m_LocalPosition: {x: -22.5, y: -0.100000024, z: 101.439865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2489,11 +2489,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
-  far clip plane: 5000
-  field of view: 58.715508
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 56.185932
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: 1.29
   m_CullingMask:
     serializedVersion: 2
@@ -6594,7 +6594,7 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 11.39
+  m_ShadowRadius: 0.25
   m_ShadowAngle: 0
 --- !u!114 &6341291410318508184
 MonoBehaviour:
@@ -6624,7 +6624,7 @@ MonoBehaviour:
   m_ShapeWidth: 0.5
   m_ShapeHeight: 0.5
   m_AspectRatio: 1
-  m_ShapeRadius: 11.39
+  m_ShapeRadius: 0.25
   m_SoftnessScale: 1
   m_UseCustomSpotLightShadowCone: 0
   m_CustomSpotLightShadowCone: 30

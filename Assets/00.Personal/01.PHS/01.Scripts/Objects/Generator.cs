@@ -48,13 +48,13 @@ public class Generator : MonoBehaviourPun, IPunObservable
 
     [Header("플레이어 수")]
     int intSurvivor = 0;
-    public int RepairingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+    public int RepairingSurvivor { get { return intSurvivor; } set {
+            intSurvivor = value;
+            SetMultiplayIncrease(); photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
 
     [PunRPC]
     void SetIntSurvivor(int value)
     {
-        intSurvivor = value; 
-        SetMultiplayIncrease();
         SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
     float multiplyIncrease = 0;
