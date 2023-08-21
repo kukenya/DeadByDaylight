@@ -667,12 +667,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                         // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
                         // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
-<<<<<<< Updated upstream
+
                         survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
                         survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
-=======
-
->>>>>>> Stashed changes
                         // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
                         // survivor.transform.localPosition = new Vector3(0,0,0);
                         // survivor.transform.localRotation = new Quaternion(0,0,0,0);
