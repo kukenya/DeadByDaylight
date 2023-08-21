@@ -7,9 +7,11 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public Transform player;
+    public GameObject[] player;
 
-    public GameObject playerObject;
+    public GameObject[] playerObject;
+
+    int i = 0;
 
     private void Awake()
     {
@@ -18,7 +20,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-
+        i = 0;
     }
 
     // Update is called once per frame
@@ -43,9 +45,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom("GameRoom");
-
-        // 플레이어 스폰
-        PlayerSpawn();
     }
 
 
@@ -69,6 +68,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("방 입장 완료");
+
+        if (!PhotonNetwork.IsMasterClient) PlayerSpawn(); // 플레이어 스폰
+       
     }
 
     // 방 입장 실패시 호출되는 함수
@@ -81,17 +83,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 방 나가기
     public void LeaveRoom()
     {
-        PhotonNetwork.Destroy(playerObject.gameObject);
+        PhotonNetwork.Destroy(playerObject[i].gameObject);
+        i--;
         PhotonNetwork.LeaveRoom();
         print("방을 떠났습니다.");
     }
 
     public void GameStart()
     {
+        print("게임씬으로 이동");
         if (PhotonNetwork.IsMasterClient)
         {
             // GameScene으로 이동
-            PhotonNetwork.LoadLevel("Murderer");
+            PhotonNetwork.LoadLevel("PHS");
         }
     }
 
@@ -109,6 +113,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void PlayerSpawn()
     {
-        playerObject = PhotonNetwork.Instantiate("Player", player.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+        playerObject[i] = PhotonNetwork.Instantiate("Player", player[i].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+        i++;
     }
 }

@@ -88,13 +88,13 @@ public class GameManager : MonoBehaviourPun
             }
         }
 
-        if(SelecterManager.Instance.IsSurvivor == false) 
+        if(PhotonNetwork.IsMasterClient) 
         {
             PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[0].position.x, 0, spawnPos[0].position.z), Quaternion.identity);
             OffCursor();
             survivorCamera1.gameObject.SetActive(false);
             survivorCanvas.SetActive(false);
-            mudererCanvas.SetActive(true); 
+            mudererCanvas.SetActive(true);
         }
         else
         {

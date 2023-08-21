@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012900415, g: 0.001996414, b: 0.002686468, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012900927, g: 0.001996373, b: 0.0026882105, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8833,6 +8833,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
+--- !u!1 &854436404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 854436406}
+  - component: {fileID: 854436405}
+  m_Layer: 0
+  m_Name: Selecter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &854436405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854436404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a4a0bd583b4884e9703c2ae5ed6def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSurvivor: 1
+--- !u!4 &854436406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854436404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30.652088, y: 2.2429798, z: 49.114017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &860776636
 GameObject:
   m_ObjectHideFlags: 0
@@ -17234,8 +17279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811375dc5182d154eb8d77e4db19a1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 655807885}
-  playerObject: {fileID: 0}
+  player:
+  - {fileID: 655807884}
+  - {fileID: 1832637860}
+  - {fileID: 949846111}
+  - {fileID: 1577188428}
+  playerObject:
+  - {fileID: 0}
 --- !u!4 &1318087719
 Transform:
   m_ObjectHideFlags: 0
@@ -20488,7 +20538,7 @@ Transform:
   m_GameObject: {fileID: 1577188428}
   m_LocalRotation: {x: -0, y: 0.9931707, z: -0, w: 0.116670705}
   m_LocalPosition: {x: 7.55, y: 0, z: 112.32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
