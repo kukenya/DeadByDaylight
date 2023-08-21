@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 
+    AppVersion: 1.011
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -75,6 +75,10 @@ MonoBehaviour:
   - SurvivorCarry
   - Hook
   - SkillCheckSuccess
+  - SetAnnaState
+  - OnAxeRenderer
+  - OnAxeRPC
+  - AxeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
