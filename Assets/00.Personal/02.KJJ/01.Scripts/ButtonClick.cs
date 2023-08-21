@@ -32,6 +32,8 @@ public class ButtonClick : MonoBehaviour
         killer.SetActive(true);
         lobby.SetActive(false);
         killerLobby.SetActive(true);
+        playerLobby.SetActive(false);
+
     }
 
     public void OnclickPlayer()
@@ -40,6 +42,7 @@ public class ButtonClick : MonoBehaviour
         player.SetActive(true);
         lobby.SetActive(false);
         playerLobby.SetActive(true);
+        killerLobby.SetActive(false);
     }
 
     public void OnclickBack()
