@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.001
+    AppVersion: 
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -74,7 +74,7 @@ MonoBehaviour:
   - OnFriendHealRPC
   - SurvivorCarry
   - Hook
-  - SetAnnaState
+  - SkillCheckSuccess
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

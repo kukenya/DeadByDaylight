@@ -116,12 +116,18 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
                 SkillCheckFail();
                 break;
             case 1:
-                Prograss += normalValue;
+                photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, normalValue);
                 break;
             case 2:
-                Prograss += hardValue;
+                photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, hardValue);
                 break;
         }
+    }
+
+    [PunRPC]
+    void SkillCheckSuccess(float value)
+    {
+        Prograss += value;
     }
 
     void Healing()
@@ -136,7 +142,11 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
                     OffSelfHeal();
                     break;
                 case HealingTarget.Being:
-                    if(interaction != null) interaction.OffFriendHealing();
+                    if (interaction != null)
+                    {
+                        interaction.OffFriendHealing();  
+                        interaction = null;
+                    }
                     break;
             }
             return;
@@ -196,7 +206,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     void SkillCheckFail()
     {
-        Prograss += failValue;
+        photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, -failValue);
         //failAudio.Play();
         switch (target)
         {
