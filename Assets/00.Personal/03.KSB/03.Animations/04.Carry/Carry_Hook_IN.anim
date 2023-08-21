@@ -115943,14 +115943,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.875
-    functionName: OnMyReset
+    functionName: OnRotate
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.875
-    functionName: OnRotate
+    functionName: OnMyReset
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
