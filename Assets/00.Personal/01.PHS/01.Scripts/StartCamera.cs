@@ -2,6 +2,7 @@ using DG.Tweening;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class StartCamera : MonoBehaviourPun
     public float startRotationAngle = 180f;
     public float rotationTime = 10;
     public SurviverController surviverController;
+    SurviverLookAt lookAt;
 
     Transform targetTrans;
 
@@ -19,6 +21,8 @@ public class StartCamera : MonoBehaviourPun
 
     IEnumerator Start()
     {
+        lookAt = GetComponent<SurviverLookAt>();
+        lookAt.LookAt = false;
         targetTrans = transform.GetChild(0); 
         if (photonView.IsMine)
         {
@@ -28,6 +32,8 @@ public class StartCamera : MonoBehaviourPun
 
         yield return new WaitForSeconds(1f);
         targetTrans.DORotate(new Vector3(0, 0, 0), rotationTime).SetEase(ease);
+        yield return new WaitForSeconds(rotationTime);
+        lookAt.LookAt = true;
     }
 
     private void Update()
