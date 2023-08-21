@@ -17,7 +17,7 @@ public class StartCamera : MonoBehaviourPun
     public Ease ease;
     public Ease textEase;
 
-    private void Start()
+    IEnumerator Start()
     {
         targetTrans = transform.GetChild(0); 
         if (photonView.IsMine)
@@ -25,6 +25,8 @@ public class StartCamera : MonoBehaviourPun
             targetTrans.GetChild(0).gameObject.SetActive(true);
         }
         targetTrans.rotation = Quaternion.Euler(0, startRotationAngle, 0);
+
+        yield return new WaitForSeconds(1f);
         targetTrans.DORotate(new Vector3(0, 0, 0), rotationTime).SetEase(ease);
     }
 

@@ -19,10 +19,6 @@ public class SkillCheck : MonoBehaviour
     public GameObject pointer;
 
     public float pointerRotationTime = 1f;
-
-    Coroutine skillCheckCor;
-    Coroutine randomSkillCheckCor;
-
     System.Action<int> action;
 
     [Header("¼Ò¸®")]
@@ -31,32 +27,53 @@ public class SkillCheck : MonoBehaviour
     public AudioClip normalCheckSound;
     public AudioClip hardCheckSound;
 
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        Check();
+    }
+
     private void Start()
     {
         skillCheck.SetActive(false);
     }
 
-    // Update is called once per frame
+    public void InputAction(System.Action<int> action)
+    {
+        this.action = action;
+    }
+
+    float currentTime;
+    float checkTime = 1;
     void Update()
     {
+        currentTime += Time.deltaTime;
+        if(currentTime >= checkTime)
+        {
+            currentTime = 0;
+            if (Random.Range(0, 5) == 1)
+            {
+                currentTime -= 3;
+                StartCoroutine(SkillCheckCor());
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Check();
         }
     }
 
-    public void StartRandomSkillCheck(System.Action<int> action = null, float checkTime = 1)
+    IEnumerator SkillCheckCor()
     {
-        this.action = action;
-        if (randomSkillCheckCor != null) return;
-        randomSkillCheckCor = StartCoroutine(RandomSkillCheck(checkTime));
-    }
-
-    public void EndRandomSkillCheck()
-    {
-        if (randomSkillCheckCor == null) return;
-        StopCoroutine(randomSkillCheckCor);
-        randomSkillCheckCor = null;
+        AudioPlay(startSound);
+        yield return new WaitForSeconds(0.2f);
+        StartSKillCheck();
     }
     
     public void AudioPlay(AudioClip audioClip)
@@ -65,32 +82,8 @@ public class SkillCheck : MonoBehaviour
         skillCheckSound.Play();
     }
 
-    float delayTime;
-
-    public IEnumerator RandomSkillCheck(float checkTime)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(checkTime);
-            if (delayTime > 0)
-            {
-                delayTime--;
-                continue;
-            }
-
-            if (Random.Range(0, 5) == 1)
-            {
-                delayTime = 3;
-                AudioPlay(startSound);
-                yield return new WaitForSeconds(0.2f);
-                StartSKillCheck();
-            }
-        }
-    }
-
     public void StartSKillCheck()
     {
-        if (skillCheckCor != null) return;
         for(int i = 0; i < skillCheckRange.Length; i++)
         {
             skillCheckRange[i].SetActive(false);
@@ -165,6 +158,7 @@ public class SkillCheck : MonoBehaviour
 
     public float minHardCheckAngle;
     public float maxHardCheckAngle;
+    private Coroutine skillCheckCor;
 
     IEnumerator PointerRotation()
     {

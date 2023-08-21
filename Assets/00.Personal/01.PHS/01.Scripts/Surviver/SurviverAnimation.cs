@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SurviverAnimation : MonoBehaviourPun
 {
     public Animator anim;
     SurviverController controller;
     SurviverHealing healing;
-    string currentState;
+    public string currentState;
 
     public enum MoveState
     {
@@ -179,27 +178,16 @@ public class SurviverAnimation : MonoBehaviourPun
 
     public void Play(string state, float time = 0.1f, int layerIdx = 0, bool overplay = false)
     {
-        if (state == currentState) return;
-
-        if (!CheckAnimExists(state))
+        if (photonView.IsMine)
         {
-            if (state.Length > 0)
-            {
-                anim.enabled = false;
-            }
-            else
-            {
-                anim.enabled = true;
-            }
-            return;
+            if (state == currentState) return;
+
+            anim.enabled = true;
+            photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, time, layerIdx);
+
+            if (overplay) currentState = "";
+            else currentState = state;
         }
-
-
-        anim.enabled = true;
-        photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, time, layerIdx);
-
-        if (overplay) currentState = "";
-        else currentState = state;
     }
 
     [PunRPC]

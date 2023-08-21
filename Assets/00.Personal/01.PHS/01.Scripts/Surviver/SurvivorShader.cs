@@ -15,14 +15,14 @@ public class SurvivorShader : MonoBehaviourPun
     {
         if(value == true)
         {
-            foreach (Transform child in transform)
+            foreach (Transform child in go.transform)
             {
                 child.gameObject.layer = 9;
             }
         }
         else
         {
-            foreach (Transform child in transform)
+            foreach (Transform child in go.transform)
             {
                 child.gameObject.layer = 6;
             }

@@ -109,12 +109,17 @@ public class SurviverHealth : MonoBehaviourPun
 
     public void NormalHit()
     {
-        if(State == HealthState.Healthy) {
-            ChangeInjuerd();
-        }
-        else if(State == HealthState.Injured){
-            ChangeDown();
-        }
+        if (photonView.IsMine)
+        {
+            if (State == HealthState.Healthy)
+            {
+                ChangeInjuerd();
+            }
+            else if (State == HealthState.Injured)
+            {
+                ChangeDown();
+            }
+        } 
     }
 
     void ChangeInjuerd()
@@ -151,14 +156,15 @@ public class SurviverHealth : MonoBehaviourPun
     public void ChangeCarring()
     {
         surviverLookAt.LookAt = false;
+        anim.enabled = true;
         if (State == HealthState.Carrying)
         {
             StartCoroutine(WaitAnimEnd());
         }
-        else
+        else if(State == HealthState.Down)
         {
             controller.BanMove = true;
-            State = HealthState.Carrying;
+            StateNA = HealthState.Carrying;
             surviverAnimation.Play("PickUp_IN");
         }
     }
@@ -167,6 +173,7 @@ public class SurviverHealth : MonoBehaviourPun
 
     IEnumerator WaitAnimEnd()
     {
+        StateNA = HealthState.Hook;
         surviverAnimation.Play("Hook_IN");
         while (true)
         {
@@ -181,7 +188,6 @@ public class SurviverHealth : MonoBehaviourPun
             if (surviverAnimation.IsAnimEnd("Hook_OUT")) break;
             yield return null;
         }
-        StateNA = HealthState.Hook;
         surviverAnimation.Play("Hook_Idle");
     }
 
@@ -202,15 +208,16 @@ public class SurviverHealth : MonoBehaviourPun
     void HookEscape()
     {
         if (State != HealthState.Hook) return;
-        photonView.RPC(nameof(AnimationWeight), RpcTarget.All, AnimationPrograss);
-
         if(Prograss >= maxPrograssTime)
         {
             if(hookCor == null)
             {
                 hookCor = StartCoroutine(WaitHook());
             }
+            return;
         }
+        photonView.RPC(nameof(AnimationWeight), RpcTarget.All, AnimationPrograss);
+
         if(escaping) { Prograss += Time.deltaTime; AnimationPrograss += Time.deltaTime * hookAnimationChangeRate; }
         else { Prograss -= Time.deltaTime; AnimationPrograss -= Time.deltaTime * hookAnimationChangeRate; }
         
@@ -235,6 +242,7 @@ public class SurviverHealth : MonoBehaviourPun
         }
         controller.BanMove = false;
         State = HealthState.Injured;
+        surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
         hookCor = null;
     }
 }

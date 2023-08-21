@@ -950,6 +950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 6445668696811590791}
+  currentState: 
   moveState: 0
   poseState: 0
   interactState: 0
@@ -1057,7 +1058,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 0
-  interaction: {fileID: 0}
   maxPrograssTime: 10
   healing: 0
   healed: 0
@@ -1113,6 +1113,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6445668696811590797}
+  - {fileID: 6445668696811590808}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1130,7 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAngle: 0
   startRotationAngle: 180
-  rotationTime: 5
+  rotationTime: 6
   surviverController: {fileID: 6445668696811590797}
   ease: 4
   textEase: 0
