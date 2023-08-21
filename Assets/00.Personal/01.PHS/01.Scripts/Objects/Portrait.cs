@@ -10,7 +10,8 @@ public class Portrait : MonoBehaviour
         Healthy,
         Injuerd,
         Down,
-        Up
+        Carry,
+        Hook
     }
     State state = State.Healthy;
     public State PortraitState { get { return state; } set { 

@@ -12,6 +12,8 @@ public class SkillCheck : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        skillCheck.SetActive(false);
+        this.enabled = false;
     }
 
     public GameObject skillCheck;
@@ -35,11 +37,6 @@ public class SkillCheck : MonoBehaviour
     private void OnDisable()
     {
         Check();
-    }
-
-    private void Start()
-    {
-        skillCheck.SetActive(false);
     }
 
     public void InputAction(System.Action<int> action)
