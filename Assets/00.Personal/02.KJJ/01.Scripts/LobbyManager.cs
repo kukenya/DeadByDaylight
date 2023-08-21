@@ -7,10 +7,8 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    // 방 생성버튼
-    public Button[] btnCreateRoom;
-    // 방 참여버튼
-    public Button btnJoninRoom;
+    // 게임시작 활성화
+    //public Button[] btnCreateRoom;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +22,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         
     }
 
-    public void CreateRoom()
+    public void JoinCreateRoom()
     {
         // 방 옵션을 설정 (최대 인원)
         RoomOptions option = new RoomOptions();
@@ -33,8 +31,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 방에 참여할 수 있는가
         option.IsOpen = true;
 
-        // 기본 로비에 방 생성 요청 (방이름, 방 옵션, )
-        PhotonNetwork.CreateRoom("GameRoom", option);
+        // 기본 로비에 방 참가 or 생성 요청 (방이름, 방 옵션, )
+        PhotonNetwork.JoinOrCreateRoom("GameRoom", option, null);
     }
 
     // 방 생성 완료시 호출되는 함수
@@ -51,11 +49,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print("방 생성 실패 : " + message);
     }
 
-    public void JoinRoom()
-    {
-        // 방 입장 요청
-        PhotonNetwork.JoinRoom("GameRoom");
-    }
 
     // 방 입장 완료시 호출되는 함수
     public override void OnJoinedRoom()
@@ -69,5 +62,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinRoomFailed(returnCode, message);
         print("방 입장 실패 : " + message);
+    }
+
+    // 방 나가기
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        print("방을 떠났습니다.");
     }
 }

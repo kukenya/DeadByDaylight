@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/99.Scenes/StartScene.unity
     guid: c0dd0a5605932dc4c9a18dd9f99b9416
-  - enabled: 1
+  - enabled: 0
     path: Assets/99.Scenes/Moved/PHS.unity
     guid: f8cc765e5038490469ffb6d891fc32b1
+  - enabled: 1
+    path: Assets/99.Scenes/Moved/KJJ/KJJ_Connection.unity
+    guid: c676f50dde63276468d57544493a22e6
+  - enabled: 1
+    path: Assets/99.Scenes/Moved/KJJ/KJJ_Lobby.unity
+    guid: 763c2ec7f3b57b54d8dc21b966701934
   m_configObjects: {}

@@ -68,6 +68,8 @@ public class ConnectManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
 
+        print(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
         // 로비씬으로 이동
         PhotonNetwork.LoadLevel("KJJ_Lobby");
     }

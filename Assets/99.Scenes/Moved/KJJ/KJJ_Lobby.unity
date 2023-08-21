@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.001290086, g: 0.001996369, b: 0.0026864028, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012900375, g: 0.001996361, b: 0.0026881145, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1413,6 +1413,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 270138598}
     m_Modifications:
+    - target: {fileID: 3083816190288953702, guid: 158011128d11e214faef8d2b2be63be3, type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4479681597863928002, guid: 158011128d11e214faef8d2b2be63be3, type: 3}
       propertyPath: m_Intensity
       value: 0.007957747
@@ -1627,10 +1631,16 @@ MonoBehaviour:
   - {fileID: 1251844622}
   - {fileID: 1055286247}
   maxPrograssTime: 80
+  interaction: {fileID: 0}
   spark: {fileID: 4978226445598443398, guid: 7235f2f24cbe4de41965e7929dcd949d, type: 3}
   sparkParticlePos:
   - {fileID: 1336840440}
   failAudio: {fileID: 1364893060}
+  blackHoleGO: {fileID: 0}
+  blackHoleEase: 0
+  blackHoleGenerateDist: 10
+  generatorMesh1: {fileID: 0}
+  generatorMesh2: {fileID: 0}
   hardValue: 10
   normalValue: 5
   failValue: -10
@@ -2724,7 +2734,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: CreateRoom
+        m_MethodName: JoinCreateRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4210,6 +4220,10 @@ PrefabInstance:
     - target: {fileID: 3973577749175512294, guid: 174518094405c734289b9e72ba5c95b2, type: 3}
       propertyPath: m_Intensity
       value: 0.4816681
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997785333868240078, guid: 174518094405c734289b9e72ba5c95b2, type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6476495066981652957, guid: 174518094405c734289b9e72ba5c95b2, type: 3}
       propertyPath: m_Intensity
@@ -5761,6 +5775,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 270138598}
     m_Modifications:
+    - target: {fileID: 3544730972337432831, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8541965241638183737, guid: 0dab95dd379a08544a555715951bf1a5, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6289,7 +6307,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: OnJoinedRoom
+        m_MethodName: JoinCreateRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7016,12 +7034,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655807884}
   m_LocalRotation: {x: -0, y: 0.9638633, z: -0, w: 0.2663973}
-  m_LocalPosition: {x: 1.1799998, y: 0, z: 0.11999512}
+  m_LocalPosition: {x: 6.24, y: 1, z: 110.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1592213534}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 149.1, z: 0}
 --- !u!1 &659602782
 GameObject:
@@ -8132,6 +8150,10 @@ PrefabInstance:
     - target: {fileID: 4679043160864514822, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684016047326552686, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
+      propertyPath: sceneViewId
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
@@ -10212,12 +10234,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949846111}
   m_LocalRotation: {x: -0, y: 0.97886735, z: -0, w: 0.2044962}
-  m_LocalPosition: {x: 1.6599998, y: 0, z: 1.0999985}
+  m_LocalPosition: {x: 6.72, y: 1, z: 111.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1592213534}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 156.4, z: 0}
 --- !u!1 &952956718
 GameObject:
@@ -12370,6 +12392,10 @@ PrefabInstance:
     - target: {fileID: 616263245656108647, guid: f50b4436f8f00e8459946c816802d402, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851732392016534224, guid: f50b4436f8f00e8459946c816802d402, type: 3}
+      propertyPath: sceneViewId
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9050615988111263470, guid: f50b4436f8f00e8459946c816802d402, type: 3}
       propertyPath: m_Name
@@ -16096,6 +16122,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4851732392016534224, guid: f50b4436f8f00e8459946c816802d402, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9050615988111263470, guid: f50b4436f8f00e8459946c816802d402, type: 3}
       propertyPath: m_Name
       value: Map4 (1)
@@ -16156,6 +16186,10 @@ PrefabInstance:
     - target: {fileID: 4679043160864514822, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684016047326552686, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
+      propertyPath: sceneViewId
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
@@ -16337,6 +16371,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7684016047326552686, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
 --- !u!4 &1247716404 stripped
@@ -16421,7 +16459,7 @@ GameObject:
   - component: {fileID: 1264471082}
   - component: {fileID: 1264471081}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16495,6 +16533,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1047108380}
         m_TargetAssemblyTypeName: Button, Assembly-CSharp
         m_MethodName: OnclickBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1318087718}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: LeaveRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16998,11 +17048,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370eaaaa47185f14a83569c3c46a4988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prograssUI: 0
   uiAlpha: 0.3
   prograssBG: {fileID: 286998711}
   prograssBar: {fileID: 282140415}
   prograssText: {fileID: 954320418}
   handImage: {fileID: 864418654}
+  bars: []
   leftMouseClick: {fileID: 359065417}
   mouseClickText: {fileID: 780204646}
   spaceBar: {fileID: 730926278}
@@ -17182,10 +17234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811375dc5182d154eb8d77e4db19a1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnCreateRoom:
-  - {fileID: 255088171}
-  - {fileID: 1533756928}
-  btnJoninRoom: {fileID: 568016769}
 --- !u!4 &1318087719
 Transform:
   m_ObjectHideFlags: 0
@@ -17199,7 +17247,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1328206521
 PrefabInstance:
@@ -19501,7 +19549,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: CreateRoom
+        m_MethodName: JoinCreateRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20425,12 +20473,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577188428}
   m_LocalRotation: {x: -0, y: 0.9931707, z: -0, w: 0.116670705}
-  m_LocalPosition: {x: 2.4900002, y: 0, z: 1.449997}
+  m_LocalPosition: {x: 7.55, y: 1, z: 112.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1592213534}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 166.6, z: 0}
 --- !u!1 &1587628403
 GameObject:
@@ -20508,41 +20556,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587628403}
   m_CullTransparentMesh: 1
---- !u!1 &1592213533
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1592213534}
-  m_Layer: 0
-  m_Name: PSpawnPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1592213534
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592213533}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.06, y: 0, z: 110.87}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1832637861}
-  - {fileID: 655807885}
-  - {fileID: 949846112}
-  - {fileID: 1577188429}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1592692625
 GameObject:
   m_ObjectHideFlags: 0
@@ -20931,6 +20944,10 @@ PrefabInstance:
     - target: {fileID: 314556979552791312, guid: e95e7d351b07edf4b9365fd511169d13, type: 3}
       propertyPath: m_Intensity
       value: 1.6055604
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089982483469414028, guid: e95e7d351b07edf4b9365fd511169d13, type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2912118525663018212, guid: e95e7d351b07edf4b9365fd511169d13, type: 3}
       propertyPath: m_Intensity
@@ -22692,12 +22709,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832637860}
   m_LocalRotation: {x: -0, y: 0.877983, z: -0, w: 0.47869185}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.06, y: 1, z: 110.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1592213534}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 122.8, z: 0}
 --- !u!4 &1839128722 stripped
 Transform:
@@ -24130,6 +24147,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7684016047326552686, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 602b8b0d6ea222a42bcb8b55d2b85881, type: 3}
 --- !u!4 &2000122970 stripped
@@ -24309,6 +24330,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2013435943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2013435945}
+  - component: {fileID: 2013435944}
+  m_Layer: 0
+  m_Name: LobbyGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2013435944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013435943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7681fc873c5e40d41a987f36a504d568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trSpawnPosGroup:
+  - {fileID: 1832637861}
+  - {fileID: 655807885}
+  - {fileID: 949846112}
+  - {fileID: 1577188429}
+--- !u!4 &2013435945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013435943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 901.8342, y: 306.91266, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2037202498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1904471492007036815, guid: d4cc08ea828f6534781b3e1a42b9c30f, type: 3}
@@ -24486,6 +24556,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 270138598}
     m_Modifications:
+    - target: {fileID: 3083816190288953702, guid: 158011128d11e214faef8d2b2be63be3, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5224684289420479218, guid: 158011128d11e214faef8d2b2be63be3, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -25182,7 +25256,7 @@ GameObject:
   - component: {fileID: 2112839711}
   - component: {fileID: 2112839710}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25256,6 +25330,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1047108380}
         m_TargetAssemblyTypeName: Button, Assembly-CSharp
         m_MethodName: OnclickBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1318087718}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: LeaveRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
