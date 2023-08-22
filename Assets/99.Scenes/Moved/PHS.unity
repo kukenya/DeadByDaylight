@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012900787, g: 0.0019963079, b: 0.0026882156, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012900552, g: 0.0019959267, b: 0.0026853033, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6867,7 +6867,7 @@ MonoBehaviour:
   lineImage: {fileID: 1766878602}
   generatorText: {fileID: 615591865}
   endingLine: {fileID: 1382103775}
-  maxGenerator: 3
+  maxGenerator: 1
   survivorCamera1: {fileID: 351348586}
   spawnPos:
   - {fileID: 826213859}
