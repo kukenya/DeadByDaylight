@@ -11,7 +11,16 @@ public class LobbyNickName : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        nickName.text = photonView.Owner.NickName;
+        if (photonView.IsMine)
+        {
+            nickName.text = PhotonNetwork.NickName;
+            nickName.color = new Color(0,0,0,0);
+        }
+        else
+        {
+            nickName.text = photonView.Owner.NickName;
+        }
+        //nickName.text = photonView.Owner.NickName;
         LobbyManager.instance.AddPlayer(gameObject);
     }
 
