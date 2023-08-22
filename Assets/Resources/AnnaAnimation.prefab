@@ -5630,15 +5630,15 @@ MonoBehaviour:
   canCarry: 0
   canDestroyGenerator: 0
   canHook: 0
+  canOpenDoor: 0
   canReLoad: 0
   canDestroyPallet: 0
   canRotate: 0
   survivor: {fileID: 6445668696811590796, guid: 389ccac1b4990f04cac95beb1dd075ee, type: 3}
   leftArm: {fileID: 6319253092841262359}
   redlight: {fileID: 367950648217861453}
-  hookSpot: {x: 0, y: 0, z: 0}
   goCloset: {fileID: 0}
-  closetSpot: {x: 0, y: 0, z: 0}
+  palletSpot: {x: 0, y: 0, z: 0}
   HaxMode: 1
   hitcolliders:
   - {fileID: 0}
