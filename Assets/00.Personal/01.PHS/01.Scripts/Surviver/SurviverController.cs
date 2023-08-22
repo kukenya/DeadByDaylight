@@ -56,7 +56,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     public bool isHit = false;
 
     public bool Sprint { get { return isSprint; } set { isSprint = value; } }
-    public bool Crawl { get { return isCrawl; }  set { isCrawl = value; } }
+    public bool Crawl { get { return isCrawl; }  set { print("머임"); isCrawl = value; } }
 
     public float sprintTime;
     public float maxSprintTime = 1;
@@ -64,6 +64,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     // �ִϸ��̼� �Ŵ���
     SurviverAnimation surviverAnimation;
     SurviverLookAt lookAt;
+    SurviverHealing healing;
 
     // ET
     public CharacterController controller;
@@ -76,6 +77,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
         surviverAnimation = GetComponent<SurviverAnimation>();
         lookAt = GetComponent<SurviverLookAt>();
+        healing = GetComponent<SurviverHealing>();
         mainCamera = Camera.main;
     }
 
@@ -89,6 +91,8 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
 
     void CameraStopCheck()
     {
+        if (healing.SelfHeal || healing.OtherHealing) { Moving = false; return; }
+        if (BanMove) { Moving = true; return; }
         Moving = currentSpeed == 0 ? false : true;
     }
 
@@ -204,18 +208,10 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
             currentSpeed = speed;
 
 
-            verticalVelocity = Grounded ? 0f : -2f;
+            verticalVelocity = Grounded ? 0f : -9.8f;
             // ���������� �÷��̾ �����δ�.
             controller.Move(targetDirection * speed * Time.deltaTime + new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 
-        }
-        else
-        {
-            
-            ////회전 보정
-            //transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-            ////위치 보정
-            //transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
         }
     }
 

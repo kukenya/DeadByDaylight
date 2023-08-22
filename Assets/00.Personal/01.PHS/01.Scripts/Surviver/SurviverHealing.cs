@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SurviverHealing : MonoBehaviourPun, IPunObservable
 {
@@ -12,11 +13,12 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     SurviverHealth health;
     SurviverUI ui;
     SkillCheck skillCheck;
+    SurvivorShader shader;
 
     float prograss;
 
 
-    public float Prograss { get { return prograss; } set { prograss = value; } }
+    public float Prograss { get { return prograss; } set { prograss = Mathf.Clamp(value, 0, maxPrograssTime); } }
     public float maxPrograssTime;
     public bool selfHeal = false;
     public bool SelfHeal
@@ -79,15 +81,15 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     [Header("플레이어 수")]
     int intSurvivor = 0;
     public int HealingSurvivor { get { return intSurvivor; } set {
-            intSurvivor = value;
-            SetMultiplayIncrease();
-            photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All); 
+            photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); 
         } 
     }
 
     [PunRPC]
-    void SetIntSurvivor()
+    void SetIntSurvivor(int value)
     {
+        intSurvivor = value;
+        SetMultiplayIncrease();
         SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
 
@@ -119,6 +121,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
         surviverController = GetComponent<SurviverController>();
         surviverAnimation = GetComponent<SurviverAnimation>();
         health = GetComponent<SurviverHealth>();
+        shader = GetComponent<SurvivorShader>();
         ui = SurviverUI.instance;
         skillCheck = SkillCheck.Instance;
     }
@@ -156,13 +159,28 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
         if (Prograss >= maxPrograssTime)
         {
-            health.State = SurviverHealth.HealthState.Healthy;
+            if (health.State == SurviverHealth.HealthState.Down && OtherHealing == false) return;
+
+
+            if (photonView.IsMine)
+            {
+                if (health.State == SurviverHealth.HealthState.Injured) { health.State = SurviverHealth.HealthState.Healthy; healed = true; }
+                else { 
+                    surviverController.Crawl = false; 
+                    photonView.RPC("ChangePose", RpcTarget.All); 
+                    shader.RedXray = false;
+                    health.State = SurviverHealth.HealthState.Injured;
+                    WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.None;
+                    healed = false;
+                }
+            }
+            
             print("치료 완료");
             if (selfHeal)
             {
                 OffSelfHeal();
             }
-            else if(otherHealing)
+            else if (otherHealing)
             {
                 if (photonView.IsMine == false)
                 {
@@ -170,7 +188,6 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
                     interaction.OffFriendHealing();
                 }
             }
-            healed = true;
             return;
         }
 
@@ -178,7 +195,6 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
         {
             if (OtherHealing) Prograss += Time.deltaTime * multiplyIncrease;
             else if (SelfHeal) Prograss += Time.deltaTime * selfHealingIncrease;
-
         }
     }
 
@@ -186,8 +202,9 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     {
         if (OtherHealing) return;
         surviverController.BanMove = true;
-        surviverAnimation.Play("Healing_Self");
         SelfHeal = true;
+        if (health.State == SurviverHealth.HealthState.Down) return;
+        surviverAnimation.Play("Healing_Self");
     }
 
     public void OffSelfHeal()
@@ -208,8 +225,9 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     public void OnFriendHealRPC()
     {
         surviverController.BanMove = true;
-        surviverAnimation.Play("Being_Heal");
         OtherHealing = true;
+        if (health.State == SurviverHealth.HealthState.Down) return;
+        surviverAnimation.Play("Being_Heal");
     }
 
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5788143975842326275}
   - component: {fileID: 7492940649137252518}
   - component: {fileID: 4618637800298372204}
-  - component: {fileID: 1197525578829447744}
+  - component: {fileID: 7213832119603683018}
   m_Layer: 0
   m_Name: Crate2
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1197525578829447744
-MeshCollider:
+--- !u!65 &7213832119603683018
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1719379237492914940, guid: 1f84e1f76a487f446a6fcfeb5fa41df3, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.010116402, y: 0.008127371, z: 0.012282548}
+  m_Center: {x: 0.0001862587, y: -0.000024262588, z: 0.006193341}
