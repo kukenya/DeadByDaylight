@@ -182,10 +182,9 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
             }
             else if (otherHealing)
             {
-                if (photonView.IsMine == false)
+                if (photonView.IsMine)
                 {
-                    print(interaction);
-                    interaction.OffFriendHealing();
+                    photonView.RPC(nameof(Off), RpcTarget.Others);
                 }
             }
             return;
@@ -196,6 +195,12 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
             if (OtherHealing) Prograss += Time.deltaTime * multiplyIncrease;
             else if (SelfHeal) Prograss += Time.deltaTime * selfHealingIncrease;
         }
+    }
+
+    [PunRPC]
+    void Off()
+    {
+        interaction.OffFriendHealing();
     }
 
     public void OnSelfHeal()
