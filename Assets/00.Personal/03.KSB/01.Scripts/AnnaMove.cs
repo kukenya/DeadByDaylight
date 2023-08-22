@@ -118,14 +118,19 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     // 애니메이션 실행 위치
     GameObject goHook;                      // 갈고리 컴포넌트 가져올 겜옵젝
-    public Vector3 hookSpot;                // 갈고리 애니메이션 실행 위치
+    Vector3 hookSpot;                       // 갈고리 애니메이션 실행 위치
 
-    public GameObject goCloset;
-    public Vector3 closetSpot;
+    public GameObject goCloset;             // 캐비넷 컴포넌트 가져올 겜옵젝
+    Vector3 closetSpot;                     // 캐비넷 애니메이션 실행 위치
+
+    GameObject goPallet;                    // 판자 컴포넌트 가져올 겜옵젝
+    public Vector3 palletSpot;              // 판자 애니메이션 실행 위치
+    Transform palletPos;
 
     // Photon
     Vector3 receivePos;                     // 전달받을 포지션 값
     Quaternion receiveRot;                  // 전달받을 로테이션 값
+
     float lerpSpeed = 50;                   // 보정 속력
     float h;                                // 좌우 입력값
     float v;                                // 앞뒤 입력값
@@ -229,7 +234,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
         // photonView.IsMine 이라면 OverlapSphere Radius 2 아니면 2.5
         float a = photonView.IsMine ? 2f : 2.5f;
-        
+
         hitcolliders = Physics.OverlapSphere(transform.position, a, layerMask);
 
         for (int i = 0; i < hitcolliders.Length; i++)
@@ -249,14 +254,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     survivor = hitcolliders[i].gameObject;
                 }
             }
-            else
-            {
-                // 만약에 생존자가 없으면 Lullaby BG 이 나오게 한다.
-
-
-                // canCarry -> false
-
-            }
 
             // Generator 발전기
             if (hitcolliders[i].transform.gameObject.name == "EnableCollider")
@@ -273,13 +270,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // Pallet 판자
             if (hitcolliders[i].transform.gameObject.name.Contains("Pallet"))
             {
-                canDestroyPallet = true;
+                goPallet = hitcolliders[i].gameObject;
+                palletPos = goPallet.GetComponent<Pallet>().GetAnimPosition(transform.position);
 
-                // 만약 판자의 상태가 '내려감' 이라면
-                //if ()
-                //{
-                //    // canDestroyPallet 을 true 로
-                //}
+                Pallet pallet = goPallet.GetComponent<Pallet>();
+
+                 // 만약 판자의 상태가 '내려감' 이라면
+                if (pallet.State == Pallet.PalletState.Ground)
+                {
+                    // canDestroyPallet 을 true 로 바꿈
+                    canDestroyPallet = true;
+                }
             }
             else { }
 
@@ -301,7 +302,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 }
 
                 closetAnim = goCloset.GetComponentInParent<Animator>();
-                closetSpot = goCloset.GetComponent<Closet>().trCloset.position;   // 항상 0번 째 closet 을 반환받는다.
+                closetSpot = goCloset.GetComponent<Closet>().trCloset.position;
 
                 // 만약 들고 있는 도끼의 개수가 최대개수라면
                 if (currentAxeCount == maxAxeCount)
@@ -462,19 +463,23 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    cc.enabled = false;             // 움직임 멈춤
-                                                    //anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
-                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");
-                    // 판자가 부서지는 애니메이션 실행
+                    Vector3 pospos = new Vector3(palletPos.position.x, transform.position.y, palletPos.position.z);
+                    transform.position = pospos;                                        // 위치를 이동
+                    transform.forward = palletPos.forward * -1;                         // 앞방향을 설정
+
+                    cc.enabled = false;                                                 // 움직임 멈춤   
+
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");   // 판자를 부수는 애니메이션 실행
+                    // photonView.RPC(nameof(), RpcTarget.All, "");                     // 판자가 부서지는 애니메이션 실행
                 }
             }
             #endregion
 
-            #region 도끼 재충전
+            #region 캐비넷 열기
             //if (currentAxeCount < maxAxeCount && canReLoad && Input.GetKeyDown(KeyCode.Space)){}
 
             // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
-            if (canOpenDoor && Input.GetKeyDown(KeyCode.Space))
+            if (canOpenDoor == true && Input.GetKeyDown(KeyCode.Space))
             {
                 // 만약 안에 사람이 있다면
                 // if(          )
@@ -483,30 +488,35 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "ClosetPickup");
                 // 상태를 Carry 로 바꾼다
                 // AnnaState = State.Carry;
+                // canOpenDoor = false;
                 // }
 
                 // 만약 
                 /*else*/
                 if (0 <= currentAxeCount && currentAxeCount < maxAxeCount)
                 {
-                    // 애니메이션 시작 장소로 이동한다.
-                    transform.position = closetSpot;                                    // Closet 위치로 이동
-                    transform.forward = goCloset.transform.forward;                     // 나의 앞방향을 Closet 앞방향으로
+                    canOpenDoor = false;
 
-                    OffCC();                                                            // 움직임 멈춤
+                    // 애니메이션 시작 장소로 이동한다.
+                    transform.position = closetSpot;                                            // Closet 위치로 이동
+                    transform.forward = goCloset.transform.forward;                             // 나의 앞방향을 Closet 앞방향으로
+
+                    OffCC();                                                                    // 움직임 멈춤
 
                     // anim.SetTrigger("Reload");                                      
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Reload");             // 도끼를 집어드는 애니메이션 실행
                     photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");     // 캐비넷 열리고 닫히는 애니메이션 실행
 
-                    currentAxeCount = maxAxeCount;                                      // 도끼 최대 소지 갯수를 최대로 채운다
+                    currentAxeCount = maxAxeCount;                                              // 도끼 최대 소지 갯수를 최대로 채운다
 
-                    axeCount.text = Convert.ToString(currentAxeCount);                  // UI 갱신한다
+                    axeCount.text = Convert.ToString(currentAxeCount);                          // UI 갱신한다
                 }
 
                 // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
                 else
                 {
+                    canOpenDoor = false;
+
                     // 그냥 열었다가 닫는다
                     // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "");
                     photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");
