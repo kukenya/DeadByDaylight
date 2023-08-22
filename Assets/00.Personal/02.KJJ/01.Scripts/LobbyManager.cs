@@ -91,11 +91,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print("방 입장 완료");
         
         // 살인마가 아니면 캐릭터를 생성
-        if(isMurderer == false)
-        {
-            PlayerSpawn();
-        }
-
+        if(isMurderer == false) PlayerSpawn();
     }
 
     // 방 입장 실패시 호출되는 함수
@@ -108,6 +104,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 방 나가기
     public void LeaveRoom()
     {
+        PlayerDestory();
         PhotonNetwork.LeaveRoom();
         print("방을 떠났습니다.");
     }
@@ -124,13 +121,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void PlayerSpawn()
     {
+        i = PhotonNetwork.CountOfPlayersInRooms;
         PhotonNetwork.Instantiate("Player", player[i].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
-        i++;
     }
 
     public void PlayerDestory()
     {
-        i--;
         PhotonNetwork.Destroy(playerObject[i].gameObject);
     }
 
@@ -140,8 +136,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         print(newPlayer.NickName + "님이 들어왔습니다!");
-        //PlayerSpawn();
-
     }
 
     // 플레이어 나갈시
@@ -149,11 +143,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            print(otherPlayer.NickName + "님이 나갔습니다!");
-            PlayerDestory();
-        }
+        print(otherPlayer.NickName + "님이 나갔습니다!");
     }
 
     public void AddPlayer(GameObject go)
