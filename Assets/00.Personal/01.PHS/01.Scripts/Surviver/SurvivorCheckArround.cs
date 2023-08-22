@@ -77,7 +77,8 @@ public class SurvivorCheckArround : MonoBehaviourPun
 
             if (checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
             {
-                if (checkColliders[i].GetComponentInParent<SurviverHealth>().State != SurviverHealth.HealthState.Injured)
+                SurviverHealth surviverHealth = checkColliders[i].GetComponentInParent<SurviverHealth>();
+                if (surviverHealth.State != SurviverHealth.HealthState.Injured && surviverHealth.State != SurviverHealth.HealthState.Down)
                 {
                     checkColliders[i] = null;
                     continue;
@@ -102,7 +103,7 @@ public class SurvivorCheckArround : MonoBehaviourPun
         if (checkColliders.Length == 0 || checkColliders[0] == null) 
         {
             interaction.NullInteractScript();
-            if (health.State == SurviverHealth.HealthState.Injured && controller.Moving == false)
+            if (health.State == SurviverHealth.HealthState.Injured && controller.Moving == false || health.State == SurviverHealth.HealthState.Down && controller.Moving == false)
             {
                 interaction.Type = SurvivorInteraction.InteractiveType.SelfHeal;
             }

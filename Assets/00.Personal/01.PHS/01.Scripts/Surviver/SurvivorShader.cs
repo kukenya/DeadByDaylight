@@ -13,6 +13,7 @@ public class SurvivorShader : MonoBehaviourPun
     [PunRPC]
     void SetRedXray(bool value)
     {
+        if (photonView.IsMine) return;
         if(value == true)
         {
             foreach (Transform child in go.transform)
@@ -28,5 +29,30 @@ public class SurvivorShader : MonoBehaviourPun
             }
         }
         red = value;
+    }
+
+    bool yellow = false;
+
+    public bool YellowXray { get { return yellow; } set { photonView.RPC(nameof(SetYellowXray), RpcTarget.All, value); } }
+
+    [PunRPC]
+    void SetYellowXray(bool value)
+    {
+        if (photonView.IsMine) return;
+        if (value == true)
+        {
+            foreach (Transform child in go.transform)
+            {
+                child.gameObject.layer = 8;
+            }
+        }
+        else
+        {
+            foreach (Transform child in go.transform)
+            {
+                child.gameObject.layer = 6;
+            }
+        }
+        yellow = value;
     }
 }

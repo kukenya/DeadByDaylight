@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class EndingLine : MonoBehaviour
 {
+    public static EndingLine instance;
+
     public Image upperPrograssImage;
     public Image lowerPrograssImage;
 
@@ -20,7 +22,8 @@ public class EndingLine : MonoBehaviour
 
     private void Awake()
     {
-        foreach(Transform child in transform)
+        instance = this;
+        foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);
         }

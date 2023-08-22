@@ -14,6 +14,7 @@ public class SurviverHealth : MonoBehaviourPun
     Animator anim;
     SurvivorShader shader;
     SurvivorListManager listManager;
+    SurviverHealing healing;
 
     public Transform rootCameraPosition;
 
@@ -45,6 +46,8 @@ public class SurviverHealth : MonoBehaviourPun
         else if(State == HealthState.Injured)
         {
             surviverAnimation.Injuerd = true;
+            healing.Prograss = 0;
+            healing.healed = false;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
         }
         else if(State == HealthState.Down)
@@ -81,6 +84,8 @@ public class SurviverHealth : MonoBehaviourPun
         else if (State == HealthState.Injured)
         {
             surviverAnimation.Injuerd = true;
+            healing.Prograss = 0;
+            healing.healed = false;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
         }
         else if (State == HealthState.Down)
@@ -94,6 +99,7 @@ public class SurviverHealth : MonoBehaviourPun
         else if (State == HealthState.Hook)
         {
             Prograss = 0;
+            WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.Hooked;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Hook;
         }
     }
@@ -114,6 +120,7 @@ public class SurviverHealth : MonoBehaviourPun
         interaction = GetComponent<SurvivorInteraction>();
         shader = GetComponent<SurvivorShader>();
         listManager = SurvivorListManager.instance;
+        healing = GetComponent<SurviverHealing>();
     }
 
     private void Update()
@@ -172,7 +179,9 @@ public class SurviverHealth : MonoBehaviourPun
     {
         surviverLookAt.LookAt = false;
         shader.RedXray = true;
+        WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.OwnerDown;
         State = HealthState.Down;
+        healing.healed = false;
         controller.Crawl = true;
         surviverSound.PlayDownSound();
         surviverAnimation.PlayStandToCrawl();
@@ -266,15 +275,18 @@ public class SurviverHealth : MonoBehaviourPun
             yield return null;
         }
         controller.BanMove = false;
+        WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.None;
         State = HealthState.Injured;
         controller.Crawl = false;
         photonView.RPC(nameof(ChangePose), RpcTarget.All);
         hookCor = null;
+        shader.RedXray = false;
     }
 
     [PunRPC]
     void ChangePose()
     {
         surviverAnimation.Pose = SurviverAnimation.PoseState.Standing;
+        surviverAnimation.anim.enabled = true;
     }
 }

@@ -28,12 +28,18 @@ public class GameManager : MonoBehaviourPun
             if(maxGenerator == 0)
             {
                 generatorText.text = " ";
-                endingLine.enabled = true;
+                foreach (GameObject go in exits)
+                {
+                    go.GetComponent<Exit>().GenerateDoorBlackHole();
+                    go.layer = 7;
+                }
                 return;
             }
             generatorText.text = maxGenerator.ToString();
         }
     }
+
+    public List<GameObject> exits = new List<GameObject>();
 
     public CinemachineVirtualCamera survivorCamera1;
 

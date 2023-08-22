@@ -49,12 +49,13 @@ public class Generator : MonoBehaviourPun, IPunObservable
     [Header("플레이어 수")]
     int intSurvivor = 0;
     public int RepairingSurvivor { get { return intSurvivor; } set {
-            intSurvivor = value;
-            SetMultiplayIncrease(); photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+             photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
 
     [PunRPC]
     void SetIntSurvivor(int value)
     {
+        intSurvivor = value;
+        SetMultiplayIncrease();
         SurviverUI.instance.ChangePrograssBarSprite(intSurvivor);
     }
     float multiplyIncrease = 0;
@@ -144,10 +145,11 @@ public class Generator : MonoBehaviourPun, IPunObservable
         {
             Repair = false;
             repaierd = true;
+            GenerateBlackHole();
+            gameObject.layer = 0;
             GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayGeneratorClear();
             if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
-            gameObject.layer = 0;
         }
 
         if(photonView.IsMine && fail == false)
