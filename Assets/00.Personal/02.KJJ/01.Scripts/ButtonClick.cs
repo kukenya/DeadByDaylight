@@ -9,6 +9,8 @@ public class ButtonClick : MonoBehaviour
     public GameObject lobby;
     public GameObject killerLobby;
     public GameObject playerLobby;
+    public GameObject ready;
+    public GameObject cancel;
 
     public GameObject killer;
     public GameObject player;
@@ -56,5 +58,17 @@ public class ButtonClick : MonoBehaviour
         killerLobby.SetActive(false);
         playerLobby.SetActive(false);
         lobby.SetActive(true);
+    }
+
+    public void Ready()
+    {
+        cancel.SetActive(true);
+        ready.SetActive(false);
+    }
+
+    public void Cancel()
+    {
+        ready.SetActive(true);
+        cancel.SetActive(false);
     }
 }
