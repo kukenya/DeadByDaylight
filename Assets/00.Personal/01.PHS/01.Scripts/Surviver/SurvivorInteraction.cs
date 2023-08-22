@@ -116,7 +116,7 @@ public class SurvivorInteraction : MonoBehaviourPun
                 break;
 
             case InteractiveType.SelfHeal:
-                if (surviverHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "자가 치료");
+                if (surviverHealing.SelfHeal) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "자가 치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "자가 치료");
                 ui.prograssBar.fillAmount = surviverHealing.Prograss / surviverHealing.maxPrograssTime;
                 break;
@@ -125,7 +125,7 @@ public class SurvivorInteraction : MonoBehaviourPun
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "탈출");
                 break;
             case InteractiveType.HealCamper:
-                if (camperHealing.healing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
+                if (camperHealing.OtherHealing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "치료");
                 ui.prograssBar.fillAmount = camperHealing.Prograss / camperHealing.maxPrograssTime;
                 break;
@@ -224,11 +224,15 @@ public class SurvivorInteraction : MonoBehaviourPun
     }
     #endregion
 
+
+    Coroutine friendHealCor;
     void FriendHealing()
     {
-        StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
+        if (friendHealCor != null) return;
+        print("FriendHealing");
+        friendHealCor = StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
             camperHealing.OnFriendHeal, 
-            () => { surviverAnimation.Play("Heal_Camper"); },
+            () => { surviverAnimation.Play("Heal_Camper"); friendHealCor = null; },
             this,
             camperHealing.transform)
             );
@@ -236,8 +240,9 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public void OffFriendHealing()
     {
+        print("OffFriendHealing");
         surviverController.BanMove = false;
-        camperHealing.OffFriendHeal();
+        camperHealing?.OffFriendHeal();
         surviverAnimation.AnimationChange();
     }
 

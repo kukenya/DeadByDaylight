@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8136090524169054645}
   - component: {fileID: 5136048254110901776}
   - component: {fileID: 6963163043309769434}
-  - component: {fileID: 1320852335223823169}
+  - component: {fileID: 5684330070567967925}
   m_Layer: 0
   m_Name: Treads
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1320852335223823169
-MeshCollider:
+--- !u!65 &5684330070567967925
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2912610213755427133, guid: 279890ceae7ed604a840d81b5d4bc60a, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.046304155, y: 0.014849639, z: 0.0131924115}
+  m_Center: {x: 0.0020318665, y: -0.0012948824, z: 0.006317188}

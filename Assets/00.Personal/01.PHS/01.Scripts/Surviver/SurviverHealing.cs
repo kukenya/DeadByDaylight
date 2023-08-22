@@ -1,59 +1,77 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SurviverHealing : MonoBehaviourPun, IPunObservable
 {
-    public enum HealingTarget
-    {
-        Self,
-        Being
-    }
-
-    public HealingTarget target = HealingTarget.Self;
-
     SurviverController surviverController;
     SurviverAnimation surviverAnimation;
     SurvivorInteraction interaction;
     SurviverHealth health;
     SurviverUI ui;
     SkillCheck skillCheck;
+    SurvivorShader shader;
 
     float prograss;
 
 
-    public float Prograss { get { return prograss; } set { prograss = value; } }
+    public float Prograss { get { return prograss; } set { prograss = Mathf.Clamp(value, 0, maxPrograssTime); } }
     public float maxPrograssTime;
-    public bool healing = false;
-    public bool Heal
+    public bool selfHeal = false;
+    public bool SelfHeal
     {
-        get { return healing; }
+        get { return selfHeal; }
         set
         {
-            if (value == false && healing != value)
+            if (value == false && selfHeal != value)
             {
                 skillCheck.enabled = false;
-                HealingSurvivor--;
-                healing = value;
+                selfHeal = value;
             }
-            else if(value == true && healing != value)
+            else if(value == true && selfHeal != value)
             {
-                if(photonView.IsMine && target == HealingTarget.Self) 
-                {
-                    skillCheck.enabled = true;
-                    skillCheck.InputAction(GetSkillCheckValue);
-                }
-                else if(!photonView.IsMine && target == HealingTarget.Being)
+                selfHeal = value;
+            }
+        }
+    }
+
+    public bool otherHealing = false;
+
+    public bool OtherHealing
+    {
+        get
+        {
+            return otherHealing;
+        }
+
+        set
+        {
+            if (value == true && otherHealing != value)
+            {
+                if(photonView.IsMine == false)
                 {
                     skillCheck.enabled = true;
                     skillCheck.InputAction(GetSkillCheckValue);
                 }
                 HealingSurvivor++;
-                healing = value;
+                otherHealing = value;
+            }
+            else if (value == false && otherHealing != value)
+            {
+                if (photonView.IsMine == false)
+                {
+                    skillCheck.enabled = false;
+                }
+                HealingSurvivor--;
+                otherHealing = value;
             }
         }
     }
+
+
 
     public bool healed = false;
 
@@ -62,7 +80,10 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     [Header("플레이어 수")]
     int intSurvivor = 0;
-    public int HealingSurvivor { get { return intSurvivor; } set { photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); } }
+    public int HealingSurvivor { get { return intSurvivor; } set {
+            photonView.RPC(nameof(SetIntSurvivor), RpcTarget.All, value); 
+        } 
+    }
 
     [PunRPC]
     void SetIntSurvivor(int value)
@@ -73,6 +94,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     }
 
     float multiplyIncrease = 0;
+    float selfHealingIncrease = 0.8f;
 
     void SetMultiplayIncrease()
     {
@@ -99,6 +121,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
         surviverController = GetComponent<SurviverController>();
         surviverAnimation = GetComponent<SurviverAnimation>();
         health = GetComponent<SurviverHealth>();
+        shader = GetComponent<SurvivorShader>();
         ui = SurviverUI.instance;
         skillCheck = SkillCheck.Instance;
     }
@@ -132,49 +155,68 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     void Healing()
     {
+        if (healed) return;
+
         if (Prograss >= maxPrograssTime)
         {
-            health.State = SurviverHealth.HealthState.Healthy;
-            if (multiplyIncrease == 0) return;
-            switch (target)
+            if (health.State == SurviverHealth.HealthState.Down && OtherHealing == false) return;
+
+
+            if (photonView.IsMine)
             {
-                case HealingTarget.Self:
-                    OffSelfHeal();
-                    break;
-                case HealingTarget.Being:
-                    if (interaction != null)
-                    {
-                        interaction.OffFriendHealing();  
-                        interaction = null;
-                    }
-                    break;
+                if (health.State == SurviverHealth.HealthState.Injured) { health.State = SurviverHealth.HealthState.Healthy; healed = true; }
+                else { 
+                    surviverController.Crawl = false; 
+                    photonView.RPC("ChangePose", RpcTarget.All); 
+                    shader.RedXray = false;
+                    health.State = SurviverHealth.HealthState.Injured;
+                    WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.None;
+                    healed = false;
+                }
+            }
+            
+            print("치료 완료");
+            if (selfHeal)
+            {
+                OffSelfHeal();
+            }
+            else if (otherHealing)
+            {
+                if (photonView.IsMine == false)
+                {
+                    print(interaction);
+                    interaction.OffFriendHealing();
+                }
             }
             return;
         }
 
         if (photonView.IsMine)
         {
-            Prograss += Time.deltaTime * multiplyIncrease;
+            if (OtherHealing) Prograss += Time.deltaTime * multiplyIncrease;
+            else if (SelfHeal) Prograss += Time.deltaTime * selfHealingIncrease;
         }
     }
 
     public void OnSelfHeal()
     {
-        if(target == HealingTarget.Being) { return; }
+        if (OtherHealing) return;
         surviverController.BanMove = true;
+        SelfHeal = true;
+        if (health.State == SurviverHealth.HealthState.Down) return;
         surviverAnimation.Play("Healing_Self");
-        Heal = true;
     }
 
     public void OffSelfHeal()
     {
-        if (target == HealingTarget.Being) { return; }
+        if (OtherHealing) return;
         surviverController.BanMove = false;
-        Heal = false;
+        SelfHeal = false;
     }
 
     public void OnFriendHeal(SurvivorInteraction interaction)
     {
+        print("OnFriendHeal : " + gameObject.name);
         this.interaction = interaction;
         photonView.RPC(nameof(OnFriendHealRPC), RpcTarget.All);
     }
@@ -182,24 +224,24 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void OnFriendHealRPC()
     {
-        target = HealingTarget.Being;
         surviverController.BanMove = true;
+        OtherHealing = true;
+        if (health.State == SurviverHealth.HealthState.Down) return;
         surviverAnimation.Play("Being_Heal");
-        Heal = true;
     }
 
 
     public void OffFriendHeal()
     {
+        print("OffFriendHeal : " + gameObject.name);
         photonView.RPC(nameof(OffFriendHealRPC), RpcTarget.All);
     }
 
     [PunRPC]
     public void OffFriendHealRPC()
     {
-        target = HealingTarget.Self;
         surviverController.BanMove = false;
-        Heal = false;
+        OtherHealing = false;
     }
 
     public float failValue = 5f;
@@ -208,15 +250,15 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     {
         photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, -failValue);
         //failAudio.Play();
-        switch (target)
-        {
-            case HealingTarget.Self:
-                surviverAnimation.Play("Healing_Self_Fail");
-                break;
-            case HealingTarget.Being:
-                surviverAnimation.Play("Being_Heal_Fail");
-                break;
-        }  
+        //switch (target)
+        //{
+        //    case HealingTarget.Self:
+        //        surviverAnimation.Play("Healing_Self_Fail");
+        //        break;
+        //    case HealingTarget.Being:
+        //        surviverAnimation.Play("Being_Heal_Fail");
+        //        break;
+        //}  
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

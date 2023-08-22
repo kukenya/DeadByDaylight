@@ -10,14 +10,19 @@ public class Pallet : MonoBehaviourPun
     public enum PalletState
     {
         Stand,
-        Ground
+        Ground,
+        Destroy
     }
 
     public PalletState state;
     public PalletState State { get { return state; } set {
             photonView.RPC(nameof(SetState), RpcTarget.All, value);
-             }
+         }
     }
+
+    public float destroyDelayTime = 1f;
+    public GameObject[] pallet;
+    public GameObject destroyedPallet;
 
     [PunRPC]
     void SetState(PalletState value)
@@ -26,7 +31,22 @@ public class Pallet : MonoBehaviourPun
         {
             Play("FallOnGround");
         }
+        else if(value == PalletState.Destroy)
+        {
+            StartCoroutine(DestroyPallet());
+        }
         state = value;
+    }
+
+    IEnumerator DestroyPallet()
+    {
+        Play("Destroy");
+        yield return new WaitForSeconds(destroyDelayTime);
+        destroyedPallet.SetActive(true);
+        foreach(GameObject go in pallet)
+        {
+            Destroy(go);
+        }
     }
 
     public LayerMask layerMask;

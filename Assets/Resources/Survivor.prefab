@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5665840020961674245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6113394967876025443}
+  m_Layer: 6
+  m_Name: FootStepGeneratePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6113394967876025443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665840020961674245}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6445668696811590795}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6445668694966617075
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +843,7 @@ GameObject:
   - component: {fileID: 6445668696811590806}
   - component: {fileID: 6664009196485085810}
   - component: {fileID: 4914784267542751688}
+  - component: {fileID: 7358671135450939754}
   m_Layer: 6
   m_Name: Survivor
   m_TagString: Survivor
@@ -834,6 +866,7 @@ Transform:
   - {fileID: 6445668696166776838}
   - {fileID: 6843541766590959832}
   - {fileID: 4330566810319588988}
+  - {fileID: 6113394967876025443}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -894,7 +927,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 6445668696811590791}
   rotationSpeed: 410
   currentSpeed: 0
-  lerpSpeed: 5
+  lerpSpeed: 50
   anim: 0
   cameraDistMultiply: 0.1
 --- !u!114 &6445668696811590793
@@ -1056,9 +1089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: 0
   maxPrograssTime: 10
-  healing: 0
+  selfHeal: 0
+  otherHealing: 0
   healed: 0
   normalValue: 2
   hardValue: 5
@@ -1147,6 +1180,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go: {fileID: 6175266693468932706}
+--- !u!114 &7358671135450939754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445668696811590796}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02af91ca41c1e854b984d8193d3b1dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStepDecal: {fileID: 7972038519755305758, guid: 4636f81018788024d8cd73a5182de799, type: 3}
+  generatePos: {fileID: 6113394967876025443}
+  generateTime: 1
+  decalRemainTime: 3
 --- !u!1 &7104911752054812998
 GameObject:
   m_ObjectHideFlags: 0

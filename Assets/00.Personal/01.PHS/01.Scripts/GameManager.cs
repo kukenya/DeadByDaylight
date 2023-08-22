@@ -2,7 +2,6 @@ using Cinemachine;
 using DG.Tweening;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,12 +28,18 @@ public class GameManager : MonoBehaviourPun
             if(maxGenerator == 0)
             {
                 generatorText.text = " ";
-                endingLine.enabled = true;
+                foreach (GameObject go in exits)
+                {
+                    go.GetComponent<Exit>().GenerateDoorBlackHole();
+                    go.layer = 7;
+                }
                 return;
             }
             generatorText.text = maxGenerator.ToString();
         }
     }
+
+    public List<GameObject> exits = new List<GameObject>();
 
     public CinemachineVirtualCamera survivorCamera1;
 
@@ -90,11 +95,12 @@ public class GameManager : MonoBehaviourPun
 
         if(SelecterManager.Instance.IsSurvivor == false) 
         {
-            PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[0].position.x, 0, spawnPos[0].position.z), Quaternion.identity);
+            int idx = Random.Range(0, spawnPos.Count);
+            PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[idx].position.x, 0, spawnPos[idx].position.z), Quaternion.identity);
             OffCursor();
             survivorCamera1.gameObject.SetActive(false);
             survivorCanvas.SetActive(false);
-            mudererCanvas.SetActive(true); 
+            mudererCanvas.SetActive(true);
         }
         else
         {
