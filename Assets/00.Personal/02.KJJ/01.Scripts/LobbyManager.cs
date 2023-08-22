@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public List<GameObject> playerObject;
 
-    int i = 0;
+    int num = 0;
 
     // 살인마 체크
     bool isMurderer = false;
@@ -44,7 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void JoinCreateRoom()
@@ -121,13 +121,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void PlayerSpawn()
     {
-        i = PhotonNetwork.CountOfPlayersInRooms;
-        PhotonNetwork.Instantiate("Player", player[i].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+        num = PhotonNetwork.CountOfPlayersInRooms;
+        PhotonNetwork.Instantiate("Player", player[num].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
     }
 
+    
     public void PlayerDestory()
     {
-        PhotonNetwork.Destroy(playerObject[i].gameObject);
+        PhotonNetwork.Destroy(playerObject[num].gameObject);
     }
 
     // 플레이어 입장시

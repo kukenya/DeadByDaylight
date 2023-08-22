@@ -20,7 +20,6 @@ public class LobbyNickName : MonoBehaviourPun
         {
             nickName.text = photonView.Owner.NickName;
         }
-        //nickName.text = photonView.Owner.NickName;
         LobbyManager.instance.AddPlayer(gameObject);
     }
 
