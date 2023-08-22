@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviourPun
             }
         }
 
-        if(PhotonNetwork.IsMasterClient) 
+        if(SelecterManager.Instance.IsSurvivor == false) 
         {
             int idx = Random.Range(0, spawnPos.Count);
             PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[idx].position.x, 0, spawnPos[idx].position.z), Quaternion.identity);
