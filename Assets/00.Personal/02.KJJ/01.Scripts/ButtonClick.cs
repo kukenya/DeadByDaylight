@@ -23,7 +23,11 @@ public class ButtonClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) OnclickBack();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnclickBack();
+            LobbyManager.instance.LeaveRoom();
+        }
     }
 
     public void OnclickKiller()

@@ -7,28 +7,51 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public Transform player;
+    public static LobbyManager instance = null;
 
-    public GameObject playerObject;
+    public GameObject[] player;
+
+    public List<GameObject> playerObject;
+
+    int num = 0;
+
+    // 살인마 체크
+    bool isMurderer = false;
 
     private void Awake()
     {
+        // 만약에 instance 값이 null 이라면
+        if (instance == null)
+        {
+            // instance에 나 자신을 셋팅
+            instance = this;
+        }
+        // 그렇지 않으면
+        else
+        {
+            // 나를 파괴한다.
+            Destroy(gameObject);
+        }
+
         PhotonNetwork.AutomaticallySyncScene = true; // 방장이 플레이 씬으로 넘어가면 다른 플레이어도 플레이 씬으로 넘어가게
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        playerObject = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
     public void JoinCreateRoom()
     {
+        // 살인마가 맞는지 체크
+        isMurderer = true;
+
         // 방 옵션을 설정 (최대 인원)
         RoomOptions option = new RoomOptions();
         option.MaxPlayers = 5;
@@ -43,9 +66,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom("GameRoom");
-
-        // 플레이어 스폰
-        PlayerSpawn();
     }
 
 
@@ -69,6 +89,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("방 입장 완료");
+        
+        // 살인마가 아니면 캐릭터를 생성
+        if(isMurderer == false) PlayerSpawn();
     }
 
     // 방 입장 실패시 호출되는 함수
@@ -81,13 +104,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 방 나가기
     public void LeaveRoom()
     {
-        PhotonNetwork.Destroy(playerObject.gameObject);
+        PlayerDestory();
         PhotonNetwork.LeaveRoom();
         print("방을 떠났습니다.");
     }
 
     public void GameStart()
     {
+        print("게임씬으로 이동");
         if (PhotonNetwork.IsMasterClient)
         {
             // GameScene으로 이동
@@ -95,20 +119,36 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //public override void OnLeftRoom()
-    //{
-    //    base.OnLeftRoom();
-    //    print("OnLeftRoom");
-    //}
-
-    //public override void OnConnectedToMaster()
-    //{
-    //    base.OnConnectedToMaster();
-    //    print("OnConnectedToMaster");
-    //}
-
     public void PlayerSpawn()
     {
-        playerObject = PhotonNetwork.Instantiate("Player", player.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+        num = PhotonNetwork.CountOfPlayersInRooms;
+        PhotonNetwork.Instantiate("Player", player[num].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+    }
+
+    
+    public void PlayerDestory()
+    {
+        PhotonNetwork.Destroy(playerObject[num].gameObject);
+    }
+
+    // 플레이어 입장시
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+        print(newPlayer.NickName + "님이 들어왔습니다!");
+    }
+
+    // 플레이어 나갈시
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+
+        print(otherPlayer.NickName + "님이 나갔습니다!");
+    }
+
+    public void AddPlayer(GameObject go)
+    {
+        playerObject.Add(go);
     }
 }
