@@ -12,7 +12,9 @@ public class InteractiveObject : MonoBehaviour
         Pallet,
         Generator,
         Exit,
-        Survivor
+        Survivor,
+        Hook,
+        Closet
     }
 
     public Type type = Type.Window;
@@ -37,6 +39,11 @@ public class InteractiveObject : MonoBehaviour
                 break;
             case Type.Survivor:
                 interactScript = GetComponentInParent<SurviverHealing>();
+                break;
+            case Type.Hook:
+                interactScript = GetComponent<Hook>();
+                break;
+            case Type.Closet:interactScript = GetComponent<Closet>();
                 break;
         }
     }

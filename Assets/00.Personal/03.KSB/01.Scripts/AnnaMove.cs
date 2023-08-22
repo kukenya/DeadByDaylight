@@ -33,7 +33,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public Camera cineCam;                      // 시네머신 카메라
     public Transform playCamera;                // 플레이 카메라
     public Transform foward;
+    public LayerMask layerMask;                 // OverlapSphere 에서 쓸 LayerMask
 
+    // 상호작용 오브젝터의 애니메이터
+    Animator palletAnim;             // 판자   애니메이터
+    Animator closetAnim;             // 클로젯 애니메이터
+    Animator generatorAnim;          // 발전기 애니메이터
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -86,10 +91,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     bool isCanceled;                        // 차징을 취소했는가?
     bool isThrowing;                        // 손도끼를 던졌는가?
     bool isStunned;                         // 스턴 당했는가?
-
+    bool isDrivingForce;                    // 일반공격할 때 추진력을 받았는가?
+    public bool isCloset;                   // 캐비넷인가?
     public bool canCarry;                   // 생존자를 들 수 있는가?
     public bool canDestroyGenerator;        // 발전기를 부술 수 있는가?
     public bool canHook;                    // 갈고리에 걸 수 있는가?
+    public bool canOpenDoor;                // 캐비넷 문을 열 수 있는가?
     public bool canReLoad;                  // 한 손 도끼를 재충전 할 수 있는가?
     public bool canDestroyPallet;           // 내려간 판자를 부술 수 있는가?
     public bool canRotate;
@@ -110,7 +117,11 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public Light redlight;                  // 살인마 앞에 있는 조명
 
     // 애니메이션 실행 위치
-    public Transform hookSpot;              // 갈고리
+    GameObject goHook;                      // 갈고리 컴포넌트 가져올 겜옵젝
+    public Vector3 hookSpot;                // 갈고리 애니메이션 실행 위치
+
+    public GameObject goCloset;
+    public Vector3 closetSpot;
 
     // Photon
     Vector3 receivePos;                     // 전달받을 포지션 값
@@ -120,6 +131,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     float v;                                // 앞뒤 입력값
 
     public bool HaxMode = false;
+
+    public Collider[] hitcolliders = new Collider[10]; // 배열은 [] 안에 선언해줘야함 배열 얼마나 할 건지
 
     #endregion
 
@@ -207,212 +220,23 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
         #endregion
 
-        if (photonView.IsMine == true)
-        {
-            if (canRotate == true)
-            {
-                #region 회전
-                // Idle 상태만 아니면 회전 가능
-                if (state != State.Idle)
-                {
-                    // 회전값을 받아온다.
-                    float mx = Input.GetAxis("Mouse X");
-                    float my = Input.GetAxis("Mouse Y");
-
-                    // 회전값을 누적
-                    rotX += mx * rotSpeed * Time.deltaTime;
-                    rotY += my * rotSpeed * Time.deltaTime;
-
-                    // 회전값을 적용
-                    transform.eulerAngles = new Vector3(0, rotX, 0);                      // Horizontal
-                    cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
-                                                                                          // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
-                                                                                          // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
-                    // rotY = Mathf.Clamp(rotY, 45, -35);                                 // Y 회전값 35도로 고정
-
-
-                }
-                #endregion
-
-                #region 이동
-                // 이동값 받아온다
-                h = Input.GetAxis("Horizontal");
-                v = Input.GetAxis("Vertical");
-
-                // 이동값을 애니메이션과 연결
-                anim.SetFloat("h", h);
-                anim.SetFloat("v", v);
-
-                // 방향을 구한다
-                Vector3 dirH = transform.right * h;
-                Vector3 dirV = transform.forward * v;
-                Vector3 dir = dirH + dirV;
-                dir.Normalize();
-
-                // 만약 차징 중이라면
-                if (isCharging == true)
-                {
-                    // 차지속도(3.08)로 이동
-                    currentSpeed = chargingSpeed;
-                }
-                // 도끼 던지고 나서
-                else if (state == State.CoolTime)
-                {
-                    currentSpeed = delaySpeed;
-                }
-                // 일반 공격 들어갈 때
-                else if (state == State.NormalAttack)
-                {
-                    currentSpeed = 6;
-                }
-                else if (isCharging == false || state != State.CoolTime || isThrowing == false)
-                {
-                    // 그 이외는 일반속도(4.4)로 이동
-                    currentSpeed = normalSpeed;
-                }
-
-                // 만약 바닥에 있지 않으면
-                if (cc.isGrounded == false)
-                {
-                    yVelocity += gravity;
-                }
-                else
-                {
-                    yVelocity = 0;
-                }
-
-                // velocity 설정
-                Vector3 velocity = dir * currentSpeed;
-
-                // yVelocity 연결하기
-                velocity.y = yVelocity;
-
-                // 이동한다
-                cc.Move(velocity * Time.deltaTime);
-                #endregion
-
-                #region 발전기 부수기
-                if (canDestroyGenerator == true)
-                {
-                    // 스페이스 바를 계속 누르고 있으면 발전기를 부순다.
-                    if (Input.GetKey(KeyCode.Space))
-                    {
-                        cc.enabled = false;                 // 멈춰!
-                                                            // anim.SetBool("DestroyG", true);     // 애니메이션 true
-                        photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", true);
-
-                        //  UI
-                        //  UI
-                        // 게이지 채운다
-                    }
-                    // 중간에 스페이스 바에서 손을 떼면 취소된다.
-                    if (Input.GetKeyUp(KeyCode.Space))
-                    {
-                        cc.enabled = true;                  // 움직여!
-                                                            // anim.SetBool("DestroyG", false);    // 애니메이션 false
-                                                            // anim.SetTrigger("DestroyCancel");   // 취소 애니메이션
-                        photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
-                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyCancel");
-
-                        //  UI
-                        //  UI
-                        // 게이지 초기화
-                    }
-                }
-                #endregion
-
-                #region 판자 부수기
-                if (canDestroyPallet == true)
-                {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        cc.enabled = false;             // 움직임 멈춤
-                                                        //anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
-                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");
-                        // 판자가 부서지는 애니메이션 실행
-                    }
-                }
-                #endregion
-            }
-        }
-        // 나의 Anna 가 아닐 때
-        else
-        {
-            // 위치 와 회전 값을 전달 <- 위 아래 회전 막고 싶다.
-            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-
-            // Parameter 값을 전달
-            anim.SetFloat("h", h);
-            anim.SetFloat("v", v);
-        }
-
-
-        #region 상호작용 애니메이션(시작하는 위치로 이동)
-        #region 도끼 재충전
-        // 도끼의 개수가 5보다 작고 재충전 가능한 상태일 때, 스페이스 바를 누르면
-        if (currentAxeCount < maxAxeCount && canReLoad && Input.GetKeyDown(KeyCode.Space))
-        {
-            // 애니메이션 시작 장소로 이동한다.
-
-            OffCC();                                                        // 움직임 멈춤
-
-            // anim.SetTrigger("Reload");                                      // 도끼를 집어드는 애니메이션 실행
-            photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Reload");
-            // 캐비넷 열리고 닫히는 애니메이션 실행
-
-            currentAxeCount = maxAxeCount;                                  // 도끼 최대 소지 갯수를 최대로 채운다
-
-            axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
-        }
-        #endregion
-
-        #region 캐비넷 확인
-        // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
-        // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
-        // 그냥 열었다가 닫는다
-        // 만약 안에 사람이 있다면
-        // 그 사람을 들어버린다
-        // 상태를 Carry 로 바꾼다
-        #endregion
-
-        #region 갈고리 걸기
-        if (state == State.Carry && canHook)
-        {
-            // 스페이스바를 누르면 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                // StartCoroutine("LerptoHook");
-
-                cc.enabled = false;                 // 움직임을 멈춘다.
-
-                // anim.SetTrigger("Hook");            // 생존자를 갈고리에 거는 애니메이션 실행한다.
-
-                photonView.RPC(nameof(Hook), RpcTarget.All);
-
-                photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Hook");
-                // 갈고리에 거는 UI 게이지가 찬다.
-
-                // 다 차면 UI 끈다.
-            }
-        }
-        #endregion
-        #endregion
-
         #region OverlapSphere & UI
         canHook = false;
         canReLoad = false;
         canDestroyPallet = false;
         canDestroyGenerator = false;
         canCarry = false;
+
+        // photonView.IsMine 이라면 OverlapSphere Radius 2 아니면 2.5
         float a = photonView.IsMine ? 2f : 2.5f;
-        Collider[] hitcolliders = Physics.OverlapSphere(transform.position, a);
-        // for 문 돌리기
+        
+        hitcolliders = Physics.OverlapSphere(transform.position, a, layerMask);
+
         for (int i = 0; i < hitcolliders.Length; i++)
         {
             print(hitcolliders[i].transform.gameObject.name);
+
             // Survivor 생존자
-            //if (hitcolliders[i].transform.gameObject.name.Contains("Survivor"))
             if (hitcolliders[i].transform.gameObject.name.Contains("Survivor"))
             {
                 // 상태가 Healthy 인 생존자가 1명 이상이라면 chase BG이 나오게 한다.
@@ -449,11 +273,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // Pallet 판자
             if (hitcolliders[i].transform.gameObject.name.Contains("Pallet"))
             {
+                canDestroyPallet = true;
+
                 // 만약 판자의 상태가 '내려감' 이라면
                 //if ()
                 //{
                 //    // canDestroyPallet 을 true 로
-                canDestroyPallet = true;
                 //}
             }
             else { }
@@ -461,20 +286,39 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // Closet 캐비넷
             if (hitcolliders[i].transform.gameObject.name.Contains("Closet"))
             {
+                // 처음에 들어오면 null 이기 때문에 else 에서 hitcollider[0] 이 goCloset 이 됨
+                // 그 다음에 들어오는 게 hitcolliders[1]이 되면서 둘과 나 사이의 거리를 재서,
+                // 만약 hitcollider[0] 이 더 가까우면 그게 최종 goCloset 이 됨
+                if (goCloset != null)
+                {
+                    float ab = Vector3.Distance(hitcolliders[i].transform.position, transform.position);
+                    float bc = Vector3.Distance(goCloset.transform.position, transform.position);
+                    if (ab < bc) goCloset = hitcolliders[i].gameObject;
+                }
+                else
+                {
+                    goCloset = hitcolliders[i].gameObject;
+                }
+
+                closetAnim = goCloset.GetComponentInParent<Animator>();
+                closetSpot = goCloset.GetComponent<Closet>().trCloset.position;   // 항상 0번 째 closet 을 반환받는다.
+
                 // 만약 들고 있는 도끼의 개수가 최대개수라면
                 if (currentAxeCount == maxAxeCount)
                 {
-                    // 그냥 문 열기 -> [SPACE] 찾기 UI
+                    // [SPACE] 찾기 UI
 
-                    // 만약 생존자가 있으면 바로 들기 / 아니면 걍 문닫기
-
+                    // 문 열기 가능
+                    canOpenDoor = true;
                 }
 
                 // 만약 들고 있는 도끼의 개수가 1~4 일때
                 else if (currentAxeCount > 0 && currentAxeCount < maxAxeCount)
                 {
-                    // canReload -> true & [SPACE] 찾기 + 손도끼 투척
-                    canReLoad = true;
+                    // [SPACE] 찾기 + 손도끼 투척
+
+                    // 문 열기 가능
+                    canOpenDoor = true;
                 }
             }
 
@@ -484,19 +328,229 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // canHook -> true
                 canHook = true;
 
-                // 갈고리 애니메이션 시작 장소  
+                // 갈고리 게임오브젝트
+                goHook = hitcolliders[i].gameObject;
+                hookSpot = goHook.GetComponent<Hook>().hookPos.position;
             }
         }
         #endregion
 
-        // 스턴 당하면 스턴 함수를 호출
-        if (Input.GetKeyDown(KeyCode.G))
+        #region PhotonView
+        if (photonView.IsMine == true)
         {
-            // G 버튼 = 스턴 함수를 불렀다고 가정하고 
-            Stunned();
+            if (canRotate == true)
+            {
+                #region 회전
+                // Idle 상태만 아니면 회전 가능
+                if (state != State.Idle)
+                {
+                    // 회전값을 받아온다.
+                    float mx = Input.GetAxis("Mouse X");
+                    float my = Input.GetAxis("Mouse Y");
+
+                    // 회전값을 누적
+                    rotX += mx * rotSpeed * Time.deltaTime;
+                    rotY += my * rotSpeed * Time.deltaTime;
+
+                    // 회전값을 적용
+                    transform.eulerAngles = new Vector3(0, rotX, 0);                      // Horizontal
+                    cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
+                                                                                          // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
+                                                                                          // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
+                                                                                          // rotY = Mathf.Clamp(rotY, 45, -35);                                 // Y 회전값 35도로 고정
+
+
+                }
+                #endregion
+
+                #region 이동
+                // 이동값 받아온다
+                h = Input.GetAxis("Horizontal");
+                v = Input.GetAxis("Vertical");
+
+                // 이동값을 애니메이션과 연결
+                anim.SetFloat("h", h);
+                anim.SetFloat("v", v);
+
+                // 방향을 구한다
+                Vector3 dirH = transform.right * h;
+                Vector3 dirV = transform.forward * v;
+                Vector3 dir = dirH + dirV;
+                dir.Normalize();
+
+                // 차징 하고 있을 때
+                if (isCharging == true)
+                {
+                    // 차지속도(3.08)로 이동
+                    currentSpeed = chargingSpeed;
+                }
+                // 도끼 던지고 나서 딜레이 시간동안
+                else if (state == State.CoolTime)
+                {
+                    currentSpeed = delaySpeed;
+                }
+                // 일반 공격 들어갈 때
+                else if (isDrivingForce == true)
+                {
+                    currentSpeed = 6.5f;
+                }
+                // 일반 공격 후 딜레이 시간동안
+                else if (isNormalAttack == true)
+                {
+                    currentSpeed = 0.6f;
+                }
+                else
+                {
+                    // 그 이외는 일반속도(4.4)로 이동
+                    currentSpeed = normalSpeed;
+                }
+
+                // 만약 바닥에 있지 않으면
+                if (cc.isGrounded == false)
+                {
+                    yVelocity += gravity;
+                }
+                else
+                {
+                    yVelocity = 0;
+                }
+
+                // velocity 설정
+                Vector3 velocity = dir * currentSpeed;
+
+                // yVelocity 연결하기
+                velocity.y = yVelocity;
+
+                // 이동한다
+                cc.Move(velocity * Time.deltaTime);
+                #endregion
+
+            }
+
+            #region 발전기 부수기
+            if (canDestroyGenerator == true)
+            {
+                // 스페이스 바를 계속 누르고 있으면 발전기를 부순다.
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    cc.enabled = false;                 // 멈춰!
+                                                        // anim.SetBool("DestroyG", true);     // 애니메이션 true
+                    photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", true);
+
+                    //  UI
+                    //  UI
+                    // 게이지 채운다
+                }
+                // 중간에 스페이스 바에서 손을 떼면 취소된다.
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    cc.enabled = true;                  // 움직여!
+                                                        // anim.SetBool("DestroyG", false);    // 애니메이션 false
+                                                        // anim.SetTrigger("DestroyCancel");   // 취소 애니메이션
+                    photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyCancel");
+
+                    //  UI
+                    //  UI
+                    // 게이지 초기화
+                }
+            }
+            #endregion
+
+            #region 판자 부수기
+            if (canDestroyPallet == true)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    cc.enabled = false;             // 움직임 멈춤
+                                                    //anim.SetTrigger("DestroyP");    // 판자를 부수는 애니메이션 실행
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");
+                    // 판자가 부서지는 애니메이션 실행
+                }
+            }
+            #endregion
+
+            #region 도끼 재충전
+            //if (currentAxeCount < maxAxeCount && canReLoad && Input.GetKeyDown(KeyCode.Space)){}
+
+            // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
+            if (canOpenDoor && Input.GetKeyDown(KeyCode.Space))
+            {
+                // 만약 안에 사람이 있다면
+                // if(          )
+                // {
+                // 그 사람을 들어버린다
+                // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "ClosetPickup");
+                // 상태를 Carry 로 바꾼다
+                // AnnaState = State.Carry;
+                // }
+
+                // 만약 
+                /*else*/
+                if (0 <= currentAxeCount && currentAxeCount < maxAxeCount)
+                {
+                    // 애니메이션 시작 장소로 이동한다.
+                    transform.position = closetSpot;                                    // Closet 위치로 이동
+                    transform.forward = goCloset.transform.forward;                     // 나의 앞방향을 Closet 앞방향으로
+
+                    OffCC();                                                            // 움직임 멈춤
+
+                    // anim.SetTrigger("Reload");                                      
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Reload");             // 도끼를 집어드는 애니메이션 실행
+                    photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");     // 캐비넷 열리고 닫히는 애니메이션 실행
+
+                    currentAxeCount = maxAxeCount;                                      // 도끼 최대 소지 갯수를 최대로 채운다
+
+                    axeCount.text = Convert.ToString(currentAxeCount);                  // UI 갱신한다
+                }
+
+                // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
+                else
+                {
+                    // 그냥 열었다가 닫는다
+                    // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "");
+                    photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");
+                }
+            }
+            #endregion
+
+            #region 갈고리 걸기
+            if (state == State.Carry && canHook)
+            {
+                // 스페이스바를 누르면 
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    transform.position = hookSpot;
+                    transform.forward = transform.forward * -1;
+
+                    // StartCoroutine("LerptoHook", hookSpot);                          // 애니메이션 장소로 Lerp
+
+                    cc.enabled = false;                                                 // 움직임을 멈춘다.
+
+                    photonView.RPC(nameof(Hook), RpcTarget.All);                        // 생존자가 갈고리에 걸리는 애니메이션 실행한다.
+
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Hook");       // 생존자를 갈고리에 거는 애니메이션 실행한다.
+
+                    // 갈고리에 거는 UI 게이지가 찬다.
+
+                    // 다 차면 UI 끈다.
+
+                }
+            }
+            #endregion
         }
+        // 나의 Anna 가 아닐 때
+        else
+        {
+            // 위치 와 회전 값을 전달 <- 위 아래 회전 막고 싶다.
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
 
-
+            // Parameter 값을 전달
+            anim.SetFloat("h", h);
+            anim.SetFloat("v", v);
+        }
+        #endregion
     }
     #endregion
 
@@ -525,15 +579,15 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     #region Lerp
     // 갈고리
-    IEnumerator LerptoHook()
+    IEnumerator LerptoHook(Vector3 animPos)
     {
-        while (Vector3.Distance(transform.position, hookSpot.position) > 0.3f)
+        while (Vector3.Distance(transform.position, animPos) > 0.3f)
         {
             // Vector3 hookdir = hookSpot.position - transform.position;   // hookSpot 에서 나의 방향벡터
-            transform.position = Vector3.Lerp(transform.position, hookSpot.position, 0.1f);
-            transform.forward = hookSpot.forward;
+            transform.position = Vector3.Lerp(transform.position, animPos, 0.1f);
+            // transform.forward = hookSpot.forward;
 
-            if (Vector3.Distance(transform.position, hookSpot.position) <= 0.3f)
+            if (Vector3.Distance(transform.position, animPos) <= 0.3f)
             {
                 break;
             }
@@ -696,8 +750,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출 
 
         survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
-        
-           
+
+
         //survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
         survivor.transform.localPosition = new Vector3(-0.0379999988f, 0.976001143f, 0.202000007f);
         //survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
@@ -849,8 +903,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            // 들기 애니메이터 레이어 값을 변경
-            anim.SetLayerWeight(1, 0.5f);
+            // h 나 v 입력값이 있으면
+            if (h > 0 || v > 0)
+            {
+                // 들기 애니메이터 레이어 값을 변경
+                anim.SetLayerWeight(1, 0.5f);
+            }
+            // 움직이지 않을 때
+            else
+            {
+                anim.SetLayerWeight(1, 0);
+            }
         }
     }
 
@@ -909,33 +972,15 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         bigAxeCollider.enabled = false;
     }
 
-    // 초기화 함수
-    void OnMyReset()
+    public void StartDrivingForce()
     {
-        if (photonView.IsMine)
-        {
-            AnnaState = State.Move;
-
-            OnCC();
-            OffAxe();
-
-            // anim.SetBool("Throwing", false);
-            // anim.SetBool("DestroyG", false);
-            photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
-            photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
-
-
-            isStunned = false;
-            isCharging = false;
-            isNormalAttack = false;
-            playingthrowsound = false;
-            canDestroyGenerator = false;
-            canDestroyPallet = false;
-            canReLoad = false;
-            throwUI.SetActive(true);
-        }
+        isDrivingForce = true;
     }
 
+    public void EndDrivingForce()
+    {
+        isDrivingForce = false;
+    }
 
     public void Throwing()      // State 를 ThrowingAttack 로 바꾸는 함수
     {
@@ -960,6 +1005,31 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         // smallAxe.SetActive(false);
         photonView.RPC(nameof(AxeRPC), RpcTarget.All, false);
     }
+
+    // 초기화 함수
+    void OnMyReset()
+    {
+        if (photonView.IsMine)
+        {
+            AnnaState = State.Move;
+
+            OnCC();
+            OffAxe();
+
+            photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
+            photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
+
+
+            isStunned = false;
+            isCharging = false;
+            isNormalAttack = false;
+            playingthrowsound = false;
+            canDestroyGenerator = false;
+            canDestroyPallet = false;
+            canReLoad = false;
+            throwUI.SetActive(true);
+        }
+    }
     #endregion
 
     #region PunRPC
@@ -967,6 +1037,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     void SetTriggerRPC(string parameter)
     {
         anim.SetTrigger(parameter);
+    }
+
+    [PunRPC]
+    void SetClosetTriggerRPC(string parameter)
+    {
+        closetAnim.SetTrigger(parameter);
     }
 
     [PunRPC]

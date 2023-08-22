@@ -10,6 +10,10 @@ public class BigAxe : MonoBehaviourPun
 
     float currentTime;              // 현재시간
 
+    public GameObject anna;         // Anna
+
+    BoxCollider box;                // 도끼 콜라이더
+
     GameObject goBloodImage;        // 핏자국 이미지
     Image bloodImage;
     Color color;                    // 컬러 <- 알파값
@@ -21,13 +25,14 @@ public class BigAxe : MonoBehaviourPun
     {
         if(photonView.IsMine== true)
         {
-            goBloodImage = GameObject.Find("Blood");
+            box = anna.GetComponent<AnnaMove>().bigAxeCollider; // 도끼 콜라이더
+
+            goBloodImage = GameObject.Find("Blood");            // 피 이미지
             bloodImage = goBloodImage.GetComponent<Image>();
             color = bloodImage.GetComponent<Image>().color;
             color.a = 0;
             bloodImage.GetComponent<Image>().color = color;
         }
-
     }
 
     private void Update()
@@ -50,20 +55,20 @@ public class BigAxe : MonoBehaviourPun
         print(other.gameObject.name);
         if (other.gameObject.name.Contains("Survivor"))
         {
-            hit = true;                                                 // 1초 후에 코루틴 함수를 호출한다.
+            hit = true;                                                     // 1초 후에 코루틴 함수를 호출한다.
 
-            other.GetComponent<SurviverHealth>().NormalHit();           // 생존자의 NormalHit 함수를 호출한다.
+            other.GetComponent<SurviverHealth>().NormalHit();               // 생존자의 NormalHit 함수를 호출한다.
 
-            GetComponent<AnnaMove>().OffAxe();                          // 도끼 콜라이더를 끈다.
-              
-            color.a = 1;                                                // 화면에 피 튀기는 UI 알파값을 1로 만든다.       
+            box.enabled = false;                                            // 도끼 콜라이더를 끈다. 
+
+            color.a = 1;                                                    // 화면에 피 튀기는 UI 알파값을 1로 만든다.       
             bloodImage.GetComponent<Image>().color = color;         
 
-            SoundManager.instance.PlayHitSounds(4);                     // 도끼에 맞는 소리를 재생한다.
+            SoundManager.instance.PlayHitSounds(4);                         // 도끼에 맞는 소리를 재생한다.
 
-            //GameObject bloodEffect = Instantiate(bloodEffectFactory); // 피 이펙트 공장에서 피 이펙트를 만든다.
-            //bloodEffect.transform.position = this.transform.position; // 내 위치에 생성하고 플레이한다.
-            //bloodEffect.transform.position.Normalize();               // 방향은 노말벡터
+            //GameObject bloodEffect = Instantiate(bloodEffectFactory);     // 피 이펙트 공장에서 피 이펙트를 만든다.
+            //bloodEffect.transform.position = this.transform.position;     // 내 위치에 생성하고 플레이한다.
+            //bloodEffect.transform.position.Normalize();                   // 방향은 노말벡터
         }
     }
 

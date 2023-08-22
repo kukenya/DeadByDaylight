@@ -48,7 +48,7 @@ public class Axe : MonoBehaviour
             other.GetComponent<SurviverHealth>().NormalHit();
             canHit = true;
         }
-        else if (other.gameObject.name.Contains("Pallet"))
+        else
         {
             SoundManager.instance.PlayHitSounds(0);
         }

@@ -91,7 +91,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // GameScene으로 이동
-            PhotonNetwork.LoadLevel("Murderer");
+            PhotonNetwork.LoadLevel("PHS");
         }
     }
 
