@@ -17,9 +17,9 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.011
+    AppVersion: 1.0
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: asia
     Server: 
     Port: 0
     ProxyServer: 
@@ -76,9 +76,6 @@ MonoBehaviour:
   - Hook
   - SkillCheckSuccess
   - SetAnnaState
-  - OnAxeRenderer
-  - OnAxeRPC
-  - AxeRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
