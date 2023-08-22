@@ -12,6 +12,7 @@ public class LobbyNickName : MonoBehaviourPun
     void Start()
     {
         nickName.text = photonView.Owner.NickName;
+        LobbyManager.instance.AddPlayer(gameObject);
     }
 
     // Update is called once per frame
