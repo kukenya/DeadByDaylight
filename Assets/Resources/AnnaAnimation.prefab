@@ -5610,10 +5610,11 @@ MonoBehaviour:
   animOC: {fileID: 22100000, guid: 6cbaed448794ec7418bbf569858dbabd, type: 2}
   cineCam: {fileID: 2788427881549103194}
   playCamera: {fileID: 2677815708388322622}
-  foward: {fileID: 4229104218976510584}
+  redlight: {fileID: 367950648217861453}
   layerMask:
     serializedVersion: 2
     m_Bits: 192
+  foward: {fileID: 4229104218976510584}
   yVelocity: 0
   gravity: -0.5
   rotSpeed: 100
@@ -5637,12 +5638,10 @@ MonoBehaviour:
   canReLoad: 0
   canDestroyPallet: 0
   canRotate: 0
-  survivor: {fileID: 6445668696811590796, guid: 389ccac1b4990f04cac95beb1dd075ee, type: 3}
   leftArm: {fileID: 6319253092841262359}
-  redlight: {fileID: 367950648217861453}
+  survivor: {fileID: 6445668696811590796, guid: 389ccac1b4990f04cac95beb1dd075ee, type: 3}
   goCloset: {fileID: 0}
   palletSpot: {x: 0, y: 0, z: 0}
-  HaxMode: 1
   hitcolliders:
   - {fileID: 0}
   - {fileID: 0}
@@ -5654,6 +5653,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  HaxMode: 1
 --- !u!114 &852289717898882860
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -746,6 +746,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 // UI È°¼ºÈ­
                 UIManager.instance.murdererUI.enabled = true;
+                UIManager.instance.throwUI.SetActive(true);
 
                 // Material
                 MaterialManager materialManager = GetComponent<MaterialManager>();

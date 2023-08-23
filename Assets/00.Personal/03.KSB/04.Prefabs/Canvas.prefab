@@ -508,7 +508,7 @@ MonoBehaviour:
   murdererUI: {fileID: 1452682735942540285}
   axeCount: {fileID: 415515108894385277}
   genCount: {fileID: 4611340456633919055}
-  throwUI: {fileID: 0}
+  throwUI: {fileID: 7884101999850935201}
   soloSpace: {fileID: 7003556344202511576}
   soloText: {fileID: 3121946526067017389}
   toGetherThrowUI: {fileID: 41048909822242411}
@@ -3173,7 +3173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610397094890425164
 Transform:
   m_ObjectHideFlags: 0
