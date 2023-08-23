@@ -32,13 +32,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public AnimatorOverrideController animOC;   // 살인마 애니메이터 (네트워크)
     public Camera cineCam;                      // 시네머신 카메라
     public Transform playCamera;                // 플레이 카메라
-    public Transform foward;
+    public Light redlight;                      // 살인마 앞에 있는 조명
     public LayerMask layerMask;                 // OverlapSphere 에서 쓸 LayerMask
 
-    // 상호작용 오브젝터의 애니메이터
-    Animator palletAnim;             // 판자   애니메이터
-    Animator closetAnim;             // 클로젯 애니메이터
-    Animator generatorAnim;          // 발전기 애니메이터
+    public Transform foward;                    // 앞방향 확인하기 위한 변수   ======================== 삭제 =============================
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -49,7 +46,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     // 중력
     public float yVelocity;                 // y 속도
     public float gravity = -0.5f;           // 중력속도
-
 
     // 회전
     float rotX;                             // X 회전값
@@ -67,13 +63,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     float maximumChargingTime = 3;          // 최대 차징 시간
     // float axeRechargingTime = 4;         // 도끼 충전 시간
 
-    // 카운트
-    float maxAxeCount = 5;                  // 최대 소유 가능한 한손도끼 개수
-    float currentAxeCount;                  // 현재 가지고 있는 한손도끼 개수
-
-    float maxGenCount = 5;                  // 최대 남은 발전기 개수
-    float currentGenCount;                  // 현재 남은 발전기 개수
-
     // 두손 도끼
     public BoxCollider bigAxeCollider;      // 두손도끼 콜라이더
 
@@ -84,6 +73,14 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public float chargingForce;             // 한손도끼 던지는 힘
     public float minAxePower = 20;          // 한손도끼 던지는 힘 최소값
     public float maxAxePower = 40;          // 한손도끼 던지는 힘 최대값
+
+    // 한손도끼 갯수
+    float maxAxeCount = 5;                  // 최대 소유 가능한 한손도끼 개수
+    float currentAxeCount;                  // 현재 가지고 있는 한손도끼 개수
+
+    // 발전기 
+    float maxGenCount = 5;                  // 최대 남은 발전기 개수
+    float currentGenCount;                  // 현재 남은 발전기 개수
 
     // bool
     public bool isNormalAttack;             // 일반공격 중인가?
@@ -101,20 +98,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public bool canDestroyPallet;           // 내려간 판자를 부술 수 있는가?
     public bool canRotate;
 
-    // 기본 UI
-    GameObject goGenCount;                  // 발전기 갯수 UI GameObject
-    TextMeshProUGUI generatorCount;         // 발전기 갯수 UI
-
-    GameObject goAxeCount;                  // 도끼 갯수 UI GameObject
-    TextMeshProUGUI axeCount;               // 도끼 갯수 UI
-
-    // 상호작용 UI
-    GameObject throwUI;                     // 도끼 던지기 UI
-
-    // 기타
-    public GameObject survivor;             // 생존자 게임오브젝트
-    public Transform leftArm;               // 왼팔
-    public Light redlight;                  // 살인마 앞에 있는 조명
+    // 상호작용 오브젝터 관련 변수
+    public Transform leftArm;                   // 왼팔
+    public GameObject survivor;                 // 생존자 게임오브젝트
+    Animator closetAnim;                        // 클로젯 애니메이터
 
     // 애니메이션 실행 위치
     GameObject goHook;                      // 갈고리 컴포넌트 가져올 겜옵젝
@@ -130,15 +117,13 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     // Photon
     Vector3 receivePos;                     // 전달받을 포지션 값
     Quaternion receiveRot;                  // 전달받을 로테이션 값
-
     float lerpSpeed = 50;                   // 보정 속력
     float h;                                // 좌우 입력값
     float v;                                // 앞뒤 입력값
 
-    public bool HaxMode = false;
-
     public Collider[] hitcolliders = new Collider[10]; // 배열은 [] 안에 선언해줘야함 배열 얼마나 할 건지
 
+    public bool HaxMode = false;            // 도끼 999 모드
     #endregion
 
     #region Start
@@ -151,7 +136,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         smallAxe.SetActive(false);          // 왼손에 들고 있는 한손도끼 렌더러 비활성화한다.
         bigAxeCollider.enabled = false;     // 양손도끼 콜라이더를 비활성화 한다.
 
-        // 내가 만든 살인마일 경우
+        // 내가 만든 살인마일 경우 ( 살인마 시점 )
         if (photonView.IsMine == true)
         {
             cc = GetComponent<CharacterController>();   // 안나 Character Controller 컴포넌트 가져온다.
@@ -160,35 +145,27 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             redlight.enabled = false;                   // 안나 redlight 꺼놓는다.
             cineCam.depth = 5;                          // 시네머신 카메라 보이게 한다.
 
-            goGenCount = GameObject.Find("TextGenerator");                  // TextGenerator GameObject 찾는다.
-            generatorCount = goGenCount.GetComponent<TextMeshProUGUI>();    // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.   
-            currentGenCount = maxGenCount;                                  // 시작할 때 돌아가야 할 발전기 개수를 최대(5개)로 설정한다.
-            generatorCount.text = Convert.ToString(currentGenCount);        // UI 로 나타낸다.
 
-            goAxeCount = GameObject.Find("TextAxe");                    // TextAxe GameObject  를 찾는다.
-            axeCount = goAxeCount.GetComponent<TextMeshProUGUI>();      // 찾은 게임오브젝트의 TextMeshProUGUI 컴포넌트를 불러온다.
-            currentAxeCount = maxAxeCount;                              // 시작할 때 도끼 개수를 최대(5개)로 설정한다.
-            axeCount.text = Convert.ToString(currentAxeCount);          // UI 로 나타낸다.
+            currentAxeCount = maxAxeCount;                                          // 시작할 때 도끼 개수를 최대(5개)로 설정한다.
+            UIManager.instance.axeCount.text = Convert.ToString(currentAxeCount);   // UI 로 나타낸다.
 
-            throwUI = GameObject.Find("ThrowUI");                       // 도끼 던지기 UI 찾는다.
-            throwUI.SetActive(false);                                   // 도끼 던지기 UI 를 비활성화 한다.
+            currentGenCount = maxGenCount;                                          // 시작할 때 돌아가야 할 발전기 개수를 최대(5개)로 설정한다.
+            UIManager.instance.genCount.text = Convert.ToString(currentGenCount);   // UI 로 나타낸다.
         }
-        // 내가 만든 살인마가 아니라면
+
+        // 내가 만든 살인마가 아니라면 ( 생존자 시점 )
         else
         {
-            playCamera.gameObject.GetComponent<Camera>().enabled = false;   // 플레이용 카메라 끄기
-
-            cineCam.gameObject.SetActive(false);                            // 시네머신 카메라 끄기
-
-            anim.runtimeAnimatorController = animOC;                        // 애니메이션 컨트롤러 오버라이드 설정
-
+            redlight.enabled = true;                                         // 살인마 조명 활성화
             anim.SetLayerWeight(1, 0);                                      // 들었을 때 애니메이션 레이어를 설정한다.
-
-            redlight.enabled = true;                                        // 살인마 조명 활성화
+            cineCam.gameObject.SetActive(false);                            // 시네머신 카메라 끄기
+            anim.runtimeAnimatorController = animOC;                        // 애니메이션 컨트롤러 오버라이드 설정
+            playCamera.gameObject.GetComponent<Camera>().enabled = false;   // 플레이카메라 끄기
         }
     }
     #endregion
 
+    #region 카메라 회전 관련
     private void LateUpdate()
     {
         go.transform.localPosition = cameraOffset;
@@ -199,14 +176,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
         //Camera.main.transform.eulerAngles = new Vector3(Camera.main.transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, 0);
     }
-
-    [PunRPC]
-    void Hook()
-    {
-        survivor.GetComponent<SurviverHealth>().ChangeCarring();
-
-        survivor.transform.parent = null;   // 생존자와의 부모자식 관계를 끊는다.
-    }
+    #endregion
 
     #region Update
     void Update()
@@ -250,8 +220,20 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 상태가 Down 이라면 canCarry 을 true 로 바꾼다.
                 if (hitcolliders[i].GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
                 {
-                    canCarry = true;
-                    survivor = hitcolliders[i].gameObject;
+                    canCarry = true;                            // 들 수 있음
+                    survivor = hitcolliders[i].gameObject;      // 생존자 게임오브젝트
+
+                    // UI
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(true, "들기");
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, true, "들기");
+                    }
                 }
             }
 
@@ -260,10 +242,32 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 canDestroyGenerator = true;
 
+                // UI
+                //UIManager.instance.toGetherThrowUI.SetActive(true);
+                //UIManager.instance.togetherSpace.SetActive(true);
+                //UIManager.instance.togetherText.enabled = true;
+                //UIManager.instance.togetherText.text = "파괴";
+
+                // UI
+                if (currentAxeCount > 0)
+                {
+                    // 도끼 + 상호작용
+                    UIManager.instance.DuoUI(true, "손상");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "손상");
+                }
+                else
+                {
+                    // 도끼 X + 상호작용
+                    UIManager.instance.SoloUI(false, true, "손상");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "손상");
+                }
+
                 // 만약 발전기의 수리 프로그래스가 0보다 크다면
                 // if(발전기 수리 프로그래스 > 0)
                 // {
-                // canDestroyGenerator 를 true 로
+                //      canDestroyGenerator 를 true 로
                 // }
             }
 
@@ -275,18 +279,30 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                 Pallet pallet = goPallet.GetComponent<Pallet>();
 
-                 // 만약 판자의 상태가 '내려감' 이라면
-                if (pallet.State == Pallet.PalletState.Ground)
+                // 만약 판자의 상태가 '내려감' 이라면
+                // UI
+                if (currentAxeCount > 0)
                 {
-                    // canDestroyPallet 을 true 로 바꿈
-                    canDestroyPallet = true;
+                    // 도끼 + 상호작용
+                    UIManager.instance.DuoUI(true, "파괴");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "파괴");
+                }
+                else
+                {
+                    // 도끼 X + 상호작용
+                    UIManager.instance.SoloUI(false, true, "파괴");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "파괴");
                 }
             }
-            else { }
 
             // Closet 캐비넷
             if (hitcolliders[i].transform.gameObject.name.Contains("Closet"))
             {
+                // 문 열기 가능
+                canOpenDoor = true;
+
                 // 처음에 들어오면 null 이기 때문에 else 에서 hitcollider[0] 이 goCloset 이 됨
                 // 그 다음에 들어오는 게 hitcolliders[1]이 되면서 둘과 나 사이의 거리를 재서,
                 // 만약 hitcollider[0] 이 더 가까우면 그게 최종 goCloset 이 됨
@@ -304,22 +320,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 closetAnim = goCloset.GetComponentInParent<Animator>();
                 closetSpot = goCloset.GetComponent<Closet>().trCloset.position;
 
-                // 만약 들고 있는 도끼의 개수가 최대개수라면
-                if (currentAxeCount == maxAxeCount)
-                {
-                    // [SPACE] 찾기 UI
-
-                    // 문 열기 가능
-                    canOpenDoor = true;
-                }
-
-                // 만약 들고 있는 도끼의 개수가 1~4 일때
-                else if (currentAxeCount > 0 && currentAxeCount < maxAxeCount)
+                // 만약 던질 도끼가 있을 때
+                if (currentAxeCount > 0)
                 {
                     // [SPACE] 찾기 + 손도끼 투척
-
-                    // 문 열기 가능
-                    canOpenDoor = true;
+                    UIManager.instance.DuoUI(true, "찾기");
+                }
+                // 만약 들고 있는 도끼의 개수가 0개라면(던질 게 없음)
+                else
+                {
+                    // [SPACE] 찾기 UI
+                    UIManager.instance.SoloUI(false, true, "찾기");
                 }
             }
 
@@ -332,6 +343,22 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 갈고리 게임오브젝트
                 goHook = hitcolliders[i].gameObject;
                 hookSpot = goHook.GetComponent<Hook>().hookPos.position;
+
+                // UI
+                if (currentAxeCount > 0)
+                {
+                    // 도끼 + 상호작용
+                    UIManager.instance.DuoUI(true, "매달기");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "매달기");
+                }
+                else
+                {
+                    // 도끼 X + 상호작용
+                    UIManager.instance.SoloUI(false, true, "매달기");
+                    // 게이지
+                    UIManager.instance.GageUI(true, false, "매달기");
+                }
             }
         }
         #endregion
@@ -356,11 +383,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     // 회전값을 적용
                     transform.eulerAngles = new Vector3(0, rotX, 0);                      // Horizontal
                     cam.transform.eulerAngles = new Vector3(-rotY, rotX, 0);              // Vertical
-                                                                                          // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
-                                                                                          // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
-                                                                                          // rotY = Mathf.Clamp(rotY, 45, -35);                                 // Y 회전값 35도로 고정
-
-
+                    // Camera.main.transform.rotation = Quaternion.Euler(-rotY, rotX, 0);
+                    // cam.transform.localEulerAngles = new Vector3(rotY, -90, -180);
+                    // rotY = Mathf.Clamp(rotY, 45, -35);
                 }
                 #endregion
 
@@ -425,7 +450,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 이동한다
                 cc.Move(velocity * Time.deltaTime);
                 #endregion
-
             }
 
             #region 발전기 부수기
@@ -434,26 +458,54 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 스페이스 바를 계속 누르고 있으면 발전기를 부순다.
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    cc.enabled = false;                 // 멈춰!
-                                                        // anim.SetBool("DestroyG", true);     // 애니메이션 true
+                    cc.enabled = false;
+
+                    // 애니메이션 true                                
                     photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", true);
 
-                    //  UI
-                    //  UI
+                    // UI                 
+                    UIManager.instance.GageUI(true, false, "손상");
+
                     // 게이지 채운다
+                    // UIManager.instance.FillGage(t);
+
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(false, null);
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, false, null);
+                    }
                 }
                 // 중간에 스페이스 바에서 손을 떼면 취소된다.
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
-                    cc.enabled = true;                  // 움직여!
-                                                        // anim.SetBool("DestroyG", false);    // 애니메이션 false
-                                                        // anim.SetTrigger("DestroyCancel");   // 취소 애니메이션
+                    cc.enabled = true;
+                    
+                    // 취소 애니메이션
                     photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyCancel");
 
-                    //  UI
-                    //  UI
+                    // UI                 
+                    UIManager.instance.GageUI(false, false, null);
+
                     // 게이지 초기화
+                    UIManager.instance.EmptyGage();
+
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(true, "손상");
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, true, "손상");
+                    }
+
                 }
             }
             #endregion
@@ -470,8 +522,25 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     cc.enabled = false;                                                 // 움직임 멈춤   
 
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");   // 판자를 부수는 애니메이션 실행
-                    Pallet pallet = goPallet.GetComponent<Pallet>();                    // 판자가 부서지는 상태로 전환
-                    pallet.State = Pallet.PalletState.Destroy;
+                    Pallet pallet = goPallet.GetComponent<Pallet>();                    
+                    pallet.State = Pallet.PalletState.Destroy;                          // 판자가 부서지는 상태로 전환
+
+                    // UI                 
+                    UIManager.instance.GageUI(true, false, "파괴");
+
+                    // 게이지 채운다
+                    // UIManager.instance.FillGage(t);
+
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(false, null);
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, false, null);
+                    }
                 }
             }
             #endregion
@@ -482,6 +551,18 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 캐비넷 앞에서 스페이스바를 누르면 캐비넷을 연다
             if (canOpenDoor == true && Input.GetKeyDown(KeyCode.Space))
             {
+                // UI
+                if (currentAxeCount > 0)
+                {
+                    // 도끼 + 상호작용
+                    UIManager.instance.DuoUI(false, null);
+                }
+                else
+                {
+                    // 도끼 X + 상호작용
+                    UIManager.instance.SoloUI(false, false, null);
+                }
+
                 // 만약 안에 사람이 있다면
                 // if(          )
                 // {
@@ -503,14 +584,14 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     transform.forward = goCloset.transform.forward;                             // 나의 앞방향을 Closet 앞방향으로
 
                     OffCC();                                                                    // 움직임 멈춤
-
-                    // anim.SetTrigger("Reload");                                      
+                               
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Reload");             // 도끼를 집어드는 애니메이션 실행
                     photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");     // 캐비넷 열리고 닫히는 애니메이션 실행
 
                     currentAxeCount = maxAxeCount;                                              // 도끼 최대 소지 갯수를 최대로 채운다
 
-                    axeCount.text = Convert.ToString(currentAxeCount);                          // UI 갱신한다
+                    UIManager.instance.axeCount.text = Convert.ToString(currentAxeCount);       // UI 갱신한다
+
                 }
 
                 // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
@@ -531,6 +612,29 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 스페이스바를 누르면 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    // UI
+                    UIManager.instance.GageUI(true, true, "매달기");
+
+                    // 게이지 채운다
+                    // UIManager.instance.FillGage(t);
+
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(false, null);
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, false, null);
+                    }
+
+                    // 다 차면 UI 끈다.
+                    if (UIManager.instance.gageSlider.value == 0)
+                    {
+                        UIManager.instance.GageUI(false, false, null);
+                    }
+
                     transform.position = hookSpot;
                     transform.forward = transform.forward * -1;
 
@@ -541,11 +645,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     photonView.RPC(nameof(Hook), RpcTarget.All);                        // 생존자가 갈고리에 걸리는 애니메이션 실행한다.
 
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Hook");       // 생존자를 갈고리에 거는 애니메이션 실행한다.
-
-                    // 갈고리에 거는 UI 게이지가 찬다.
-
-                    // 다 차면 UI 끈다.
-
                 }
             }
             #endregion
@@ -568,20 +667,23 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     #region 스턴
     private void Stunned()
     {
+        // 만약 뭔가 하고 있다면 스턴 안당함
+        // if(){} else{}
         SoundManager.instance.PlayHitSounds(4);
 
         cc.enabled = false;
+        OffRotate();
+
+        UIManager.instance.throwUI.SetActive(false);
 
         if (state == State.Carry)
         {
             // 캐리 스턴 애니메이션을 실행
-            // anim.SetTrigger("CarryStunned");
             photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "CarryStunned");
         }
         else
         {
             // 스턴 애니메이션을 실행
-            // anim.SetTrigger("Stunned");
             photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Stunned");
             OffSmallAxe();
         }
@@ -636,23 +738,29 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             cc.enabled = false;
-
             canRotate = false;
 
             // 게임이 시작하고 5초 뒤에 상태를 Move 로 바꾼다.
             currentTime += Time.deltaTime;
-            //if (currentTime >= gameStartTime)
             if (currentTime >= gameStartTime)
             {
+                // UI 활성화
+                UIManager.instance.murdererUI.enabled = true;
+
+                // Material
                 MaterialManager materialManager = GetComponent<MaterialManager>();
                 materialManager.ChangeMaterials();
-                throwUI.SetActive(true);
+
+                // 카메라 및 이동, 회전
                 cineCam.enabled = false;
                 cc.enabled = true;
                 canRotate = true;
+
+                // 안나 상태 전환 및 애니메이션
                 AnnaState = State.Move;
-                //anim.SetBool("Move", true);
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Move", true);
+
+                // 현재시간 초기화
                 currentTime = 0;
             }
         }
@@ -670,15 +778,15 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 마우스 왼쪽 버튼을 누르면 일반공격을 한다.
             if (Input.GetButtonDown("Fire1") && isCharging == false && isThrowing == false && isCanceled == false && state != State.CoolTime)
             {
-                    SoundManager.instance.PlayHitSounds(0);         // 때리는 입소리
+                SoundManager.instance.PlayHitSounds(0);                             // 때리는 입소리
 
-                    AnnaState = State.NormalAttack;                     // 상태를 NormalAttack 로 바꿈
+                AnnaState = State.NormalAttack;                                     // 상태를 NormalAttack 로 바꿈
 
-                    // anim.SetTrigger("Attack");                      // 일반공격 애니메이션 실행
+                photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Attack");     // 일반공격 애니메이션 실행
 
-                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Attack");
+                isNormalAttack = true;                                              // 공격이 끝날 때까지 왼쪽 버튼 못누르게 하기
 
-                    isNormalAttack = true;                          // 공격이 끝날 때까지 왼쪽 버튼 못누르게 하기
+                UIManager.instance.throwUI.SetActive(false);
             }
             #endregion
 
@@ -686,35 +794,42 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             // 마우스 오른쪽 버튼을 누르면 한손도끼를 차징하기 시작한다.
             if (state != State.NormalAttack && isNormalAttack == false && isCanceled == false && currentAxeCount != 0 && Input.GetButton("Fire2"))
             {
-                Charging();                         // 차징 함수를 실행
-                isCharging = true;                  // 차징 중에 마우스 왼쪽 버튼을 눌러도 일반공격을 못하도록
-                                                    // anim.SetBool("Throwing", true);     // 왼손을 든 채로 돌아다닐 수 있다.
-                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", true);
-                throwUI.SetActive(false);
+                Charging();                                                             // 차징 함수를 실행
+                
+                isCharging = true;                                                      // 차징 중에 마우스 왼쪽 버튼을 눌러도 일반공격을 못하도록
+                                                    
+                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", true);    // 도끼 드는 애니메이션  실행
+
+                UIManager.instance.throwUI.SetActive(false);
             }
 
             // 마우스 오른쪽 버튼을 떼면 도끼를 던진다.
             if (isCanceled == false && currentAxeCount != 0 && Input.GetButtonUp("Fire2"))
             {
-                photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Throw");
-                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
-                currentChargingTime = 0;                        // 현재 차징 시간을 초기화
+                photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Throw");              // 도끼를 던지는 애니메이션 실행
+                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);       // 도끼 드는 애니메이션 취소
+                
+                currentChargingTime = 0;                                                    // 현재 차징 시간을 초기화
             }
 
             // 차징 중에 마우스 왼쪽 버튼을 누르면 공격을 취소한다.
             if (isCharging == true && isNormalAttack == false && isThrowing == false && Input.GetButtonDown("Fire1"))
             {
-                isCanceled = true;                              // 캔슬했음
-                isCharging = false;                             // 차징 중이 아님
+                isCanceled = true;                                                      // 캔슬했음
+                
+                isCharging = false;                                                     // 차징 중이 아님
 
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);   // 차징 애니메이션 취소
-                
-                currentChargingTime = 0;                        // 현재 차징 시간을 초기화
 
-                SoundManager.instance.PlaySmallAxeSounds(2);    // 취소하는 사운드 재생
-                playingchargingsound = false;                   // 차징하는 사운드 재생 안됨
+                currentChargingTime = 0;                                                // 현재 차징 시간을 초기화
+
+                SoundManager.instance.PlaySmallAxeSounds(2);                            // 취소하는 사운드 재생
+                
+                playingchargingsound = false;                                           // 차징하는 사운드 재생 안됨
+                
                 playingfullchargingsound = false;
-                throwUI.SetActive(true);
+                
+                UIManager.instance.throwUI.SetActive(false);
             }
             #endregion
 
@@ -727,24 +842,26 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     // 들어올리기 UI 가 화면에 보일 때 스페이스바를 누르면
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        photonView.RPC(nameof(SurvivorCarry), RpcTarget.All);
+                        StartCoroutine("LerptoSurvivor");                                   // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
 
-                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup"); // 생존자를 들어올린다.
+                        photonView.RPC(nameof(SurvivorCarry), RpcTarget.All);               // 생존자의 상태를 바꾼다.
+
+                        photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Pickup");     // 생존자를 들어올린다.
 
                         AnnaState = State.Carry;                                            // 상태를 Carry 로 바꾼다.
 
-                        canCarry = false;                                               // 들 수 있는 상태가 아님
+                        canCarry = false;                                                   // 들 수 있는 상태가 아님
 
-                        survivor.transform.forward = transform.forward;            // 생존자의 머리가 내 등쪽으로 향하게 한다.
+                        survivor.transform.forward = transform.forward;                     // 생존자의 머리가 내 등쪽으로 향하게 한다.
 
-                        StartCoroutine("LerptoSurvivor");                               // 애니메이션 시작 장소로 이동하는 코루틴 실행한다.
-
-                        // survivor.transform.localPosition = new Vector3(-0.350566328f, 1.01032352f, 0.0430793613f);
-                        // survivor.transform.localPosition = new Vector3(-0.367999434f, 1.02999997f, -0.191000223f);
-
-                        // survivor.transform.localPosition = new Vector3(-0.4f,0.961f,-0.125f);
-                        // survivor.transform.localPosition = new Vector3(0,0,0);
-                        // survivor.transform.localRotation = new Quaternion(0,0,0,0);
+                        if(currentAxeCount > 0)
+                        {
+                            UIManager.instance.DuoUI(false, null);
+                        }
+                        else
+                        {
+                            UIManager.instance.SoloUI(false, false, null);
+                        }
                     }
                 }
             }
@@ -753,36 +870,21 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
-    [PunRPC]
-    void SurvivorCarry()
-    {
-        survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출 
-
-        survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
-
-
-        //survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
-        survivor.transform.localPosition = new Vector3(-0.0379999988f, 0.976001143f, 0.202000007f);
-        //survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
-        survivor.transform.localRotation = new Quaternion(0, -0.999083936f, 0, -0.0427953899f);
-    }
-
     #region 일반공격
     private void NormalAttack()
     {
         if (photonView.IsMine)
         {
-            throwUI.SetActive(false);
+            UIManager.instance.throwUI.SetActive(false);
             //anim.SetLayerWeight(3, 0f);
             // 공격이 끝나면 상태를 Move 로 바꾼다. -> 애니메이션 이벤트
         }
     }
     #endregion
 
-    #region 한손 도끼 차징 / 취소 / 던짐 / 쿨타임
+    #region 한손 도끼 차징
     bool playingchargingsound;
     bool playingfullchargingsound;
-    // 도끼 차징
     void Charging()
     {
         if (photonView.IsMine)
@@ -841,7 +943,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             photonView.RPC(nameof(ThrowAxeRPC), RpcTarget.All, pos, forward, chargingForce);
 
             currentAxeCount--;                                              // 도끼 갯수를 줄인다
-            axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
+            UIManager.instance.axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
             print(currentAxeCount);
 
             AnnaState = State.CoolTime;                                         // 상태를 CoolTime 으로 바꾼다
@@ -869,7 +971,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                 if (currentAxeCount != 0)       // 현재 도끼 개수가 0이 아니라면
                 {
-                    throwUI.SetActive(true);    // 도끼 개수 UI 보이게 하기 ( 만약 0 이라면 계속 안보이겠지)
+                    UIManager.instance.throwUI.SetActive(true);    // 도끼 개수 UI 보이게 하기 ( 만약 0 이라면 계속 안보이겠지)
                 }
 
                 currentTime = 0;                // 현재 시간을 초기화
@@ -884,7 +986,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            throwUI.SetActive(false);
+            UIManager.instance.throwUI.SetActive(false);
 
             #region 내려놓기
             //if (Input.GetKeyDown(KeyCode.Space) && canCarry == false && canHook == false)
@@ -1032,43 +1134,65 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             canDestroyGenerator = false;
             canDestroyPallet = false;
             canReLoad = false;
-            throwUI.SetActive(true);
+            UIManager.instance.throwUI.SetActive(true);
         }
     }
     #endregion
 
     #region PunRPC
-    [PunRPC]
-    void SetTriggerRPC(string parameter)
-    {
-        anim.SetTrigger(parameter);
-    }
-
-    [PunRPC]
+    [PunRPC]    // Closet 애니메이터 trigger
     void SetClosetTriggerRPC(string parameter)
     {
         closetAnim.SetTrigger(parameter);
     }
 
-    [PunRPC]
+    [PunRPC]    // Anna 애니메이터 trigger
+    void SetTriggerRPC(string parameter)
+    {
+        anim.SetTrigger(parameter);
+    }
+
+    [PunRPC]    // Anna 애니메이터 Bool
     void SetBoolRPC(string parameter, bool boolean)
     {
         anim.SetBool(parameter, boolean);
     }
 
-    [PunRPC]
+    [PunRPC]    // 도끼 던지기
     void ThrowAxeRPC(Vector3 throwPos, Vector3 throwForward, float force)
     {
-        GameObject axe = Instantiate(smallAxeFactory);
-        axe.transform.position = throwPos;      // 도끼 던지는 위치
-        axe.transform.forward = throwForward;   // 도끼 앞 방향
-        axe.GetComponent<Axe>().flying(force);  // 도끼 던지는 힘
+        GameObject axe = Instantiate(smallAxeFactory);      // 도끼 생성
+        axe.transform.position = throwPos;                  // 도끼 던지는 위치
+        axe.transform.forward = throwForward;               // 도끼 앞 방향
+        axe.GetComponent<Axe>().flying(force);              // 도끼 던지는 힘
     }
 
-    [PunRPC]
+    [PunRPC]    // 도끼 메쉬렌더러 활성여부
     public void AxeRPC(Boolean axeBool)
     {
         smallAxe.SetActive(axeBool);
+    }
+
+    [PunRPC]    // 생존자 들기
+    void SurvivorCarry()
+    {
+        survivor.GetComponent<SurviverHealth>().ChangeCarring();        // 생존자의 상태를 바꾸는 함수를 호출 
+
+        survivor.transform.parent = leftArm.transform;                 // 생존자를 나의 자식 오브젝트로 설정한다.
+
+
+        //survivor.transform.localPosition = new Vector3(-0.331999868f, 0.976001263f, -0.19100064f);
+        survivor.transform.localPosition = new Vector3(-0.0379999988f, 0.976001143f, 0.202000007f);
+        //survivor.transform.localRotation = new Quaternion(2.60770321e-08f, -0.1253708f, 2.09547579e-09f, 0.992109954f);
+        survivor.transform.localRotation = new Quaternion(0, -0.999083936f, 0, -0.0427953899f);
+    }
+
+    [PunRPC]    // 갈고리 걸기
+    void Hook()
+    {
+        survivor.GetComponent<SurviverHealth>().ChangeCarring();
+
+        survivor.transform.parent = null;   // 생존자와의 부모자식 관계를 끊는다.
     }
     #endregion
 

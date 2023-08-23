@@ -18,7 +18,7 @@ public class BigAxe : MonoBehaviourPun
     Image bloodImage;
     Color color;                    // 컬러 <- 알파값
 
-    // public GameObject bloodEffectFactory;
+    // public GameObject bloodEffectFactory;    // 피 이펙트 공장
 
 
     private void Start()
