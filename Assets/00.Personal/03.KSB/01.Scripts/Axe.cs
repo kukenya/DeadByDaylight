@@ -1,9 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Axe : MonoBehaviour
 {
+    public PhotonView photonView;
     Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
     GameObject survivor;         // 생존자
     bool canHit = false;                // 때릴 수 있나 여부
@@ -54,7 +56,7 @@ public class Axe : MonoBehaviour
         if (other.gameObject.name.Contains("Survivor") & canHit == false)
         {
             SoundManager.instance.PlayHitSounds(3);
-            other.GetComponent<SurviverHealth>().NormalHit();
+            if(photonView.IsMine == false) other.GetComponent<SurviverHealth>().NormalHit();
             canHit = true;
         }
         else if(other.gameObject.name.Contains("나무") & canHit == false)
