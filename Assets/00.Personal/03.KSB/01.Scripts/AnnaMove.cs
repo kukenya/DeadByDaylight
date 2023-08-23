@@ -463,14 +463,15 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Vector3 pospos = new Vector3(palletPos.position.x, transform.position.y, palletPos.position.z);
+                    Vector3 pospos = new Vector3(palletPos.position.x + 0.8f, transform.position.y, palletPos.position.z);
                     transform.position = pospos;                                        // 위치를 이동
                     transform.forward = palletPos.forward * -1;                         // 앞방향을 설정
 
                     cc.enabled = false;                                                 // 움직임 멈춤   
 
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");   // 판자를 부수는 애니메이션 실행
-                    // photonView.RPC(nameof(), RpcTarget.All, "");                     // 판자가 부서지는 애니메이션 실행
+                    Pallet pallet = goPallet.GetComponent<Pallet>();                    // 판자가 부서지는 상태로 전환
+                    pallet.State = Pallet.PalletState.Destroy;
                 }
             }
             #endregion
