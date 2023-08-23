@@ -11,11 +11,16 @@ public class WorldSound : MonoBehaviour
         Instacne = this;
     }
 
-    public AudioSource genClear;
-    public AudioClip genClearSound;
+    AudioSource worldSound;
+    public AudioClip[] worldAudios;
 
-    public void PlayGeneratorClear()
+    private void Start()
     {
-        genClear.Play();
+        worldSound = GetComponent<AudioSource>();
+    }
+
+    public void PlayWorldSound(int idx)
+    {
+        worldSound.PlayOneShot(worldAudios[idx]);
     }
 }
