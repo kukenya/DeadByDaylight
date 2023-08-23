@@ -973,13 +973,11 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     public void OnAxe()
     {
-        if (photonView.IsMine == false) return;
         bigAxeCollider.enabled = true;
     }
 
     public void OffAxe()
     {
-        if (photonView.IsMine == false) return;
         bigAxeCollider.enabled = false;
     }
 
