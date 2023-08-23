@@ -26,10 +26,15 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(smallAxeSounds[index], Camera.main.transform.position);
     }
 
+    public void PlaySmallAxeFlyingSounds(int index)
+    {
+        AudioSource.PlayClipAtPoint(smallAxeSounds[index], Camera.main.transform.position, 0.5f);
+    }
+
     public void PlayHitSounds(int index)
     {
         // hitAudioSource.clip = hitSounds[index];
-        hitAudioSource.PlayOneShot(hitSounds[index]);
+        hitAudioSource.PlayOneShot(hitSounds[index], 0.5f);
     }
 
     #region ÆÇÀÚ

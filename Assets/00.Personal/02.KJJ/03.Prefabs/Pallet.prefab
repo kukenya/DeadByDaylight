@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  destroyDelayTime: 1
+  destroyDelayTime: 2.05
   pallet:
   - {fileID: 2524314365978902353}
   - {fileID: 2857441271236274333}
