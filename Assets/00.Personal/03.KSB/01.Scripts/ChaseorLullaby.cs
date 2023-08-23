@@ -11,6 +11,8 @@ public class ChaseorLullaby : MonoBehaviourPun
         instance = this;
     }
 
+    public LayerMask layerMask;
+
     // 사운드
     public AudioSource lullaby;             // 자장가
     public AudioSource chase;               // 추적
@@ -23,6 +25,19 @@ public class ChaseorLullaby : MonoBehaviourPun
         lullaby.PlayDelayed(3);
         // lullaby.volume = 0.1f;
     }
+
+    private void Update()
+    {
+        Collider[] hitcolliders = Physics.OverlapSphere(transform.position, 45, layerMask);
+        for (int i = 0; i < hitcolliders.Length; i++)
+        {
+            if (hitcolliders[i].gameObject.name.Contains("Survivor"))
+            {
+                // 자장가
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

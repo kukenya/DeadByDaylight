@@ -5,7 +5,7 @@ using UnityEngine;
 public class Axe : MonoBehaviour
 {
     Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
-    GameObject survivor;         // 생존자
+    GameObject survivor;                // 생존자
     bool canHit = false;                // 때릴 수 있나 여부
     bool isDestroy;
     private void Start()

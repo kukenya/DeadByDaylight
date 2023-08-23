@@ -668,23 +668,23 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         {
             #region  일반 공격
             // 마우스 왼쪽 버튼을 누르면 일반공격을 한다.
-            if (Input.GetButtonDown("Fire1") && isCharging == false)
+            if (Input.GetButtonDown("Fire1") && isCharging == false && isThrowing == false && isCanceled == false && state != State.CoolTime)
             {
-                SoundManager.instance.PlayHitSounds(0);         // 때리는 입소리
+                    SoundManager.instance.PlayHitSounds(0);         // 때리는 입소리
 
-                AnnaState = State.NormalAttack;                     // 상태를 NormalAttack 로 바꿈
+                    AnnaState = State.NormalAttack;                     // 상태를 NormalAttack 로 바꿈
 
-                // anim.SetTrigger("Attack");                      // 일반공격 애니메이션 실행
+                    // anim.SetTrigger("Attack");                      // 일반공격 애니메이션 실행
 
-                photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Attack");
+                    photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Attack");
 
-                isNormalAttack = true;                          // 공격이 끝날 때까지 왼쪽 버튼 못누르게 하기
+                    isNormalAttack = true;                          // 공격이 끝날 때까지 왼쪽 버튼 못누르게 하기
             }
             #endregion
 
             #region 던지는 도끼 공격
             // 마우스 오른쪽 버튼을 누르면 한손도끼를 차징하기 시작한다.
-            if (Input.GetButton("Fire2") && state != State.NormalAttack && isCanceled == false && currentAxeCount != 0)
+            if (state != State.NormalAttack && isNormalAttack == false && isCanceled == false && currentAxeCount != 0 && Input.GetButton("Fire2"))
             {
                 Charging();                         // 차징 함수를 실행
                 isCharging = true;                  // 차징 중에 마우스 왼쪽 버튼을 눌러도 일반공격을 못하도록
@@ -694,29 +694,27 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             }
 
             // 마우스 오른쪽 버튼을 떼면 도끼를 던진다.
-            if (isCanceled == false && Input.GetButtonUp("Fire2") && currentAxeCount != 0)
+            if (isCanceled == false && currentAxeCount != 0 && Input.GetButtonUp("Fire2"))
             {
-                // anim.SetTrigger("Throw");                       // 애니메이션 실행
-                // anim.SetBool("Throwing", false);                // 차징 애니메이션 취소
                 photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Throw");
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
                 currentChargingTime = 0;                        // 현재 차징 시간을 초기화
             }
 
             // 차징 중에 마우스 왼쪽 버튼을 누르면 공격을 취소한다.
-            if (Input.GetButtonDown("Fire1") && isCharging == true)
+            if (isCharging == true && isNormalAttack == false && isThrowing == false && Input.GetButtonDown("Fire1"))
             {
                 isCanceled = true;                              // 캔슬했음
                 isCharging = false;                             // 차징 중이 아님
-                                                                //anim.SetBool("Throwing", false);                // 차징 애니메이션 취소
-                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
+
+                photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);   // 차징 애니메이션 취소
+                
                 currentChargingTime = 0;                        // 현재 차징 시간을 초기화
+
                 SoundManager.instance.PlaySmallAxeSounds(2);    // 취소하는 사운드 재생
                 playingchargingsound = false;                   // 차징하는 사운드 재생 안됨
                 playingfullchargingsound = false;
                 throwUI.SetActive(true);
-
-                Invoke("DoCancel", 0.4f);                       // 0.4초 후에 도끼 안보이게 함
             }
             #endregion
 
@@ -821,14 +819,6 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
     }
 
-    // 도끼 차징 캔슬
-    void DoCancel()
-    {
-        isCanceled = false;
-        OffSmallAxe();
-        throwUI.SetActive(true);
-    }
-
     // 도끼 던짐
     private void ThrowingAttack()
     {
@@ -871,13 +861,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             currentTime += Time.deltaTime;      // 현재 시간을 흐르게 한다
             if (currentTime >= 2)               // 현재 시간이 2초가 되면
             {
-                AnnaState = State.Move;             // 상태를 Move 로 바꾼다
+                AnnaState = State.Move;         // 상태를 Move 로 바꾼다
+
                 isCharging = false;             // 차징 가능
                 isThrowing = false;             // 던지기 가능
+                isCanceled = false;
+
                 if (currentAxeCount != 0)       // 현재 도끼 개수가 0이 아니라면
                 {
                     throwUI.SetActive(true);    // 도끼 개수 UI 보이게 하기 ( 만약 0 이라면 계속 안보이겠지)
                 }
+
                 currentTime = 0;                // 현재 시간을 초기화
             }
         }
@@ -1024,6 +1018,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
             OnCC();
             OffAxe();
+            OffSmallAxe();
 
             photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
             photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
@@ -1031,6 +1026,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
             isStunned = false;
             isCharging = false;
+            isCanceled = false;
             isNormalAttack = false;
             playingthrowsound = false;
             canDestroyGenerator = false;

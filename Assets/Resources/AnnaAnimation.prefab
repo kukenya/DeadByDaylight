@@ -1862,7 +1862,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427880018934285}
-  m_LocalRotation: {x: 0.0004555839, y: 0.973111, z: 0.23032846, w: -0.0019247893}
+  m_LocalRotation: {x: 0.000455575, y: 0.973111, z: 0.23032844, w: -0.0019247519}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4801,6 +4801,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72b7568c250e9a409978aa1e53d757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
   lullaby: {fileID: 5858625105955735603}
   chase: {fileID: 5858625105296362203}
   isChasing: 0
