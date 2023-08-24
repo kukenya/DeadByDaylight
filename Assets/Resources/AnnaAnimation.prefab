@@ -5629,6 +5629,7 @@ MonoBehaviour:
   chargingForce: 0
   minAxePower: 20
   maxAxePower: 40
+  currentAxeCount: 0
   isNormalAttack: 0
   isCloset: 0
   canCarry: 0
@@ -5653,7 +5654,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  HaxMode: 1
+  HaxMode: 0
 --- !u!114 &852289717898882860
 MonoBehaviour:
   m_ObjectHideFlags: 0

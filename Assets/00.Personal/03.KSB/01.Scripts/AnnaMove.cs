@@ -76,7 +76,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
     // 한손도끼 갯수
     float maxAxeCount = 5;                  // 최대 소유 가능한 한손도끼 개수
-    float currentAxeCount;                  // 현재 가지고 있는 한손도끼 개수
+    public float currentAxeCount;                  // 현재 가지고 있는 한손도끼 개수
 
     // 발전기 
     float maxGenCount = 5;                  // 최대 남은 발전기 개수
@@ -156,11 +156,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         // 내가 만든 살인마가 아니라면 ( 생존자 시점 )
         else
         {
-            redlight.enabled = true;                                         // 살인마 조명 활성화
+            redlight.enabled = true;                                        // 살인마 조명 활성화
             anim.SetLayerWeight(1, 0);                                      // 들었을 때 애니메이션 레이어를 설정한다.
             cineCam.gameObject.SetActive(false);                            // 시네머신 카메라 끄기
             anim.runtimeAnimatorController = animOC;                        // 애니메이션 컨트롤러 오버라이드 설정
-            playCamera.gameObject.GetComponent<Camera>().enabled = false;   // 플레이카메라 끄기
+            playCamera.gameObject.GetComponent<Camera>().enabled = false;   // 플레이카메라 끄기'
+
         }
     }
     #endregion
@@ -216,24 +217,23 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 // 상태가 Healthy 인 생존자가 1명 이상이라면 chase BG이 나오게 한다.
 
-
                 // 상태가 Down 이라면 canCarry 을 true 로 바꾼다.
                 if (hitcolliders[i].GetComponent<SurviverHealth>().State == SurviverHealth.HealthState.Down)
                 {
                     canCarry = true;                            // 들 수 있음
                     survivor = hitcolliders[i].gameObject;      // 생존자 게임오브젝트
 
-                    // UI
-                    if (currentAxeCount > 0)
-                    {
-                        // 도끼 + 상호작용
-                        UIManager.instance.DuoUI(true, "들기");
-                    }
-                    else
-                    {
-                        // 도끼 X + 상호작용
-                        UIManager.instance.SoloUI(false, true, "들기");
-                    }
+                    //// UI
+                    //if (currentAxeCount > 0)
+                    //{
+                    //    // 도끼 + 상호작용
+                    //    UIManager.instance.DuoUI(true, "들기");
+                    //}
+                    //else
+                    //{
+                    //    // 도끼 X + 상호작용
+                    //    UIManager.instance.SoloUI(false, true, "들기");
+                    //}
                 }
             }
 
@@ -280,29 +280,29 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 Pallet pallet = goPallet.GetComponent<Pallet>();
 
                 // 만약 판자의 상태가 '내려감' 이라면
-                // UI
-                if (currentAxeCount > 0)
+                if (pallet.State == Pallet.PalletState.Destroy)
                 {
-                    // 도끼 + 상호작용
-                    UIManager.instance.DuoUI(true, "파괴");
-                    // 게이지
-                    UIManager.instance.GageUI(true, false, "파괴");
-                }
-                else
-                {
-                    // 도끼 X + 상호작용
-                    UIManager.instance.SoloUI(false, true, "파괴");
-                    // 게이지
-                    UIManager.instance.GageUI(true, false, "파괴");
+                    // UI
+                    if (currentAxeCount > 0)
+                    {
+                        // 도끼 + 상호작용
+                        UIManager.instance.DuoUI(true, "파괴");
+                        // 게이지
+                        UIManager.instance.GageUI(true, false, "파괴");
+                    }
+                    else
+                    {
+                        // 도끼 X + 상호작용
+                        UIManager.instance.SoloUI(false, true, "파괴");
+                        // 게이지
+                        UIManager.instance.GageUI(true, false, "파괴");
+                    }
                 }
             }
 
             // Closet 캐비넷
             if (hitcolliders[i].transform.gameObject.name.Contains("Closet"))
             {
-                // 문 열기 가능
-                canOpenDoor = true;
-
                 // 처음에 들어오면 null 이기 때문에 else 에서 hitcollider[0] 이 goCloset 이 됨
                 // 그 다음에 들어오는 게 hitcolliders[1]이 되면서 둘과 나 사이의 거리를 재서,
                 // 만약 hitcollider[0] 이 더 가까우면 그게 최종 goCloset 이 됨
@@ -311,28 +311,44 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     float ab = Vector3.Distance(hitcolliders[i].transform.position, transform.position);
                     float bc = Vector3.Distance(goCloset.transform.position, transform.position);
                     if (ab < bc) goCloset = hitcolliders[i].gameObject;
+
+                    canOpenDoor = true;
+
+                    // 멀어지면 문을 열 수 없다.
+                    if (Vector3.Distance(transform.position, goCloset.transform.position) > 1.7f)
+                    {
+                        canOpenDoor = false;
+                    }
+
+                    if (currentAxeCount > 0)
+                    {
+                        // UI 두개
+
+                    }
+                    else
+                    {
+                        // UI 한개
+
+                    }
+
                 }
                 else
                 {
                     goCloset = hitcolliders[i].gameObject;
+
+                    canOpenDoor = true;
+
+                    if (Vector3.Distance(transform.position, goCloset.transform.position) > 1.7f)
+                    {
+                        canOpenDoor = false;
+                    }
                 }
+
 
                 closetAnim = goCloset.GetComponentInParent<Animator>();
                 closetSpot = goCloset.GetComponent<Closet>().trCloset.position;
-
-                // 만약 던질 도끼가 있을 때
-                if (currentAxeCount > 0)
-                {
-                    // [SPACE] 찾기 + 손도끼 투척
-                    UIManager.instance.DuoUI(true, "찾기");
-                }
-                // 만약 들고 있는 도끼의 개수가 0개라면(던질 게 없음)
-                else
-                {
-                    // [SPACE] 찾기 UI
-                    UIManager.instance.SoloUI(false, true, "찾기");
-                }
             }
+
 
             // Hook 갈고리 // 만약 내 상태가 Carry라면
             if (hitcolliders[i].transform.gameObject.name.Contains("Hook") && state == State.Carry)
@@ -360,10 +376,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     UIManager.instance.GageUI(true, false, "매달기");
                 }
             }
+
+            // UIManager.instance.OffAllUI();
         }
         #endregion
 
-        #region PhotonView
+        #region 회전 / 이동 / 상호작용(발전기, 판자, 캐비넷, 갈고리)
         if (photonView.IsMine == true)
         {
             if (canRotate == true)
@@ -484,7 +502,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
                     cc.enabled = true;
-                    
+
                     // 취소 애니메이션
                     photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyCancel");
@@ -522,7 +540,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     cc.enabled = false;                                                 // 움직임 멈춤   
 
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "DestroyP");   // 판자를 부수는 애니메이션 실행
-                    Pallet pallet = goPallet.GetComponent<Pallet>();                    
+                    Pallet pallet = goPallet.GetComponent<Pallet>();
                     pallet.State = Pallet.PalletState.Destroy;                          // 판자가 부서지는 상태로 전환
 
                     // UI                 
@@ -584,7 +602,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                     transform.forward = goCloset.transform.forward;                             // 나의 앞방향을 Closet 앞방향으로
 
                     OffCC();                                                                    // 움직임 멈춤
-                               
+
                     photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Reload");             // 도끼를 집어드는 애니메이션 실행
                     photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");     // 캐비넷 열리고 닫히는 애니메이션 실행
 
@@ -594,14 +612,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                 }
 
-                // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면
+                // 만약 안에 사람이 없고 도끼 소지 개수가 최대라면 그냥 열었다가 닫는다
                 else
                 {
                     canOpenDoor = false;
+                    OffCC();
+                    OffRotate();
+                    // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "");                // 문 여는 애니메이션
+                    photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");     // 문 열리는 애니메이션
 
-                    // 그냥 열었다가 닫는다
-                    // photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "");
-                    photonView.RPC(nameof(SetClosetTriggerRPC), RpcTarget.All, "OpenDoor");
+                    Invoke("OnCC", 3f);
+                    Invoke("OnRotate", 3f);
                 }
             }
             #endregion
@@ -613,28 +634,28 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     // UI
-                    UIManager.instance.GageUI(true, true, "매달기");
+                    // UIManager.instance.GageUI(true, true, "매달기");
 
                     // 게이지 채운다
                     // UIManager.instance.FillGage(t);
 
-                    if (currentAxeCount > 0)
-                    {
-                        // 도끼 + 상호작용
-                        UIManager.instance.DuoUI(false, null);
-                    }
-                    else
-                    {
-                        // 도끼 X + 상호작용
-                        UIManager.instance.SoloUI(false, false, null);
-                    }
+                    //if (currentAxeCount > 0)
+                    //{
+                    //    // 도끼 + 상호작용
+                    //    UIManager.instance.DuoUI(false, null);
+                    //}
+                    //else
+                    //{
+                    //    // 도끼 X + 상호작용
+                    //    UIManager.instance.SoloUI(false, false, null);
+                    //}
 
-                    // 다 차면 UI 끈다.
-                    if (UIManager.instance.gageSlider.value == 0)
-                    {
-                        UIManager.instance.GageUI(false, false, null);
-                    }
-
+                    //// 다 차면 UI 끈다.
+                    //if (UIManager.instance.gageSlider.value == 0)
+                    //{
+                    //    UIManager.instance.GageUI(false, false, null);
+                    //}
+                    // Vector3 animspot = hookSpot +
                     transform.position = hookSpot;
                     transform.forward = transform.forward * -1;
 
@@ -796,9 +817,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             if (state != State.NormalAttack && isNormalAttack == false && isCanceled == false && currentAxeCount != 0 && Input.GetButton("Fire2"))
             {
                 Charging();                                                             // 차징 함수를 실행
-                
+
                 isCharging = true;                                                      // 차징 중에 마우스 왼쪽 버튼을 눌러도 일반공격을 못하도록
-                                                    
+
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", true);    // 도끼 드는 애니메이션  실행
 
                 UIManager.instance.throwUI.SetActive(false);
@@ -809,7 +830,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             {
                 photonView.RPC(nameof(SetTriggerRPC), RpcTarget.All, "Throw");              // 도끼를 던지는 애니메이션 실행
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);       // 도끼 드는 애니메이션 취소
-                
+
                 currentChargingTime = 0;                                                    // 현재 차징 시간을 초기화
             }
 
@@ -817,7 +838,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             if (isCharging == true && isNormalAttack == false && isThrowing == false && Input.GetButtonDown("Fire1"))
             {
                 isCanceled = true;                                                      // 캔슬했음
-                
+
                 isCharging = false;                                                     // 차징 중이 아님
 
                 photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);   // 차징 애니메이션 취소
@@ -825,11 +846,11 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 currentChargingTime = 0;                                                // 현재 차징 시간을 초기화
 
                 SoundManager.instance.PlaySmallAxeSounds(2);                            // 취소하는 사운드 재생
-                
+
                 playingchargingsound = false;                                           // 차징하는 사운드 재생 안됨
-                
+
                 playingfullchargingsound = false;
-                
+
                 UIManager.instance.throwUI.SetActive(false);
             }
             #endregion
@@ -855,14 +876,14 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
                         survivor.transform.forward = transform.forward;                     // 생존자의 머리가 내 등쪽으로 향하게 한다.
 
-                        if(currentAxeCount > 0)
-                        {
-                            UIManager.instance.DuoUI(false, null);
-                        }
-                        else
-                        {
-                            UIManager.instance.SoloUI(false, false, null);
-                        }
+                        //if (currentAxeCount > 0)
+                        //{
+                        //    UIManager.instance.DuoUI(false, null);
+                        //}
+                        //else
+                        //{
+                        //    UIManager.instance.SoloUI(false, false, null);
+                        //}
                     }
                 }
             }
@@ -883,7 +904,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     }
     #endregion
 
-    #region 한손 도끼 차징
+    #region 한손 도끼 차징 / 던지기 / 쿨타임 
     bool playingchargingsound;
     bool playingfullchargingsound;
     void Charging()
@@ -1121,8 +1142,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
 
             OnCC();
             OffAxe();
-            OffSmallAxe();
-
+            // OffSmallAxe();
+            photonView.RPC(nameof(AxeRPC), RpcTarget.All, false);
             photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "Throwing", false);
             photonView.RPC(nameof(SetBoolRPC), RpcTarget.All, "DestroyG", false);
 

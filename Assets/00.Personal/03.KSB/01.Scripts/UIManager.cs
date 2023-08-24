@@ -11,12 +11,13 @@ public class UIManager : MonoBehaviour
     {
         if(instance = null)
         {
-            Destroy(instance);
+            Destroy(gameObject);
         }
         else
         {
             // 나다.
             instance = this;
+            DontDestroyOnLoad(gameObject);
 
             // UI 비활성화
             murdererUI.enabled = false;
@@ -42,7 +43,6 @@ public class UIManager : MonoBehaviour
     #region UI 변수
     // 기본 UI
     public Canvas murdererUI;               // UI        
-    
     // 카운트 UI
     public TextMeshProUGUI axeCount;        // 도끼 갯수 UI
     public TextMeshProUGUI genCount;        // 발전기 갯수 UI
@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
     public void SoloUI(bool axe, bool interaction, string str)
     {
         throwUI.SetActive(axe);
+
         soloSpace.SetActive(interaction);
         soloText.enabled = interaction;
         soloText.text = str;
@@ -98,5 +99,16 @@ public class UIManager : MonoBehaviour
     public void EmptyGage()
     {
         gageSlider.value = 0;
+    }
+
+    public void OffAllUI()
+    {
+        throwUI.SetActive(true);
+        soloSpace.SetActive(false);
+        soloText.enabled = false;
+        gageSlider.enabled = false;
+        sliderBG.enabled = false;
+        gageText.enabled = false;
+        gageImage.enabled = false;
     }
 }

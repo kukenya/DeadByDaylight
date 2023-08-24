@@ -518,6 +518,7 @@ MonoBehaviour:
   sliderBG: {fileID: 676029648282645464}
   gageText: {fileID: 6227147423186661876}
   gageImage: {fileID: 3498959185356167507}
+  anna: {fileID: 6699578995008591789, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
 --- !u!1 &1388143620130530532
 GameObject:
   m_ObjectHideFlags: 0
