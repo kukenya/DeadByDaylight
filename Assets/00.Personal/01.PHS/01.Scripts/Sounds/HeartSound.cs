@@ -45,7 +45,7 @@ public class HeartSound : MonoBehaviour
             currentTime += Time.deltaTime;
 
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
-
+            print(dist);
             float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
             heartAudio.volume = a;
             a = 1 - a;
@@ -99,8 +99,9 @@ public class HeartSound : MonoBehaviour
     {
         while (true)
         {
+            
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
-
+            print(dist);
             if(dist < chase2SoundStartDist)
             {
                 if (soundState != ChaseSoundState.Chase1)

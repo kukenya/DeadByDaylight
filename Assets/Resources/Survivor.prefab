@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1012401010663656595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742761244698693748}
+  - component: {fileID: 4529330300106556597}
+  - component: {fileID: 8955637500200761814}
+  m_Layer: 7
+  m_Name: Escape
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742761244698693748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012401010663656595}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6445668696811590795}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4529330300106556597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012401010663656595}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8955637500200761814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012401010663656595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfce9d8d5e79fd74a99c9e9d682b68bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 7
+  interactScript: {fileID: 0}
 --- !u!1 &5665840020961674245
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +89,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6445668696811590795}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6445668694966617075
 GameObject:
@@ -84,7 +144,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -745,7 +805,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -830,6 +890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6445668696811590795}
   - component: {fileID: 6445668696811590788}
+  - component: {fileID: 7276317201787998082}
   - component: {fileID: 6445668696811590797}
   - component: {fileID: 6445668696811590793}
   - component: {fileID: 6445668696811590791}
@@ -844,6 +905,7 @@ GameObject:
   - component: {fileID: 6664009196485085810}
   - component: {fileID: 4914784267542751688}
   - component: {fileID: 7358671135450939754}
+  - component: {fileID: 8870872142253484956}
   m_Layer: 6
   m_Name: Survivor
   m_TagString: Survivor
@@ -866,6 +928,7 @@ Transform:
   - {fileID: 6445668696166776838}
   - {fileID: 6843541766590959832}
   - {fileID: 4330566810319588988}
+  - {fileID: 1742761244698693748}
   - {fileID: 6113394967876025443}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -887,6 +950,20 @@ CharacterController:
   m_StepOffset: 0.2
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &7276317201787998082
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445668696811590796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.86
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6445668696811590797
 MonoBehaviour:
@@ -1057,6 +1134,8 @@ MonoBehaviour:
   generator: {fileID: 0}
   exit: {fileID: 0}
   camperHealing: {fileID: 0}
+  camperEscape: {fileID: 0}
+  offAutoUI: 0
   possibleAngle: 120
   autoMoverStopDistance: 0.2
   autoMoverSpeed: 8
@@ -1145,7 +1224,9 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6445668696811590797}
+  - {fileID: 6445668696811590790}
   - {fileID: 6445668696811590808}
+  - {fileID: 8870872142253484956}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1196,6 +1277,21 @@ MonoBehaviour:
   generatePos: {fileID: 6113394967876025443}
   generateTime: 1
   decalRemainTime: 3
+--- !u!114 &8870872142253484956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445668696811590796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324fbe536541d1c44b1900cbeffb591b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPrograssTime: 2
+  escaping: 0
+  escaped: 0
 --- !u!1 &7104911752054812998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1304,7 @@ GameObject:
   - component: {fileID: 8401826479120791949}
   - component: {fileID: 5671048156055111897}
   m_Layer: 7
-  m_Name: Collider
+  m_Name: Healing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

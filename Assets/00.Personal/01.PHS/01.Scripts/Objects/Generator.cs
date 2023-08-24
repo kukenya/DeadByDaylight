@@ -128,7 +128,10 @@ public class Generator : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void SkillCheckFail()
     {
-        Prograss += failValue;
+        if (photonView.IsMine == true)
+        {
+            Prograss += failValue;
+        }
         anim.CrossFadeInFixedTime("Fail", 0.25f);
 
         Transform sparkTrans = animPos[0].GetChild(0).transform;
@@ -149,7 +152,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
             gameObject.layer = 0;
             GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayWorldSound(0);
-            if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            interaction?.EndInteract(SurvivorInteraction.InteractiveType.Generator);
         }
 
         if(photonView.IsMine && fail == false)
@@ -190,6 +193,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void SKillCheckIncrease(float value)
     {
+        if (photonView.IsMine == false) return;
         Prograss += value;
     }
 

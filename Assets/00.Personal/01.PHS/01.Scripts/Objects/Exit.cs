@@ -78,9 +78,30 @@ public class Exit : MonoBehaviourPun, IPunObservable
     }
 
     public bool activate = false;
+    public bool open = false;
 
     public void ExitActivate()
     {
+        if (open == true) return;
+        if (maxPrograssTime / 2 > Prograss && Prograss > maxPrograssTime / 3)
+        {
+            if (soundState == SoundState.Sound2) return;
+            soundState = SoundState.Sound2;
+            audioSo.PlayOneShot(exitSounds[0]);
+        }
+        else if(maxPrograssTime > Prograss && Prograss > maxPrograssTime / 2)
+        {
+            if (soundState == SoundState.Sound3) return;
+            soundState = SoundState.Sound3;
+            audioSo.PlayOneShot(exitSounds[1]);
+        }
+        else if (Prograss >= maxPrograssTime)
+        {
+            if (soundState == SoundState.Sound4) return;
+            soundState = SoundState.Sound4;
+            audioSo.PlayOneShot(exitSounds[2]);
+        }
+
         if (activate == false) return;
         if (prograss >= maxPrograssTime)
         {
@@ -94,10 +115,12 @@ public class Exit : MonoBehaviourPun, IPunObservable
     void OpenDoor()
     {
         Play("Opening");
+        open = true;
         state = State.Open;
         interaction?.EndInteract(SurvivorInteraction.InteractiveType.ExitLever);
         gameObject.layer = 0;
         EndingLine.instance.enabled = true;
+        
     }
 
     public Transform GetAnimationPos(Vector3 position)
@@ -134,4 +157,16 @@ public class Exit : MonoBehaviourPun, IPunObservable
     //    ui.UnFocusProgressUI();
     //    interaction.ChangeInteract(SurvivorInteraction.InteractiveType.None);
     //}
+
+    public enum SoundState
+    {
+        Sound1,
+        Sound2,
+        Sound3,
+        Sound4,
+    }
+
+    public SoundState soundState = SoundState.Sound1;
+    public AudioSource audioSo;
+    public AudioClip[] exitSounds;
 }

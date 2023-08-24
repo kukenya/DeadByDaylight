@@ -83,6 +83,12 @@ MonoBehaviour:
   - OpenDoor
   - SetClosetTriggerRPC
   - Off
+  - ChangeDown
+  - ChangeInjuerd
+  - GenerateHookBlackHoleEffect
+  - OffEscapingRPC
+  - OnEscapingRPC
+  - ChangePose2
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

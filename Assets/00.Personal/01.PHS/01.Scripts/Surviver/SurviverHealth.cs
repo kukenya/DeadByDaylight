@@ -141,21 +141,20 @@ public class SurviverHealth : MonoBehaviourPun
 
     public void NormalHit()
     {
-        if (photonView.IsMine)
+        if (State == HealthState.Healthy)
         {
-            if (State == HealthState.Healthy)
-            {
-                ChangeInjuerd();
-            }
-            else if (State == HealthState.Injured)
-            {
-                ChangeDown();
-            }
-        } 
+            photonView.RPC(nameof(ChangeInjuerd), RpcTarget.All);
+        }
+        else if (State == HealthState.Injured)
+        {
+            photonView.RPC(nameof(ChangeDown), RpcTarget.All);
+        }
     }
 
+    [PunRPC]
     void ChangeInjuerd()
     {
+        if(photonView.IsMine == false) return;
         State = HealthState.Injured;
         photonView.RPC("PlayAnimationRPC", RpcTarget.All, "Hit", 0.25f, 2);
         surviverSound.PlayInjSound();
@@ -175,8 +174,10 @@ public class SurviverHealth : MonoBehaviourPun
         controller.isHit = false;
     }
 
+    [PunRPC]
     void ChangeDown()
     {
+        if (photonView.IsMine == false) return;
         surviverLookAt.LookAt = false;
         shader.RedXray = true;
         WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.OwnerDown;
@@ -190,7 +191,7 @@ public class SurviverHealth : MonoBehaviourPun
     public void ChangeCarring()
     {
         surviverLookAt.LookAt = false;
-        anim.enabled = true;
+        anim.speed = 1;
         if (State == HealthState.Carrying)
         {
             StartCoroutine(WaitAnimEnd());
