@@ -191,7 +191,7 @@ public class SurviverHealth : MonoBehaviourPun
     public void ChangeCarring()
     {
         surviverLookAt.LookAt = false;
-        anim.enabled = true;
+        anim.speed = 1;
         if (State == HealthState.Carrying)
         {
             StartCoroutine(WaitAnimEnd());

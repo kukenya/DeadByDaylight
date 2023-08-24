@@ -42,6 +42,10 @@ public class SurvivorCheckArround : MonoBehaviourPun
                     interaction.Type = SurvivorInteraction.InteractiveType.HealCamper;
                     interaction.camperHealing = (SurviverHealing)InteractScript;
                     break;
+                case InteractiveObject.Type.CamperEscape:
+                    interaction.Type = SurvivorInteraction.InteractiveType.EscapeCamper;
+                    interaction.camperEscape = (SurvivorHookEscape)InteractScript;
+                    break;
             }
         }
     }
@@ -75,10 +79,19 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 continue;
             }
 
-            if (checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
+            if (checkColliders[i].name.Contains("Healing") && checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
             {
                 SurviverHealth surviverHealth = checkColliders[i].GetComponentInParent<SurviverHealth>();
                 if (surviverHealth.State != SurviverHealth.HealthState.Injured && surviverHealth.State != SurviverHealth.HealthState.Down)
+                {
+                    checkColliders[i] = null;
+                    continue;
+                }
+            }
+            else if (checkColliders[i].name.Contains("Escape") && checkColliders[i].GetComponentInParent<SurviverHealth>() != null)
+            {
+                SurviverHealth surviverHealth = checkColliders[i].GetComponentInParent<SurviverHealth>();
+                if (surviverHealth.State != SurviverHealth.HealthState.Hook)
                 {
                     checkColliders[i] = null;
                     continue;

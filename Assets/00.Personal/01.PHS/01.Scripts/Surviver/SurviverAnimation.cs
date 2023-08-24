@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SurviverAnimation : MonoBehaviourPun
+public class SurviverAnimation : MonoBehaviourPun, IPunObservable
 {
     public Animator anim;
     SurviverController controller;
@@ -147,13 +147,13 @@ public class SurviverAnimation : MonoBehaviourPun
         switch (mState)
         {
             case MoveState.Idle:
-                anim.enabled = false;
+                anim.speed = 0;
                 break;
             case MoveState.Walking:
-                anim.enabled = true;
+                anim.speed = 1;
                 break;
             case MoveState.Sprinting:
-                anim.enabled = true;
+                anim.speed = 1;
                 break;
         }
     }
@@ -217,5 +217,17 @@ public class SurviverAnimation : MonoBehaviourPun
     public void ResetLastState()
     {
         currentState = "";
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(anim.speed);
+        }
+        else
+        {
+            anim.speed = (float)stream.ReceiveNext();   
+        }
     }
 }

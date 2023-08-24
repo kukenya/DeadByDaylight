@@ -17,7 +17,8 @@ public class SurvivorInteraction : MonoBehaviourPun
         ExitLever,
         SelfHeal,
         HookEscape,
-        HealCamper
+        HealCamper,
+        EscapeCamper
     }
 
     [SerializeField]
@@ -41,6 +42,7 @@ public class SurvivorInteraction : MonoBehaviourPun
     public Generator generator;
     public Exit exit;
     public SurviverHealing camperHealing;
+    public SurvivorHookEscape camperEscape;
 
     bool activate = false;
     public bool Activate { get { return activate; } set {
@@ -83,13 +85,17 @@ public class SurvivorInteraction : MonoBehaviourPun
     }
     #endregion
 
+    public bool offAutoUI = false;
     #region UI업데이트
     public void UpdateSurvivorUI()
     {
         if (photonView.IsMine == false) return;
 
+
         ui.UnFocusSpaceBarUI();
         ui.OffFocusProgressUI();
+
+        if (offAutoUI) return;
 
         switch (Type)
         {
@@ -128,6 +134,11 @@ public class SurvivorInteraction : MonoBehaviourPun
                 if (camperHealing.OtherHealing) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "치료");
                 else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "치료");
                 ui.prograssBar.fillAmount = camperHealing.Prograss / camperHealing.maxPrograssTime;
+                break;
+            case InteractiveType.EscapeCamper:
+                if(camperEscape.Escape) ui.ChangePrograssUI(SurviverUI.PrograssUI.On, "구출");
+                else ui.ChangePrograssUI(SurviverUI.PrograssUI.Focus, "구출");
+                ui.prograssBar.fillAmount = camperEscape.Prograss / camperEscape.maxPrograssTime;
                 break;
         }
     }
@@ -220,16 +231,44 @@ public class SurvivorInteraction : MonoBehaviourPun
                     OffFriendHealing();
                 }
                 break;
+            case InteractiveType.EscapeCamper:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    CamperEscape();
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    OffCamperEscape();
+                }
+                break;
         }
     }
     #endregion
+
+    Coroutine escapeCor;
+    void CamperEscape()
+    {
+        if (escapeCor != null) return;
+        escapeCor = StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
+            camperEscape.OnEscaping,
+            () => { surviverAnimation.Play("RecueCamperIn"); escapeCor = null; },
+            this,
+            camperEscape.transform)
+            );
+    }
+
+    void OffCamperEscape()
+    {
+        surviverController.BanMove = false;
+        camperEscape.OffEscaping();
+        surviverAnimation.AnimationChange();
+    }
 
 
     Coroutine friendHealCor;
     void FriendHealing()
     {
         if (friendHealCor != null) return;
-        print("FriendHealing");
         friendHealCor = StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
             camperHealing.OnFriendHeal, 
             () => { surviverAnimation.Play("Heal_Camper"); friendHealCor = null; },
@@ -240,7 +279,6 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public void OffFriendHealing()
     {
-        print("OffFriendHealing");
         surviverController.BanMove = false;
         camperHealing?.OffFriendHeal();
         surviverAnimation.AnimationChange();

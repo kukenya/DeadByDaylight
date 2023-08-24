@@ -14,7 +14,8 @@ public class InteractiveObject : MonoBehaviour
         Exit,
         Survivor,
         Hook,
-        Closet
+        Closet,
+        CamperEscape
     }
 
     public Type type = Type.Window;
@@ -43,7 +44,11 @@ public class InteractiveObject : MonoBehaviour
             case Type.Hook:
                 interactScript = GetComponent<Hook>();
                 break;
-            case Type.Closet:interactScript = GetComponent<Closet>();
+            case Type.Closet:
+                interactScript = GetComponent<Closet>();
+                break;
+            case Type.CamperEscape:
+                interactScript = GetComponentInParent<SurvivorHookEscape>();
                 break;
         }
     }

@@ -152,7 +152,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
             gameObject.layer = 0;
             GameManager.Instance.Generator--;
             WorldSound.Instacne.PlayWorldSound(0);
-            if(interaction != null) interaction.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            interaction?.EndInteract(SurvivorInteraction.InteractiveType.Generator);
         }
 
         if(photonView.IsMine && fail == false)
