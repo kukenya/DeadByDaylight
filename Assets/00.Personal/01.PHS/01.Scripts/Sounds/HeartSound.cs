@@ -19,7 +19,13 @@ public class HeartSound : MonoBehaviour
         slasher = transform;
         heartAudio = GetComponent<AudioSource>();
         minHeartBeatTiming = heartSound.length;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1);
+
+        if(GetComponentInParent<PhotonView>().IsMine == true)
+        {
+            yield break;
+        }
+
         foreach (GameObject go in SurvivorListManager.instance.Survivors)
         {
             if (go.GetPhotonView().IsMine)

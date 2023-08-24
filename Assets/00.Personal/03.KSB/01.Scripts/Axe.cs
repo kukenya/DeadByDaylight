@@ -56,7 +56,10 @@ public class Axe : MonoBehaviour
         if (other.gameObject.name.Contains("Survivor") & canHit == false)
         {
             SoundManager.instance.PlayHitSounds(3);
-            if(photonView.IsMine == false) other.GetComponent<SurviverHealth>().NormalHit();
+            if (photonView.IsMine)
+            {
+                other.GetComponent<SurviverHealth>().NormalHit();
+            }
             canHit = true;
         }
         else if(other.gameObject.name.Contains("³ª¹«") & canHit == false)

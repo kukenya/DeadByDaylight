@@ -1187,6 +1187,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         axe.transform.position = throwPos;                  // 도끼 던지는 위치
         axe.transform.forward = throwForward;               // 도끼 앞 방향
         axe.GetComponent<Axe>().flying(force);              // 도끼 던지는 힘
+        axe.GetComponent<Axe>().photonView = this.photonView;
     }
 
     [PunRPC]    // 도끼 메쉬렌더러 활성여부
