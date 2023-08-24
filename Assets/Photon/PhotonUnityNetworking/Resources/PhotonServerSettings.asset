@@ -79,6 +79,7 @@ MonoBehaviour:
   - ChangePose
   - AxeRPC
   - SetClosetTriggerRPC
+  - RpcSetReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
