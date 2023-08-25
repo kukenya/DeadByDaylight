@@ -64,10 +64,13 @@ public class UIManager : MonoBehaviour
     public Image gageImage;                 // 게이지 이미지
     #endregion
 
-    public void SoloUI(bool axe, bool interaction, string str)
+    public void ThrowUI(bool axe)
     {
         throwUI.SetActive(axe);
+    }
 
+    public void SoloUI(bool interaction, string str)
+    {
         soloSpace.SetActive(interaction);
         soloText.enabled = interaction;
         soloText.text = str;
@@ -76,6 +79,7 @@ public class UIManager : MonoBehaviour
     public void DuoUI(bool boolean, string str)
     {
         toGetherThrowUI.SetActive(boolean);
+
         togetherSpace.SetActive(boolean);
         togetherText.enabled = boolean;
         togetherText.text = str;
@@ -88,7 +92,6 @@ public class UIManager : MonoBehaviour
         gageText.enabled = uiBool;
         gageImage.enabled = imageBool;
         gageText.text = str;
-
     }
 
     public void FillGage(Time time)

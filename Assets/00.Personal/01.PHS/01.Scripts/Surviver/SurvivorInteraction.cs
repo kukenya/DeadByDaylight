@@ -249,7 +249,6 @@ public class SurvivorInteraction : MonoBehaviourPun
     public void CamperEscape()
     {
         if (escapeCor != null) return;
-        print("¿Â");
         escapeCor = StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
             camperEscape.OnEscaping,
             () => { surviverAnimation.Play("RescueCamperIn"); escapeCor = null; },
@@ -262,7 +261,6 @@ public class SurvivorInteraction : MonoBehaviourPun
     {
         if (escaped == true) { StartCoroutine(CamperEscapingCor()); return; }
 
-        print("¿ÀÇÁ");
         if (escapeCor != null)
         {
             StopCoroutine(escapeCor);

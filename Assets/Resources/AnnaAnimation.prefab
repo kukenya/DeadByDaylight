@@ -5745,7 +5745,7 @@ GameObject:
   - component: {fileID: 5465658704204983726}
   m_Layer: 20
   m_Name: AnnaAnimation
-  m_TagString: Untagged
+  m_TagString: Killer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5848,6 +5848,7 @@ MonoBehaviour:
   maxAxePower: 40
   currentAxeCount: 0
   isNormalAttack: 0
+  isanimation: 0
   isCloset: 0
   canCarry: 0
   canDestroyGenerator: 0
