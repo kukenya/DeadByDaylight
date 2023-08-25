@@ -158,11 +158,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         // 내가 만든 살인마가 아니라면 ( 생존자 시점 )
         else
         {
-            redlight.enabled = true;                                        // 살인마 조명 활성화
-            anim.SetLayerWeight(1, 0);                                      // 들었을 때 애니메이션 레이어를 설정한다.
-            cineCam.gameObject.SetActive(false);                            // 시네머신 카메라 끄기
-            anim.runtimeAnimatorController = animOC;                        // 애니메이션 컨트롤러 오버라이드 설정
-            playCamera.gameObject.GetComponent<Camera>().enabled = false;   // 플레이카메라 끄기'
+            redlight.enabled = true;                                                // 살인마 조명 활성화
+            anim.SetLayerWeight(1, 0);                                              // 들었을 때 애니메이션 레이어를 설정한다.
+            cineCam.gameObject.SetActive(false);                                    // 시네머신 카메라 끄기
+            anim.runtimeAnimatorController = animOC;                                // 애니메이션 컨트롤러 오버라이드 설정
+            playCamera.gameObject.GetComponent<Camera>().enabled = false;           // 플레이카메라 끄기
+            playCamera.gameObject.GetComponent<AudioListener>().enabled = false;    // 플레이카메라 오디오 리스너 끄기
 
         }
     }
@@ -994,20 +995,16 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
             playingchargingsound = false;                                   // 차징하는 사운드 재생할 수 있는 상태
             playingfullchargingsound = false;
 
-            //GameObject smallaxe = Instantiate(smallAxeFactory);             // 한손도끼를 만든다.
-            //smallaxe.transform.position = throwingSpot.position;            // 만든 한손도끼의 위치를 왼손에 배치한다.
-            //smallaxe.transform.forward = Camera.main.transform.forward;     // 만든 한손도끼의 앞방향을 카메라의 앞방향으로 한다
-
-            Vector3 pos = throwingSpot.position;
-            Vector3 forward = Camera.main.transform.forward;
+            Vector3 pos = throwingSpot.position;                                // 도끼 위치
+            Vector3 forward = Camera.main.transform.forward;                    // 도끼 앞방향
 
             photonView.RPC(nameof(ThrowAxeRPC), RpcTarget.All, pos, forward, chargingForce);
 
-            currentAxeCount--;                                              // 도끼 갯수를 줄인다
-            UIManager.instance.axeCount.text = Convert.ToString(currentAxeCount);              // UI 갱신한다
+            currentAxeCount--;                                                                  // 도끼 갯수를 줄인다
+            UIManager.instance.axeCount.text = Convert.ToString(currentAxeCount);               // UI 갱신한다
             print(currentAxeCount);
 
-            AnnaState = State.CoolTime;                                         // 상태를 CoolTime 으로 바꾼다
+            AnnaState = State.CoolTime;                                                         // 상태를 CoolTime 으로 바꾼다
         }
     }
 
@@ -1238,10 +1235,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     [PunRPC]    // 도끼 던지기
     void ThrowAxeRPC(Vector3 throwPos, Vector3 throwForward, float force)
     {
-        GameObject axe = Instantiate(smallAxeFactory);      // 도끼 생성
-        axe.transform.position = throwPos;                  // 도끼 던지는 위치
-        axe.transform.forward = throwForward;               // 도끼 앞 방향
-        axe.GetComponent<Axe>().flying(force);              // 도끼 던지는 힘
+        GameObject axe = Instantiate(smallAxeFactory);          // 도끼 생성
+        axe.transform.position = throwPos;                      // 도끼 던지는 위치
+        axe.transform.forward = throwForward;                   // 도끼 앞 방향
+        axe.GetComponent<Axe>().flying(force);                  // 도끼 던지는 힘
         axe.GetComponent<Axe>().photonView = this.photonView;
     }
 
