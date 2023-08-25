@@ -166,6 +166,15 @@ public class SurvivorCheckArround : MonoBehaviourPun
                         break;
                 }
             }
+
+            if(health.State == SurviverHealth.HealthState.Down || health.State == SurviverHealth.HealthState.Carrying || health.State == SurviverHealth.HealthState.Hook)
+            {
+                InteractiveObject obj = checkColliders[i].GetComponent<InteractiveObject>();
+                if (obj.type == InteractiveObject.Type.Pallet || obj.type == InteractiveObject.Type.Window)
+                {
+                    checkColliders[i] = null;
+                }
+            }
         }
 
         //checkColliders.Sort(ColliderListSortComparer);
