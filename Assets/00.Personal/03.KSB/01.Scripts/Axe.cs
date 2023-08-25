@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Axe : MonoBehaviour
 {
+    public AudioSource axeAudio;
     public PhotonView photonView;
     Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
     GameObject survivor;                // 생존자
@@ -20,7 +21,8 @@ public class Axe : MonoBehaviour
         Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
         smallAxeRigidbody.AddForce(transform.forward * chargingForce, ForceMode.Impulse);
 
-        StartCoroutine("FlyingSound");
+
+        // StartCoroutine("FlyingSound");
     }
 
     private void Update()
