@@ -518,7 +518,6 @@ MonoBehaviour:
   sliderBG: {fileID: 676029648282645464}
   gageText: {fileID: 6227147423186661876}
   gageImage: {fileID: 3498959185356167507}
-  anna: {fileID: 6699578995008591789, guid: 49b79ea95a8008a45a577c94f2a000c5, type: 3}
 --- !u!1 &1388143620130530532
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1146178760818356310}
   m_Layer: 0
-  m_Name: HookGage
+  m_Name: Gage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2032,7 +2031,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 3
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
