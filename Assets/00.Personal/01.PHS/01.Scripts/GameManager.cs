@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using JetBrains.Annotations;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -198,5 +199,10 @@ public class GameManager : MonoBehaviourPun
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void EndGame()
+    {
+        
     }
 }

@@ -4,6 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Solution
+{
+    public int solution(int n, int[,] computers)
+    {
+        int answer = 0;
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                answer = computers[i,j] == 1 ? answer++ : answer;
+            }
+        }
+        return answer;
+    }
+}
+
 public class HeartSound : MonoBehaviour
 {
     public Transform ownerSurvivor;
