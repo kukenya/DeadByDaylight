@@ -56,7 +56,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     public bool isHit = false;
 
     public bool Sprint { get { return isSprint; } set { isSprint = value; } }
-    public bool Crawl { get { return isCrawl; }  set { print("머임"); isCrawl = value; } }
+    public bool Crawl { get { return isCrawl; }  set { isCrawl = value; if (value == true) { lookAt.LookAt = false; } else { lookAt.LookAt = true; } } }
 
     public float sprintTime;
     public float maxSprintTime = 1;
@@ -102,7 +102,7 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     bool banMove = false;
 
     public bool BanMove { get { return banMove; } set {
-            banMove = value; 
+            photonView.RPC(nameof(SetBanMove), RpcTarget.All, value);
             if (value == false)
             {
                 lookAt.LookAt = true;
@@ -116,6 +116,12 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
                 controller.enabled = false;
             }
         }
+    }
+
+    [PunRPC]
+    void SetBanMove(bool value)
+    {
+        banMove = value;
     }
 
     Vector3 receivePos;
