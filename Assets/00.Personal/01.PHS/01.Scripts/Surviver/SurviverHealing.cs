@@ -58,7 +58,10 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
                     skillCheck.enabled = true;
                     skillCheck.InputAction(GetSkillCheckValue);
                 }
-                HealingSurvivor++;
+                else
+                {
+                    HealingSurvivor++;
+                }
                 otherHealing = value;
             }
             else if (value == false && otherHealing != value)
@@ -67,7 +70,10 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
                 {
                     skillCheck.enabled = false;
                 }
-                HealingSurvivor--;
+                else
+                {
+                    HealingSurvivor--;
+                }
                 otherHealing = value;
             }
         }
@@ -152,6 +158,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
     [PunRPC]
     void SkillCheckSuccess(float value)
     {
+        if (photonView.IsMine == false) return;
         Prograss += value;
     }
 

@@ -15,6 +15,7 @@ public class SurviverHealth : MonoBehaviourPun
     SurvivorShader shader;
     SurvivorListManager listManager;
     SurviverHealing healing;
+    SurvivorHookEscape hookEscape;
 
     public Transform rootCameraPosition;
 
@@ -123,6 +124,7 @@ public class SurviverHealth : MonoBehaviourPun
         shader = GetComponent<SurvivorShader>();
         listManager = SurvivorListManager.instance;
         healing = GetComponent<SurviverHealing>();
+        hookEscape = GetComponent<SurvivorHookEscape>();
     }
 
     private void Update()
@@ -245,6 +247,9 @@ public class SurviverHealth : MonoBehaviourPun
     void HookEscape()
     {
         if (State != HealthState.Hook) return;
+
+        if (hookEscape.escaped || hookEscape.Escape) return;
+
         if(Prograss >= maxPrograssTime)
         {
             if(hookCor == null)

@@ -14,6 +14,7 @@ public class SurvivorShader : MonoBehaviourPun
     void SetRedXray(bool value)
     {
         if (photonView.IsMine) return;
+        if (SelecterManager.Instance.IsSurvivor == false) return;
         if(value == true)
         {
             foreach (Transform child in go.transform)
@@ -39,6 +40,7 @@ public class SurvivorShader : MonoBehaviourPun
     void SetYellowXray(bool value)
     {
         if (photonView.IsMine) return;
+        if (SelecterManager.Instance.IsSurvivor == false) return;
         if (value == true)
         {
             foreach (Transform child in go.transform)

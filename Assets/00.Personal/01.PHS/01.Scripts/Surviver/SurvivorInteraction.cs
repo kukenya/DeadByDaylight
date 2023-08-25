@@ -248,19 +248,46 @@ public class SurvivorInteraction : MonoBehaviourPun
     #endregion
 
     Coroutine escapeCor;
-    void CamperEscape()
+    public void CamperEscape()
     {
         if (escapeCor != null) return;
+        print("¿Â");
         escapeCor = StartCoroutine(surviverAutoMove.FriendHealingAutoMoveCor(
             camperEscape.OnEscaping,
-            () => { surviverAnimation.Play("RecueCamperIn"); escapeCor = null; },
+            () => { surviverAnimation.Play("RescueCamperIn"); escapeCor = null; },
             this,
             camperEscape.transform)
             );
     }
 
-    void OffCamperEscape()
+    public void OffCamperEscape(bool escaped = false)
     {
+        if (escaped == true) { StartCoroutine(CamperEscapingCor()); return; }
+
+        print("¿ÀÇÁ");
+        if (escapeCor != null)
+        {
+            StopCoroutine(escapeCor);
+            escapeCor = null;
+        }
+        surviverController.BanMove = false;
+        camperEscape.OffEscaping();
+        surviverAnimation.AnimationChange();
+    }
+
+    IEnumerator CamperEscapingCor()
+    {
+        surviverAnimation.Play("RescueCamperEnd");
+        while (true)
+        {
+            if(surviverAnimation.IsAnimEnd("RescueCamperEnd")) break;
+            yield return null;
+        }
+        if (escapeCor != null)
+        {
+            StopCoroutine(escapeCor);
+            escapeCor = null;
+        }
         surviverController.BanMove = false;
         camperEscape.OffEscaping();
         surviverAnimation.AnimationChange();
@@ -281,6 +308,11 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     public void OffFriendHealing()
     {
+        if (friendHealCor != null)
+        {
+            StopCoroutine(friendHealCor);
+            friendHealCor = null;
+        }
         surviverController.BanMove = false;
         camperHealing?.OffFriendHeal();
         surviverAnimation.AnimationChange();

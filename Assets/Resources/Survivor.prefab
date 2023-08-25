@@ -1430,6 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPrograssTime: 2
+  originRotation: {x: 0, y: 0, z: 0, w: 0}
   escaping: 0
   escaped: 0
 --- !u!1 &7104911752054812998
