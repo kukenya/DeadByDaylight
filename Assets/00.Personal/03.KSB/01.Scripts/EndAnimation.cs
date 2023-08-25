@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class EndAnimation : MonoBehaviour
 {
-    GameObject annaMove;
+    GameObject anna;
 
     // Start is called before the first frame update
     void Start()
     {
-        annaMove = GameObject.FindGameObjectWithTag("Killer");
+        Invoke("FindAnna", 10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
+    public void FindAnna()
+    {
+        anna = GameObject.FindGameObjectWithTag("Killer");
+    }
 
     public void OnEndAnimation()
     {
-        annaMove.GetComponent<AnnaMove>().EndAnimation();
+        anna.GetComponent<AnnaMove>().EndAnimation();
     }
 
 }

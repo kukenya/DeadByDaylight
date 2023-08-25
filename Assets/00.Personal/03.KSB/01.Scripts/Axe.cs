@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Axe : MonoBehaviour
+public class Axe : MonoBehaviourPun
 {
     public AudioSource axeAudio;
-    public PhotonView photonView;
+    public PhotonView photonView2;
     Rigidbody smallAxeRigidbody;        // 한손도끼 Rigidbody 컴포넌트
     GameObject survivor;                // 생존자
     bool canHit = false;                // 때릴 수 있나 여부
     bool isDestroy;
+    public GameObject bloodEffectFactory;    // 피 이펙트 공장
+
     private void Start()
     {
         
@@ -20,8 +22,6 @@ public class Axe : MonoBehaviour
     {
         Rigidbody smallAxeRigidbody = GetComponent<Rigidbody>();
         smallAxeRigidbody.AddForce(transform.forward * chargingForce, ForceMode.Impulse);
-
-
         // StartCoroutine("FlyingSound");
     }
 
@@ -43,28 +43,32 @@ public class Axe : MonoBehaviour
             }
 
             yield return null;
-        }
-       
-        
+        }           
     }
 
-    // 토구가 던진 도끼가 플레이어에게 닿으면 플레이어의 체력을 감소시킨다.
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
+        Vector3 point = collision.contacts[0].point;
+        Vector3 normal = collision.contacts[0].normal;
+      
         Destroy(gameObject);
 
         isDestroy = true;
 
-        if (other.gameObject.name.Contains("Survivor") & canHit == false)
+        if (collision.gameObject.name.Contains("Survivor") & canHit == false)
         {
+            photonView2.RPC("SmallAxeBlood", RpcTarget.All, point, normal);
+
             SoundManager.instance.PlayHitSounds(3);
-            if (photonView.IsMine)
+            
+            if (photonView2.IsMine)
             {
-                other.GetComponent<SurviverHealth>().NormalHit();
+                collision.gameObject.GetComponent<SurviverHealth>().NormalHit();
             }
+
             canHit = true;
         }
-        else if(other.gameObject.name.Contains("나무") & canHit == false)
+        else if (collision.gameObject.name.Contains("나무") & canHit == false)
         {
             SoundManager.instance.PlayHitSounds(1);
         }
