@@ -13,10 +13,12 @@ public class ButtonClick : MonoBehaviourPun
     public GameObject playerReady;
     public GameObject playerCancel;
     public GameObject readycheck;
+    public GameObject readyStartImage;
 
     public GameObject killer;
     public GameObject player;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,7 @@ public class ButtonClick : MonoBehaviourPun
         lobby.SetActive(false);
         killerLobby.SetActive(true);
         playerLobby.SetActive(false);
-
+        readyStartImage.SetActive(true);
     }
 
     public void OnclickPlayer()
@@ -50,6 +52,7 @@ public class ButtonClick : MonoBehaviourPun
         lobby.SetActive(false);
         playerLobby.SetActive(true);
         killerLobby.SetActive(false);
+        readyStartImage.SetActive(true);
     }
 
     public void OnclickBack()
@@ -59,6 +62,7 @@ public class ButtonClick : MonoBehaviourPun
         killerLobby.SetActive(false);
         playerLobby.SetActive(false);
         lobby.SetActive(true);
+        readyStartImage.SetActive(false);
     }
 
     public void PlayerReady()
@@ -67,6 +71,7 @@ public class ButtonClick : MonoBehaviourPun
         playerReady.SetActive(false);
         readycheck.SetActive(true);
         LobbyManager.instance.SetReady(true);
+        //SetReadyImage(true);
 
         //LobbyManager.instance.myPhotonView.RPC("RpcSetReady", Photon.Pun.RpcTarget.All, true);
     }
@@ -78,6 +83,18 @@ public class ButtonClick : MonoBehaviourPun
         playerCancel.SetActive(false);
         readycheck.SetActive(false);
         LobbyManager.instance.SetReady(false);
+        //SetReadyImage(false);
     }
-    
+
+    //public void SetReadyImage(bool onReady)
+    //{
+    //    LobbyManager.instance.readyImage.GetComponent<PhotonView>().RPC(nameof(RpcReadyImage), RpcTarget.AllBuffered, onReady);
+    //}
+
+    //[PunRPC]
+    //void RpcReadyImage(bool onReady)
+    //{
+    //    if (onReady == true) LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.red;
+    //    else LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.white;
+    //}
 }

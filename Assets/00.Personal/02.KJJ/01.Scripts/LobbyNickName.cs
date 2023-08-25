@@ -35,15 +35,19 @@ public class LobbyNickName : MonoBehaviourPun
 
     public void SetReady(bool isReady)
     {
-        photonView.RPC(nameof(RpcSetReady), RpcTarget.All, isReady);
+        photonView.RPC(nameof(RpcSetReady), RpcTarget.AllBuffered, isReady);
     }
 
     [PunRPC]
     void RpcSetReady(bool isReady)
     {
         ready.SetActive(isReady);
-        if (isReady == true) LobbyManager.instance.readyCount += 1;
+        if (isReady == true)
+        {
+            LobbyManager.instance.readyCount += 1;
+        }
         else LobbyManager.instance.readyCount -= 1;
+
     }
 
 
