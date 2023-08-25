@@ -21,6 +21,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public GameObject startWaitButton;
     public GameObject startButton;
 
+    public GameObject readyImage;
+
     int num = 0;
 
     // 살인마 체크
@@ -135,11 +137,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void GameStart()
     {
-        print("게임씬으로 이동");
+        print("로딩씬으로 이동");
         if (PhotonNetwork.IsMasterClient)
         {
             // GameScene으로 이동
-            PhotonNetwork.LoadLevel("PHS");
+            PhotonNetwork.LoadLevel("KJJ_Loading");
         }
     }
 
@@ -180,4 +182,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         myPhotonView.GetComponent<LobbyNickName>().SetReady(isReady);
     }
+
+
+    //[PunRPC]
+    //void RpcReadyImage(bool onReady)
+    //{
+    //    if (onReady == true) LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.red;
+    //    else LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.white;
+    //}
 }
