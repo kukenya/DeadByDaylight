@@ -87,10 +87,17 @@ public class Generator : MonoBehaviourPun, IPunObservable
         fail = value;
     }
 
-    private void Start()
+    IEnumerator Start()
     {
         anim = gameObject.GetComponentInParent<Animator>();
         skillCheck = SkillCheck.Instance;
+
+        yield return new WaitForSeconds(2f);
+        if (SelecterManager.Instance.IsSurvivor == false)
+        {
+            generatorMesh1.layer = 9;
+            generatorMesh2.layer = 9;
+        }
     }
 
     private void Update()
@@ -118,8 +125,9 @@ public class Generator : MonoBehaviourPun, IPunObservable
             generatorMesh1.layer = 11;
             generatorMesh2.layer = 11;
             GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
-            go.GetComponent<BlackHoleEffect>().action = () => { generatorMesh1.layer = 0; generatorMesh2.layer = 0; };
-            //go.transform.DOScale(0, 10).SetDelay(4).SetEase(blackHoleEase).SetAutoKill();
+            go.GetComponent<BlackHoleEffect>().action = () => { if (SelecterManager.Instance.IsSurvivor == false) 
+                { generatorMesh1.layer = 9; generatorMesh2.layer = 9; return; } 
+                generatorMesh1.layer = 0; generatorMesh2.layer = 0; };
         }
     }
 

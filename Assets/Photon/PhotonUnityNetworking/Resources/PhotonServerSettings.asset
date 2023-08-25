@@ -89,6 +89,8 @@ MonoBehaviour:
   - OffEscapingRPC
   - OnEscapingRPC
   - ChangePose2
+  - SetActivate
+  - SetBanMove
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

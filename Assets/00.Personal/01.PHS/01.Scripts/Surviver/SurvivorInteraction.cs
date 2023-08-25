@@ -46,7 +46,7 @@ public class SurvivorInteraction : MonoBehaviourPun
 
     bool activate = false;
     public bool Activate { get { return activate; } set {
-            activate = value;
+            photonView.RPC(nameof(SetActivate), RpcTarget.All, value);
             if(value == true)
             {
                 surviverLookAt.LookAt = false;
@@ -56,6 +56,12 @@ public class SurvivorInteraction : MonoBehaviourPun
                 surviverLookAt.LookAt = true;
             }
         } 
+    }
+
+    [PunRPC]
+    public void SetActivate(bool value)
+    {
+        activate = value;
     }
 
     public void NullInteractScript()

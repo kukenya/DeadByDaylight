@@ -24,7 +24,7 @@ public class HeartSound : MonoBehaviour
         minHeartBeatTiming = heartSound.length;
         yield return new WaitForSeconds(1);
 
-        if(gameObject.transform.parent.name.Contains("Survivor") == false)
+        if(GetComponentInParent<PhotonView>().IsMine == true)
         {
             yield break;
         }
@@ -137,8 +137,14 @@ public class HeartSound : MonoBehaviour
         }
     }
 
+    public float singStartPosition = 30;
+    public float singEndPosition = 5;
+    public AudioSource singAudio;
+
     private void Update()
     {
-        
+        if (dist == 0) return;
+        float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
+        singAudio.volume = a;
     }
 }

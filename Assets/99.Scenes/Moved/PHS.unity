@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.15352514, g: 0.16842383, b: 0.19324553, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10112,7 +10112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &947983882
 Transform:
   m_ObjectHideFlags: 0
@@ -11544,7 +11544,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
 --- !u!4 &1058201162 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1594917303487681590, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5425929088495846124, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
   m_PrefabInstance: {fileID: 1058201161}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1058201163 stripped
@@ -19469,6 +19469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2010416659}
+  - component: {fileID: 2010416660}
   - component: {fileID: 2010416658}
   m_Layer: 0
   m_Name: CustomPass
@@ -19498,12 +19499,28 @@ MonoBehaviour:
   - rid: 5215255685316476932
   - rid: 5215255685316476933
   - rid: 5215255685316476934
+  - rid: 514885375900778496
   injectionPoint: 1
   m_TargetCamera: {fileID: 0}
   useTargetCamera: 0
   references:
     version: 2
     RefIds:
+    - rid: 514885375900778496
+      type: {class: SeeThrough, ns: , asm: Assembly-CSharp}
+      data:
+        m_Name: HacksOn
+        enabled: 0
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        seeThroughLayer:
+          serializedVersion: 2
+          m_Bits: 832
+        seeThroughMaterial: {fileID: 2100000, guid: 4511aca5b9d1d164987990d5b105fb10, type: 2}
+        stencilShader: {fileID: 0}
     - rid: 5215255639746936832
       type: {class: DrawRenderersCustomPass, ns: UnityEngine.Rendering.HighDefinition, asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:
@@ -19575,7 +19592,7 @@ MonoBehaviour:
         targetColorBuffer: 0
         targetDepthBuffer: 0
         clearFlags: 0
-        passFoldout: 0
+        passFoldout: 1
         m_Version: 0
         seeThroughLayer:
           serializedVersion: 2
@@ -19590,7 +19607,7 @@ MonoBehaviour:
         targetColorBuffer: 0
         targetDepthBuffer: 0
         clearFlags: 0
-        passFoldout: 1
+        passFoldout: 0
         m_Version: 0
         seeThroughLayer:
           serializedVersion: 2
@@ -19612,6 +19629,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2010416660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010416657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0bf09499f86cf04a8c4c80baecc0149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomPassVolume: {fileID: 2010416658}
 --- !u!1 &2013226991
 GameObject:
   m_ObjectHideFlags: 0

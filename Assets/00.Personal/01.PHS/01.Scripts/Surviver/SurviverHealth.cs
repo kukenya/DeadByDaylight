@@ -19,6 +19,8 @@ public class SurviverHealth : MonoBehaviourPun
 
     public Transform rootCameraPosition;
 
+    public Vector3 rootCameraOriginPos;
+
     public enum HealthState
     {
         Healthy,
@@ -123,6 +125,7 @@ public class SurviverHealth : MonoBehaviourPun
         listManager = SurvivorListManager.instance;
         healing = GetComponent<SurviverHealing>();
         hookEscape = GetComponent<SurvivorHookEscape>();
+        rootCameraOriginPos = rootCameraPosition.localPosition;
     }
 
     private void Update()
@@ -143,6 +146,25 @@ public class SurviverHealth : MonoBehaviourPun
 
     public void NormalHit()
     {
+        if (controller.BanMove) { print("코루틴"); StartCoroutine(WaitHit()); }
+        else { print("노말"); NormalHit2(); };
+    }
+
+    IEnumerator WaitHit()
+    {
+        while (true)
+        {
+            if(controller.BanMove == false)
+            {
+                NormalHit2();
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    public void NormalHit2()
+    {
         if (State == HealthState.Healthy)
         {
             photonView.RPC(nameof(ChangeInjuerd), RpcTarget.All);
@@ -157,7 +179,7 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeInjuerd()
     {
         if(photonView.IsMine == false) return;
-        State = HealthState.Injured;
+        StateNA = HealthState.Injured;
         photonView.RPC("PlayAnimationRPC", RpcTarget.All, "Hit", 0.25f, 2);
         surviverSound.PlayInjSound();
         StartCoroutine(HitSpeed());
@@ -183,7 +205,7 @@ public class SurviverHealth : MonoBehaviourPun
         surviverLookAt.LookAt = false;
         shader.RedXray = true;
         WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.OwnerDown;
-        State = HealthState.Down;
+        StateNA = HealthState.Down;
         healing.healed = false;
         controller.Crawl = true;
         surviverSound.PlayDownSound();
@@ -272,7 +294,7 @@ public class SurviverHealth : MonoBehaviourPun
 
     IEnumerator WaitHook()
     {
-        rootCameraPosition.position -= new Vector3(0, yOffset, 0);
+        rootCameraPosition.transform.localPosition = rootCameraOriginPos;
         surviverAnimation.Play("Hook_Free");
         photonView.RPC(nameof(AnimationWeight), RpcTarget.All, (float)0);
         while (true)
@@ -287,6 +309,7 @@ public class SurviverHealth : MonoBehaviourPun
         photonView.RPC(nameof(ChangePose), RpcTarget.All);
         hookCor = null;
         shader.RedXray = false;
+        anim.speed = 1;
     }
 
     [PunRPC]

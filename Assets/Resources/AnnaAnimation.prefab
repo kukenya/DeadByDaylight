@@ -1777,7 +1777,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427879883519561}
-  m_LocalRotation: {x: -0.000000007462639, y: 0.9771478, z: -0.21256112, w: -0.00000003430591}
+  m_LocalRotation: {x: -0.000000011120046, y: 0.9771478, z: -0.21256112, w: -0.000000051119084}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1862,7 +1862,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427880018934285}
-  m_LocalRotation: {x: 0.00014647967, y: 0.9736501, z: 0.22804628, w: -0.0006253991}
+  m_LocalRotation: {x: 0.00014647574, y: 0.9736501, z: 0.22804628, w: -0.00062538235}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2459,8 +2459,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427881549103197}
-  m_LocalRotation: {x: 0.00014648479, y: 0.9736501, z: 0.22804628, w: -0.00062542094}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.24993096, y: -0.18541607, z: 0.08008666, w: 0.94696444}
+  m_LocalPosition: {x: -22.042, y: -0.100000024, z: 101.416}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2490,11 +2490,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
-  far clip plane: 5000
-  field of view: 58.715508
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 56.185932
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: 1.29
   m_CullingMask:
     serializedVersion: 2
@@ -5054,7 +5054,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6696,6 +6696,8 @@ MonoBehaviour:
   slasher: {fileID: 0}
   heartSound: {fileID: 8300000, guid: 7d735dc1529134648829dc800ef7dcf8, type: 3}
   heartBeatTiming: 1.7100472
+  dist: 0
+  heartSoundPlaying: 0
   heartStartPosition: 22
   heartEndPosition: 5
   minHeartBeatTiming: 0.47466666
@@ -6711,6 +6713,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1484b83b0e9a4e540955bf441708e99d, type: 3}
   soundState: 2
   a: 1
+  singStartPosition: 30
+  singEndPosition: 5
+  singAudio: {fileID: 5858625105955735603}
 --- !u!1 &7867936785135857709
 GameObject:
   m_ObjectHideFlags: 0
