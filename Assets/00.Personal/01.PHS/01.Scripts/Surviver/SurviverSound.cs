@@ -60,6 +60,8 @@ public class SurviverSound : MonoBehaviour
     {
         if (controller.enabled == false) return;
 
+        if (controller.BanMove) return;
+
         if (controller.sprintTime >= controller.maxSprintTime)
         {
             if (audioSource.isPlaying) return;
