@@ -1865,7 +1865,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427880018934285}
-  m_LocalRotation: {x: 0.00014647574, y: 0.9736501, z: 0.22804628, w: -0.00062538235}
+  m_LocalRotation: {x: 0.00014647967, y: 0.9736501, z: 0.22804628, w: -0.0006253991}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2462,7 +2462,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427881549103197}
-  m_LocalRotation: {x: 0.00014647064, y: 0.9736501, z: 0.22804628, w: -0.0006253605}
+  m_LocalRotation: {x: 0.00014648479, y: 0.9736501, z: 0.22804628, w: -0.00062542094}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5883,7 +5883,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   HaxMode: 0
-  bloodEffectFactory: {fileID: 0}
+  bloodEffectFactory: {fileID: 9016681532666092740, guid: c9aba7ec44ffec948b063306f96fdd2f, type: 3}
 --- !u!114 &852289717898882860
 MonoBehaviour:
   m_ObjectHideFlags: 0
