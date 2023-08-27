@@ -2,9 +2,10 @@ using DG.Tweening;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class HeartSound : MonoBehaviour
+public class HeartSound : MonoBehaviourPun
 {
     public Transform ownerSurvivor;
     public Transform slasher;
@@ -24,7 +25,7 @@ public class HeartSound : MonoBehaviour
         minHeartBeatTiming = heartSound.length;
         yield return new WaitForSeconds(1);
 
-        if(gameObject.transform.parent.name.Contains("Survivor") == false)
+        if(gameObject.transform.parent.gameObject.GetPhotonView().IsMine)
         {
             yield break;
         }
