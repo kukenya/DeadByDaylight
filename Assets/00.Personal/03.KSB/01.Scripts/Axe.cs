@@ -68,13 +68,13 @@ public class Axe : MonoBehaviourPun
 
             canHit = true;
         }
-        else if (collision.gameObject.name.Contains("나무") & canHit == false)
-        {
-            SoundManager.instance.PlayHitSounds(1);
-        }
-        else
-        {
-            // 깡 하는 소리
-        }
+        //else if (collision.gameObject.name.Contains("나무") & canHit == false)
+        //{
+        //    SoundManager.instance.PlayHitSounds(1);
+        //}
+        //else
+        //{
+        //    // 깡 하는 소리
+        //}
     }
 }

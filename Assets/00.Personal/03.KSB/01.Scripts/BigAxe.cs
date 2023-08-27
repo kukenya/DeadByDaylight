@@ -45,7 +45,6 @@ public class BigAxe : MonoBehaviourPun
         {
             if (hitinfo.collider.gameObject.name.Contains("Hook"))
             {
-                print("dfkjahdkjlfhaskljdfhalikhgfiolaufgbisdlajfuhsdkjflhjkdh476328576");
                 //GameObject bloodEffect = Instantiate(bloodEffectFactory);
                 //bloodEffect.transform.position = hitinfo.point;
                 //bloodEffect.transform.forward = hitinfo.normal;
@@ -66,9 +65,8 @@ public class BigAxe : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Survivor"))
+        if (photonView.IsMine && other.gameObject.name.Contains("Survivor"))
         {
-
             hit = true;                                                     // 1초 후에 코루틴 함수를 호출한다.
 
             other.GetComponent<SurviverHealth>().NormalHit();               // 생존자의 NormalHit 함수를 호출한다.
@@ -87,9 +85,9 @@ public class BigAxe : MonoBehaviourPun
     [PunRPC]
     public void MakeEffect()
     {
-        GameObject bloodEffect = Instantiate(bloodEffectFactory);          // 도끼 생성
-        bloodEffect.transform.position = transform.position;                      // 도끼 던지는 위치
-                                                                                  // bloodEffect.transform.forward = tran;                   // 도끼 앞 방향
+        GameObject bloodEffect = Instantiate(bloodEffectFactory);           // 도끼 생성
+        bloodEffect.transform.position = rayStart.position;                 // 도끼 던지는 위치
+        bloodEffect.transform.forward = rayStart.forward;                   // 도끼 앞 방향
 
 
         //GameObject bloodEffect = Instantiate(bloodEffectFactory);     // 피 이펙트 공장에서 피 이펙트를 만든다.
