@@ -182,6 +182,8 @@ public class Generator : MonoBehaviourPun, IPunObservable
 
     void GetSkillCheckValue(int value)
     {
+        if (repaierd) return;
+
         switch (value)
         {
             case 0:

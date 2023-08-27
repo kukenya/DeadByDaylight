@@ -105,6 +105,8 @@ public class SurviverAnimation : MonoBehaviourPun, IPunObservable
 
     void Standing()
     {
+        if(anim.speed != 1) anim.speed = 1;
+
         switch (mState)
         {
             case MoveState.Idle:
@@ -124,6 +126,8 @@ public class SurviverAnimation : MonoBehaviourPun, IPunObservable
 
     void Crouching()
     {
+        if (anim.speed != 1) anim.speed = 1;
+
         switch (mState)
         {
             case MoveState.Idle:
@@ -189,6 +193,15 @@ public class SurviverAnimation : MonoBehaviourPun, IPunObservable
             if (overplay) currentState = "";
             else currentState = state;
         }
+    }
+
+    [PunRPC]
+    public void ForcePlay(string state)
+    {
+        if (state == currentState) return;
+
+        anim.enabled = true;
+        photonView.RPC(nameof(PlayAnimationRPC), RpcTarget.All, state, 0.1f, 0);
     }
 
     [PunRPC]

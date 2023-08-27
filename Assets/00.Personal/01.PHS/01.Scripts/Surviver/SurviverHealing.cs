@@ -1,9 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SurviverHealing : MonoBehaviourPun, IPunObservable
 {
@@ -141,6 +139,8 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     void GetSkillCheckValue(int value)
     {
+        if(healed == true) return;
+
         switch (value)
         {
             case 0:
@@ -230,7 +230,6 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     public void OnFriendHeal(SurvivorInteraction interaction)
     {
-        print("OnFriendHeal : " + gameObject.name);
         this.interaction = interaction;
         photonView.RPC(nameof(OnFriendHealRPC), RpcTarget.All);
     }
@@ -274,6 +273,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
         else if(OtherHealing)
         {
             surviverAnimation.Play("Being_Heal_Fail");
+            //interaction.photonView.RPC("ForcePlay", RpcTarget.All, "Heal_Camper_Fail");
         }
     }
 

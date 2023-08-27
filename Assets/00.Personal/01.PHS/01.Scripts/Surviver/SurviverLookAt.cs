@@ -21,6 +21,7 @@ public class SurviverLookAt : MonoBehaviourPun
     [PunRPC]
     void SetLookAt(bool value)
     {
+        if (health == null) health = GetComponent<SurviverHealth>();
         if(health.State == SurviverHealth.HealthState.Down ||
             health.State == SurviverHealth.HealthState.Carrying ||
             health.State == SurviverHealth.HealthState.Hook) value = false;
