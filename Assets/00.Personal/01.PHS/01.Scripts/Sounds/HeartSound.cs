@@ -4,22 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solution
-{
-    public int solution(int n, int[,] computers)
-    {
-        int answer = 0;
-        for(int i = 0; i < n; i++)
-        {
-            for(int j = 0; j < n; j++)
-            {
-                answer = computers[i,j] == 1 ? answer++ : answer;
-            }
-        }
-        return answer;
-    }
-}
-
 public class HeartSound : MonoBehaviour
 {
     public Transform ownerSurvivor;
@@ -28,6 +12,9 @@ public class HeartSound : MonoBehaviour
     public AudioClip heartSound;
 
     public float heartBeatTiming = 0;
+    public float dist = 0;
+
+    public bool heartSoundPlaying = false;
 
     // Start is called before the first frame update
     IEnumerator Start()
@@ -37,7 +24,7 @@ public class HeartSound : MonoBehaviour
         minHeartBeatTiming = heartSound.length;
         yield return new WaitForSeconds(1);
 
-        if(GetComponentInParent<PhotonView>().IsMine == true)
+        if(gameObject.transform.parent.name.Contains("Survivor") == false)
         {
             yield break;
         }
@@ -67,6 +54,9 @@ public class HeartSound : MonoBehaviour
             currentTime += Time.deltaTime;
 
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
+
+            if (heartSoundPlaying == false) dist = 100f;
+
             print(dist);
             float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
             heartAudio.volume = a;
@@ -123,6 +113,7 @@ public class HeartSound : MonoBehaviour
         {
             
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
+            if (heartSoundPlaying == false) dist = 100f;
             print(dist);
             if(dist < chase2SoundStartDist)
             {
