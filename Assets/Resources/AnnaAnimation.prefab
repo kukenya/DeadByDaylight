@@ -1963,7 +1963,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427879883519561}
-  m_LocalRotation: {x: -0.000000011120046, y: 0.9771478, z: -0.21256112, w: -0.000000051119084}
+  m_LocalRotation: {x: -0.000000007462639, y: 0.9771478, z: -0.21256112, w: -0.00000003430591}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6022,6 +6022,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   foward: {fileID: 4229104218976510584}
+  animCam: {fileID: 1940528422018357531}
+  trSkeleton: {fileID: 1647404167142061328}
+  cameraAnimOffset: {fileID: 4229104218976510584}
   yVelocity: 0
   gravity: -0.5
   rotSpeed: 100
