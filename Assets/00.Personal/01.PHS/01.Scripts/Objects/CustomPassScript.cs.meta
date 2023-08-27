@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/00.Personal/01.PHS/01.Scripts/Objects/CustomPassScript.cs.meta
 guid: e0bf09499f86cf04a8c4c80baecc0149
+========
+guid: a8d30730cbb29824f8121246cbce6b19
+>>>>>>>> KSB-Betaver:Assets/00.Personal/01.PHS/01.Scripts/Objects/EndObject.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
