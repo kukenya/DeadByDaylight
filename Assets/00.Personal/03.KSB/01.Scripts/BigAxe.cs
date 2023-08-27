@@ -6,24 +6,24 @@ using Photon.Pun;
 
 public class BigAxe : MonoBehaviourPun
 {
-    bool hit = false;               // hit 했나?
+    public GameObject anna;                     // Anna
+    public BoxCollider box;                     // 도끼 콜라이더
+    public GameObject bloodEffectFactory;       // 피 이펙트 공장
+    public Transform rayStart;
 
-    float currentTime;              // 현재시간
+    float currentTime;                          // 현재시간
 
-    public GameObject anna;         // Anna
+    bool hit = false;                           // hit 했나?
 
-    BoxCollider box;                // 도끼 콜라이더
+    GameObject goBloodImage;                    // 핏자국 겜옵젝
+    Image bloodImage;                           // 핏자국 이미지
+    Color color;                                // 컬러 <- 알파값
 
-    GameObject goBloodImage;        // 핏자국 이미지
-    Image bloodImage;
-    Color color;                    // 컬러 <- 알파값
-
-    // public GameObject bloodEffectFactory;    // 피 이펙트 공장
 
 
     private void Start()
     {
-        if(photonView.IsMine== true)
+        if (photonView.IsMine == true)
         {
             box = anna.GetComponent<AnnaMove>().bigAxeCollider; // 도끼 콜라이더
 
@@ -37,6 +37,20 @@ public class BigAxe : MonoBehaviourPun
 
     private void Update()
     {
+        Ray ray = new Ray(rayStart.position, rayStart.forward);
+
+        RaycastHit hitinfo;
+
+        if (Physics.Raycast(ray, out hitinfo, 1))
+        {
+            if (hitinfo.collider.gameObject.name.Contains("Hook"))
+            {
+                //GameObject bloodEffect = Instantiate(bloodEffectFactory);
+                //bloodEffect.transform.position = hitinfo.point;
+                //bloodEffect.transform.forward = hitinfo.normal;
+            }
+        }
+
         if (hit == true)
         {
             currentTime += Time.deltaTime;
@@ -49,11 +63,9 @@ public class BigAxe : MonoBehaviourPun
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
-        if (other.gameObject.name.Contains("Survivor"))
+        if (photonView.IsMine && other.gameObject.name.Contains("Survivor"))
         {
             hit = true;                                                     // 1초 후에 코루틴 함수를 호출한다.
 
@@ -61,15 +73,26 @@ public class BigAxe : MonoBehaviourPun
 
             box.enabled = false;                                            // 도끼 콜라이더를 끈다. 
 
-            color.a = 1;                                                    // 화면에 피 튀기는 UI 알파값을 1로 만든다.       
-            bloodImage.GetComponent<Image>().color = color;         
+            color.a = 1;                                                    // 화면에 피 튀는 UI 알파값을 1로 만든다.       
+            bloodImage.GetComponent<Image>().color = color;
 
             SoundManager.instance.PlayHitSounds(4);                         // 도끼에 맞는 소리를 재생한다.
 
-            //GameObject bloodEffect = Instantiate(bloodEffectFactory);     // 피 이펙트 공장에서 피 이펙트를 만든다.
-            //bloodEffect.transform.position = this.transform.position;     // 내 위치에 생성하고 플레이한다.
-            //bloodEffect.transform.position.Normalize();                   // 방향은 노말벡터
+            photonView.RPC(nameof(MakeEffect), RpcTarget.All);              // 피 튀는 이펙트를 보낸다.
         }
+    }
+
+    [PunRPC]
+    public void MakeEffect()
+    {
+        GameObject bloodEffect = Instantiate(bloodEffectFactory);           // 도끼 생성
+        bloodEffect.transform.position = rayStart.position;                 // 도끼 던지는 위치
+        bloodEffect.transform.forward = rayStart.forward;                   // 도끼 앞 방향
+
+
+        //GameObject bloodEffect = Instantiate(bloodEffectFactory);     // 피 이펙트 공장에서 피 이펙트를 만든다.
+        //bloodEffect.transform.position = this.transform.position;     // 내 위치에 생성하고 플레이한다.
+        //bloodEffect.transform.position.Normalize();                   // 방향은 노말벡터
     }
 
     IEnumerator FadeOut()

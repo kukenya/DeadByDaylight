@@ -15,6 +15,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
     SurvivorInteraction ownerInteraction;
     float prograss = 0;
     public float maxPrograssTime = 2;
+    public Quaternion originRotation;
     public float Prograss
     {
         get { return prograss; }
@@ -54,21 +55,23 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
     Coroutine hookCor;
     void OtherHookEscape()
     {
-        if (escaping == false) return;
-
         if (escaped == true) return;
 
         if (Prograss >= maxPrograssTime)
         {
             if (hookCor == null)
             {
-                hookCor = StartCoroutine(WaitHook());
                 escaped = true;
+                hookCor = StartCoroutine(WaitHook());
+                if (photonView.IsMine == false)
+                {
+                    interaction.OffCamperEscape(escaped);
+                }
             }
             return;
         }
 
-        if(photonView.IsMine == false) return;
+        if (photonView.IsMine == false) return;
 
         if (escaping) 
         { 
@@ -76,7 +79,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
         }
         else 
         {
-            Prograss -= Time.deltaTime;
+            Prograss = 0;
         }
     }
 
@@ -84,7 +87,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
     public void OnEscaping(SurvivorInteraction interaction)
     {
         this.interaction = interaction;
-        photonView.RPC(nameof(OnEscapingRPC), RpcTarget.All);
+        photonView.RPC(nameof(OnEscapingRPC), RpcTarget.All, interaction.transform.position);
     }
 
     public void OffEscaping()
@@ -94,12 +97,16 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
 
     Coroutine a;
     [PunRPC]
-    public void OnEscapingRPC()
+    public void OnEscapingRPC(Vector3 camperPos)
     {
-        if(photonView.IsMine == false) return;
+        Escape = true;
+        originRotation = transform.rotation;
+        transform.rotation = Quaternion.LookRotation(camperPos - transform.position);
+        if (photonView.IsMine == false) return;
         a = StartCoroutine(UpdateUI());
         ownerInteraction.offAutoUI = true;
-        Escape = true;
+
+        if (escaped) return;
         surviverAnimation.Play("BeingRescueIn");
     }
 
@@ -107,6 +114,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
     {
         while (true)
         {
+            if (escaped) break;
             SurviverUI.instance.ChangePrograssUI(SurviverUI.PrograssUI.On, "±∏√‚");
             SurviverUI.instance.prograssBar.fillAmount = Prograss / maxPrograssTime;
             yield return null;
@@ -116,10 +124,14 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void OffEscapingRPC()
     {
-        if(photonView.IsMine == false) return;
+        Escape = false;
+        transform.rotation = originRotation;
+        if (photonView.IsMine == false) return;
         StopCoroutine(a);
         ownerInteraction.offAutoUI = false;
-        Escape = false;
+
+        if (escaped) return;
+        surviverAnimation.Play("Hook_Idle");
     }
 
     IEnumerator WaitHook()
@@ -138,6 +150,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
         photonView.RPC(nameof(ChangePose2), RpcTarget.All);
         hookCor = null;
         shader.RedXray = false;
+        anim.speed = 1;
     }
 
     [PunRPC]

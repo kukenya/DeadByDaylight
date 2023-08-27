@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8218494251601556686}
   - component: {fileID: 1272074197195840633}
   - component: {fileID: 1723144263557442996}
-  m_Layer: 0
+  - component: {fileID: 1052124312707596918}
+  m_Layer: 7
   m_Name: SK_Closet01_REF.mo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3365214762802403983, guid: 7e27e3d57f2b56445accb94cee52c4a9, type: 3}
+--- !u!114 &1052124312707596918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998697058547827239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8640f963af0cab42a420a701d9ea453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trCloset: {fileID: 287429266291278076}
 --- !u!1 &1695896115689241694
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5857870274959900448}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_DoorLT_01_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2566644682662773629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_AttachCamper_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4487131856334182576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_DoorRT_01_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2676252158281618721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_DoorRT_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5225553157868514189}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_Pelvis_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8766645475542628403}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_DoorLT_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5721762846100194793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_AttachKiller_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +352,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8066529223335081656}
-  m_Layer: 0
+  - component: {fileID: 7515621506390792759}
+  - component: {fileID: 2088520812613558052}
+  m_Layer: 7
   m_Name: Closet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,6 +378,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7515621506390792759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258044735871364098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0a447ab089bdf439da5f969baafc52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &2088520812613558052
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258044735871364098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 93068e39884b47249a7fd35f6766a7a6, type: 3}
+  m_Controller: {fileID: 9100000, guid: be3d0e1c2a4b4354582e3e96a23a4ec6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7413627402008476779
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 287429266291278076}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_AttachKiller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8023877790440689427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_AttachCamper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 175879497830833947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: joint_Char
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5391930284688776572}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SK_Closet01_REF.ao
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -89,6 +89,10 @@ MonoBehaviour:
   - OffEscapingRPC
   - OnEscapingRPC
   - ChangePose2
+  - smallAxeBlood
+  - MakeEffect
+  - SmallAxeBlood
+  - AxeRay
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -28,58 +28,35 @@ public class ChaseorLullaby : MonoBehaviourPun
 
     private void Update()
     {
-        Collider[] hitcolliders = Physics.OverlapSphere(transform.position, 45, layerMask);
-        for (int i = 0; i < hitcolliders.Length; i++)
-        {
-            if (hitcolliders[i].gameObject.name.Contains("Survivor"))
-            {
-                // ÀÚÀå°¡
-            }
-        }
+
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.gameObject.name.Contains("Survivor") && isChasing == false)
+        if (other.gameObject.name.Contains("Survivor") && isChasing == false)
         {
+            lullaby.Stop();
+            
             if (photonView.IsMine)
             {
-                PlayChaseBG();
+                chase.PlayDelayed(0.5f);
+                chase.volume = 0.8f;
+
+                isChasing = true;
+                isLullaby = false;
             }
-            
-            isChasing = true;
-            isLullaby = false;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.gameObject.name.Contains("Survivor") && isLullaby == false)
+        if (other.gameObject.name.Contains("Survivor") && isLullaby == false)
         {
-            PlayLullaby();
+            chase.Stop();
+            lullaby.PlayDelayed(0.5f);
             isLullaby = true;
             isChasing = false;
         }
-    }
-
-    public void PlayChaseBG()
-    {
-        //isChasing = true;
-        //isLullaby = false;
-
-        lullaby.Stop();
-        chase.Play();
-        //chase.volume = 0.1f;
-    }
-
-    public void PlayLullaby()
-    {
-        //isChasing = false;
-        //isLullaby = true;
-
-        lullaby.Play();
-        //lullaby.volume = 0.1f;
-        chase.Stop();
     }
 }

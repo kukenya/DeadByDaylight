@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     private void Awake()
     {
-        if(instance = null)
+        if (instance = null)
         {
             Destroy(gameObject);
         }
@@ -19,8 +19,13 @@ public class UIManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
+            startUI.SetActive(true);
+
             // UI 비활성화
-            murdererUI.enabled = false;
+            escapeTimeUI.SetActive(false);
+            PerksUI.SetActive(false);
+            leftDownUI.SetActive(false);
+
 
             // 단독 UI 비활성화
             throwUI.SetActive(false);
@@ -42,7 +47,15 @@ public class UIManager : MonoBehaviour
 
     #region UI 변수
     // 기본 UI
-    public Canvas murdererUI;               // UI        
+    // public Canvas murdererUI;               // UI
+    public GameObject PerksUI;
+    public GameObject leftDownUI;
+
+
+    // Game Manager UI
+    public GameObject startUI;              // 게임시작 UI
+    public GameObject escapeTimeUI;         // 탈출 남은시간 UI
+
     // 카운트 UI
     public TextMeshProUGUI axeCount;        // 도끼 갯수 UI
     public TextMeshProUGUI genCount;        // 발전기 갯수 UI
@@ -64,23 +77,31 @@ public class UIManager : MonoBehaviour
     public Image gageImage;                 // 게이지 이미지
     #endregion
 
-    public void SoloUI(bool axe, bool interaction, string str)
+    // 정중앙 UI
+    public void ThrowUI(bool axe)
     {
         throwUI.SetActive(axe);
+    }
 
+    // 도끼 없을 때 상호작용 UI
+    public void SoloUI(bool interaction, string str)
+    {
         soloSpace.SetActive(interaction);
         soloText.enabled = interaction;
         soloText.text = str;
     }
 
+    // 도끼 있을 때 상호작용 UI
     public void DuoUI(bool boolean, string str)
     {
         toGetherThrowUI.SetActive(boolean);
+
         togetherSpace.SetActive(boolean);
         togetherText.enabled = boolean;
         togetherText.text = str;
     }
 
+    // 게이지 UI
     public void GageUI(bool uiBool, bool imageBool, string str)
     {
         gageSlider.enabled = uiBool;
@@ -88,19 +109,19 @@ public class UIManager : MonoBehaviour
         gageText.enabled = uiBool;
         gageImage.enabled = imageBool;
         gageText.text = str;
-
     }
 
-    public void FillGage(Time time)
-    {
-        // Mathf.Lerp();
-    }
+    //public void FillGage(Time time)
+    //{
+    //    // Mathf.Lerp();
+    //}
 
-    public void EmptyGage()
-    {
-        gageSlider.value = 0;
-    }
+    //public void EmptyGage()
+    //{
+    //    gageSlider.value = 0;
+    //}
 
+    // 모든 UI 끄기
     public void OffAllUI()
     {
         throwUI.SetActive(true);
@@ -110,5 +131,11 @@ public class UIManager : MonoBehaviour
         sliderBG.enabled = false;
         gageText.enabled = false;
         gageImage.enabled = false;
+    }
+
+
+    public void OffTitleUI()
+    {
+        startUI.SetActive(false);
     }
 }

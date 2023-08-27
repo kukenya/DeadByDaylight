@@ -24,7 +24,7 @@ public class HeartSound : MonoBehaviour
         minHeartBeatTiming = heartSound.length;
         yield return new WaitForSeconds(1);
 
-        if(GetComponentInParent<PhotonView>().IsMine == true)
+        if(gameObject.transform.parent.name.Contains("Survivor") == false)
         {
             yield break;
         }
