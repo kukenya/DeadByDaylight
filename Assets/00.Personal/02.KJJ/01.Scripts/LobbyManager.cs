@@ -11,7 +11,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public GameObject[] player;
 
-    public List<GameObject> playerObject;
+    public List<PhotonView> playerObject;
+
+    public PhotonView myPhotonView;
+
+    public int readyCount;
+    int maxPlayerReady;
+
+    public GameObject startWaitButton;
+    public GameObject startButton;
+
+    public GameObject readyImage;
 
     int num = 0;
 
@@ -38,13 +48,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        playerObject = new List<GameObject>();
+        playerObject = new List<PhotonView>();
+        readyCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        maxPlayerReady = playerObject.Count;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (readyCount == maxPlayerReady && maxPlayerReady > 0)
+            {
+                startWaitButton.SetActive(false);
+                startButton.SetActive(true);
+            }
+            else
+            {
+                startButton.SetActive(false);
+                startWaitButton.SetActive(true);
+            }
+        }
     }
 
     public void JoinCreateRoom()
@@ -89,9 +113,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("방 입장 완료");
-        
+
         // 살인마가 아니면 캐릭터를 생성
-        if(isMurderer == false) PlayerSpawn();
+        if (isMurderer == false)
+        {
+            PlayerSpawn();
+        }
     }
 
     // 방 입장 실패시 호출되는 함수
@@ -106,26 +133,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PlayerDestory();
         PhotonNetwork.LeaveRoom();
-        print("방을 떠났습니다.");
     }
 
     public void GameStart()
     {
-        print("게임씬으로 이동");
+        print("로딩씬으로 이동");
         if (PhotonNetwork.IsMasterClient)
         {
             // GameScene으로 이동
-            PhotonNetwork.LoadLevel("PHS");
+            PhotonNetwork.LoadLevel("KJJ_Loading");
         }
     }
 
     public void PlayerSpawn()
     {
         num = PhotonNetwork.CountOfPlayersInRooms;
-        PhotonNetwork.Instantiate("Player", player[num].transform.position, Quaternion.Euler(0, 150, 0)); // ("생성파일이름",생성위치,생성방향)
+        PhotonNetwork.Instantiate("Player", player[num].transform.position, Quaternion.Euler(0, 95, 0)); // ("생성파일이름",생성위치,생성방향)
     }
 
-    
+
     public void PlayerDestory()
     {
         PhotonNetwork.Destroy(playerObject[num].gameObject);
@@ -147,8 +173,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print(otherPlayer.NickName + "님이 나갔습니다!");
     }
 
-    public void AddPlayer(GameObject go)
+    public void AddPlayer(PhotonView go)
     {
         playerObject.Add(go);
     }
+
+    public void SetReady(bool isReady)
+    {
+        myPhotonView.GetComponent<LobbyNickName>().SetReady(isReady);
+    }
+
+
+    //[PunRPC]
+    //void RpcReadyImage(bool onReady)
+    //{
+    //    if (onReady == true) LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.red;
+    //    else LobbyManager.instance.readyImage.GetComponent<Image>().color = Color.white;
+    //}
 }
