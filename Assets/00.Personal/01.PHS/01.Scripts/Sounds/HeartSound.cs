@@ -12,6 +12,9 @@ public class HeartSound : MonoBehaviour
     public AudioClip heartSound;
 
     public float heartBeatTiming = 0;
+    public float dist = 0;
+
+    public bool heartSoundPlaying = false;
 
     // Start is called before the first frame update
     IEnumerator Start()
@@ -51,6 +54,9 @@ public class HeartSound : MonoBehaviour
             currentTime += Time.deltaTime;
 
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
+
+            if (heartSoundPlaying == false) dist = 100f;
+
             print(dist);
             float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
             heartAudio.volume = a;
@@ -99,15 +105,15 @@ public class HeartSound : MonoBehaviour
 
     public ChaseSoundState soundState = ChaseSoundState.None;
 
-    public float a = 1;
-
     IEnumerator BackGroundSound()
     {
         while (true)
         {
             
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
+            if (heartSoundPlaying == false) dist = 100f;
             print(dist);
+            this.dist = dist;
             if(dist < chase2SoundStartDist)
             {
                 if (soundState != ChaseSoundState.Chase1)
@@ -130,8 +136,15 @@ public class HeartSound : MonoBehaviour
         }
     }
 
+    public float singStartPosition = 30;
+    public float singEndPosition = 5;
+    public AudioSource singAudio;
+
+
     private void Update()
     {
-        
+        if (dist == 0) return;
+        float a = Mathf.InverseLerp(singStartPosition, singEndPosition, dist);
+        singAudio.volume = a;
     }
 }

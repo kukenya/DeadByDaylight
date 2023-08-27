@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,6 +63,14 @@ public class SurvivorCheckArround : MonoBehaviourPun
         CheckArround();
     }
 
+    [Header("°Å¸®")]
+    public float windowDist;
+    public float palletDist;
+    public float generatorDist;
+    public float exitDist;
+    public float healingDist;
+    public float escapeDist;
+
     void CheckArround() 
     {
         if (photonView.IsMine == false) return;
@@ -104,9 +113,58 @@ public class SurvivorCheckArround : MonoBehaviourPun
                 continue;
             }
 
-            if (Physics.Raycast(transform.position, checkColliders[i].transform.position - transform.position, 3f, Physics.AllLayers) == false)
+            //Ray ray = new Ray(transform.position, checkColliders[i].transform.position - transform.position);
+            //if(Physics.SphereCast(ray, raySphereRadius, 4f) == false)
+            //{
+            //    checkColliders[i] = null;
+            //    continue;
+            //}
+            Ray ray = new Ray(transform.position, checkColliders[i].transform.position - transform.position);
+            Debug.DrawRay(transform.position, checkColliders[i].transform.position - transform.position, Color.red, 0.1f);
+            if (Physics.Raycast(ray, out RaycastHit hit, 3f, layer))
             {
-                checkColliders[i] = null;
+                if(hit.transform.gameObject.layer != 7)
+                {
+                    print(hit.transform.gameObject.name);
+                    checkColliders[i] = null;
+                    continue;
+                }
+            }
+
+            if (health.State == SurviverHealth.HealthState.Down || health.State == SurviverHealth.HealthState.Carrying || health.State == SurviverHealth.HealthState.Hook)
+            {
+                InteractiveObject obj = checkColliders[i].GetComponent<InteractiveObject>();
+                if (obj.type == InteractiveObject.Type.Pallet || obj.type == InteractiveObject.Type.Window)
+                {
+                    checkColliders[i] = null;
+                    continue;
+                }
+            }
+
+            if (checkColliders[i].GetComponent<InteractiveObject>() != null)
+            {
+                InteractiveObject ob = checkColliders[i].GetComponent<InteractiveObject>();
+                switch (ob.type)
+                {
+                    case InteractiveObject.Type.Window:
+                        if (CompareDist(windowDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                    case InteractiveObject.Type.Pallet:
+                        if (CompareDist(palletDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                    case InteractiveObject.Type.Generator:
+                        if (CompareDist(generatorDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                    case InteractiveObject.Type.Exit:
+                        if (CompareDist(exitDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                    case InteractiveObject.Type.Survivor:
+                        if (CompareDist(healingDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                    case InteractiveObject.Type.CamperEscape:
+                        if (CompareDist(escapeDist, ob.transform.position)) checkColliders[i] = null;
+                        break;
+                }
             }
         }
 
@@ -131,6 +189,7 @@ public class SurvivorCheckArround : MonoBehaviourPun
         }
         else
         {
+            if (checkColliders[0].GetComponent<InteractiveObject>() == null) return;
             InteractiveObject ob = checkColliders[0].GetComponent<InteractiveObject>();
             type = ob.type;
             InteractScript = ob.interactScript;
@@ -138,6 +197,18 @@ public class SurvivorCheckArround : MonoBehaviourPun
     }
 
     public InteractiveObject.Type type;
+
+    public float raySphereRadius = 3f;
+    public LayerMask layer;
+
+
+
+    public bool CompareDist(float dist, Vector3 targetPos)
+    {
+        float distance = Vector3.Distance(transform.position, targetPos);
+        if (distance > dist) return true;
+        else return false;
+    }
 
 
 

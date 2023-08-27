@@ -14,6 +14,6 @@ public class GeneratorAudio : MonoBehaviour
 
     public void LTSound(int value)
     {
-        lt[value].Play();
+       lt[value].Play();
     }
 }

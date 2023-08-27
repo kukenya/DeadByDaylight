@@ -8,6 +8,8 @@ public class SurviverSound : MonoBehaviour
 
     public AudioClip[] injSound;
     public AudioClip[] downSound;
+    public AudioClip screamingSound;
+    public AudioClip hookSound;
 
     public AudioSource windowSource;
     public AudioClip[] jumpWindowSounds;
@@ -17,6 +19,11 @@ public class SurviverSound : MonoBehaviour
 
     SurviverController controller;
 
+    public void PlayHookSound()
+    {
+        audioSource.PlayOneShot(hookSound);
+    }
+
     public void PlayFootStepLT()
     {
         footStep[0].Play();
@@ -25,6 +32,11 @@ public class SurviverSound : MonoBehaviour
     public void PlayFootStepRT()
     {
         footStep[1].Play();
+    }
+
+    public void PlayScreamingSound()
+    {
+        audioSource.PlayOneShot(screamingSound);
     }
 
 
@@ -66,5 +78,10 @@ public class SurviverSound : MonoBehaviour
             audioSource.clip = sprintSound[Random.Range(0, sprintSound.Length)];
             audioSource.Play();
         }
+    }
+
+    void PlayPalletJumpSound()
+    {
+
     }
 }

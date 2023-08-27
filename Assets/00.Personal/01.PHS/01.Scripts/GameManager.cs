@@ -85,14 +85,6 @@ public class GameManager : MonoBehaviourPun
         //OnPhotonSerializeView »£√‚ ∫Ûµµ
         PhotonNetwork.SerializationRate = 60;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            foreach (Transform tr in generatorSpawnPos)
-            {
-                PhotonNetwork.Instantiate("Generator", tr.position, tr.rotation);
-            }
-        }
-
         if(SelecterManager.Instance.IsSurvivor == false) 
         {
             int idx = Random.Range(0, spawnPos.Count);

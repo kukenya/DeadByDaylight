@@ -65,7 +65,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FallOnGround
-  m_Speed: 1.2
+  m_Speed: 1.6
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2594899658397509782}
@@ -78,7 +78,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -8844683997783013619, guid: 06cc28f7367d9f64083fdf0af4680d98, type: 3}
+  m_Motion: {fileID: 7400000, guid: 796d14234edc72b43beffdaa4c95e42f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

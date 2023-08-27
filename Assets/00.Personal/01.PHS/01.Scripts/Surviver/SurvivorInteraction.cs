@@ -97,6 +97,8 @@ public class SurvivorInteraction : MonoBehaviourPun
 
         if (offAutoUI) return;
 
+        if (Activate) return;
+
         switch (Type)
         {
             case InteractiveType.None:

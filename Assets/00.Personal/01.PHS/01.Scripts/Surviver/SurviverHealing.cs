@@ -33,6 +33,8 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
             }
             else if(value == true && selfHeal != value)
             {
+                skillCheck.enabled = true;
+                skillCheck.InputAction(GetSkillCheckValue);
                 selfHeal = value;
             }
         }
@@ -136,7 +138,7 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
         switch (value)
         {
             case 0:
-                SkillCheckFail();
+                photonView.RPC(nameof(SkillCheckFail), RpcTarget.All);
                 break;
             case 1:
                 photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, normalValue);
@@ -251,19 +253,21 @@ public class SurviverHealing : MonoBehaviourPun, IPunObservable
 
     public float failValue = 5f;
 
+
+    [PunRPC]
     void SkillCheckFail()
     {
-        photonView.RPC(nameof(SkillCheckSuccess), RpcTarget.All, -failValue);
+        if (photonView.IsMine == false) return;
+        Prograss += -failValue;
         //failAudio.Play();
-        //switch (target)
-        //{
-        //    case HealingTarget.Self:
-        //        surviverAnimation.Play("Healing_Self_Fail");
-        //        break;
-        //    case HealingTarget.Being:
-        //        surviverAnimation.Play("Being_Heal_Fail");
-        //        break;
-        //}  
+        if (SelfHeal)
+        {
+            surviverAnimation.Play("Healing_Self_Fail");
+        }
+        else if(OtherHealing)
+        {
+            surviverAnimation.Play("Being_Heal_Fail");
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -108,6 +108,8 @@ public class SurviverHealth : MonoBehaviourPun
     [Range(0, 2)]
     public int hook = 0;
 
+    public int Hook { get { return hook; } set { hook = value; listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().SetHookImgae(hook); } }
+
     public int survivorRoomIdx;
 
     private void Start()
@@ -216,7 +218,7 @@ public class SurviverHealth : MonoBehaviourPun
             yield return null;
         }
         rootCameraPosition.position += new Vector3(0, yOffset, 0);
-        hook++;
+        Hook++;
         surviverAnimation.Play("Hook_OUT");
         while (true)
         {

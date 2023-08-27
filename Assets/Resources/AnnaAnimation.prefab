@@ -1777,7 +1777,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427879883519561}
-  m_LocalRotation: {x: -0.000000011120046, y: 0.9771478, z: -0.21256112, w: -0.000000051119084}
+  m_LocalRotation: {x: -0.000000007462639, y: 0.9771478, z: -0.21256112, w: -0.00000003430591}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1862,7 +1862,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427880018934285}
-  m_LocalRotation: {x: 0.00014647967, y: 0.9736501, z: 0.22804628, w: -0.0006253991}
+  m_LocalRotation: {x: 0.00014647574, y: 0.9736501, z: 0.22804628, w: -0.00062538235}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2459,8 +2459,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427881549103197}
-  m_LocalRotation: {x: 0.38700423, y: 0.44638652, z: -0.22277525, w: 0.7754599}
-  m_LocalPosition: {x: -22.5, y: -0.100000024, z: 101.439865}
+  m_LocalRotation: {x: 0.00014647064, y: 0.9736501, z: 0.22804628, w: -0.0006253605}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2490,11 +2490,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 56.185932
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 58.715508
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: 1.29
   m_CullingMask:
     serializedVersion: 2
@@ -5054,7 +5054,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5439,7 +5439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6422725408986766012}
   m_LocalRotation: {x: 0.40177235, y: -1.8172925e-16, z: 1.0319318e-15, w: 0.9157396}
-  m_LocalPosition: {x: -0.012, y: -0.01570076, z: 0.005697907}
+  m_LocalPosition: {x: -0, y: -0.00075, z: 0.00237}
   m_LocalScale: {x: 0.01, y: 0.009999999, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5745,7 +5745,7 @@ GameObject:
   - component: {fileID: 5465658704204983726}
   m_Layer: 20
   m_Name: AnnaAnimation
-  m_TagString: Untagged
+  m_TagString: Killer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5848,6 +5848,7 @@ MonoBehaviour:
   maxAxePower: 40
   currentAxeCount: 0
   isNormalAttack: 0
+  isanimation: 0
   isCloset: 0
   canCarry: 0
   canDestroyGenerator: 0
@@ -6462,9 +6463,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1011966274760647133}
+  - component: {fileID: 597869144948641868}
   - component: {fileID: 3582949517644742732}
   - component: {fileID: 3357819369372595794}
-  - component: {fileID: 597869144948641868}
   m_Layer: 0
   m_Name: HeartSound
   m_TagString: Untagged
@@ -6480,13 +6481,48 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7861306336589651854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.942738, y: -1.5065732, z: 61.01459}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6319253092841262359}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597869144948641868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861306336589651854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f97af264f2a7cc4a8fdb41ef299fd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerSurvivor: {fileID: 0}
+  slasher: {fileID: 0}
+  heartSound: {fileID: 8300000, guid: 7d735dc1529134648829dc800ef7dcf8, type: 3}
+  heartBeatTiming: 1.7100472
+  dist: 0
+  heartSoundPlaying: 1
+  heartStartPosition: 20
+  heartEndPosition: 0
+  minHeartBeatTiming: 0.47466666
+  maxHeartBeatTiming: 3
+  chase2SoundStartDist: 8
+  chase2SoundEndDelay: 2
+  chase1SoundStartDist: 8
+  chase1SoundEndDelay: 1
+  chase2SoundPlaying: 0
+  chase1SoundPlaying: 0
+  chaseAudioSource: {fileID: 3357819369372595794}
+  chaseAudioClips:
+  - {fileID: 8300000, guid: 1484b83b0e9a4e540955bf441708e99d, type: 3}
+  soundState: 2
+  singStartPosition: 40
+  singEndPosition: 0
+  singAudio: {fileID: 5858625105955735603}
 --- !u!82 &3582949517644742732
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6679,37 +6715,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &597869144948641868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7861306336589651854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f97af264f2a7cc4a8fdb41ef299fd32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerSurvivor: {fileID: 0}
-  slasher: {fileID: 0}
-  heartSound: {fileID: 8300000, guid: 7d735dc1529134648829dc800ef7dcf8, type: 3}
-  heartBeatTiming: 1.7100472
-  heartStartPosition: 22
-  heartEndPosition: 5
-  minHeartBeatTiming: 0.47466666
-  maxHeartBeatTiming: 2
-  chase2SoundStartDist: 8
-  chase2SoundEndDelay: 2
-  chase1SoundStartDist: 8
-  chase1SoundEndDelay: 1
-  chase2SoundPlaying: 0
-  chase1SoundPlaying: 0
-  chaseAudioSource: {fileID: 3357819369372595794}
-  chaseAudioClips:
-  - {fileID: 8300000, guid: 1484b83b0e9a4e540955bf441708e99d, type: 3}
-  soundState: 2
-  a: 1
 --- !u!1 &7867936785135857709
 GameObject:
   m_ObjectHideFlags: 0

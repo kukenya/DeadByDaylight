@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: None
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: SK_Generator01_REF.ao
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_B_wireLt_05_IK
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_B_wireLt_05_IK/joint_B_wireLt_05_IK_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_B_wireRt_05_IK
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_B_wireRt_05_IK/joint_B_wireRt_05_IK_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach01/joint_CamperAttach01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach02/joint_CamperAttach02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach03/joint_CamperAttach03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_CamperAttach04/joint_CamperAttach04_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_F_wireLt_05_IK
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_F_wireLt_05_IK/joint_F_wireLt_05_IK_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_F_wireRt_05_IK
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_F_wireRt_05_IK/joint_F_wireRt_05_IK_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01/joint_B_wireLt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01/joint_B_wireLt_02/joint_B_wireLt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01/joint_B_wireLt_02/joint_B_wireLt_03/joint_B_wireLt_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01/joint_B_wireLt_02/joint_B_wireLt_03/joint_B_wireLt_04/joint_B_wireLt_05
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireLt_01/joint_B_wireLt_02/joint_B_wireLt_03/joint_B_wireLt_04/joint_B_wireLt_05/joint_B_wireLt_05_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01/joint_B_wireRt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01/joint_B_wireRt_02/joint_B_wireRt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01/joint_B_wireRt_02/joint_B_wireRt_03/joint_B_wireRt_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01/joint_B_wireRt_02/joint_B_wireRt_03/joint_B_wireRt_04/joint_B_wireRt_05
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_B_wireRt_01/joint_B_wireRt_02/joint_B_wireRt_03/joint_B_wireRt_04/joint_B_wireRt_05/joint_B_wireRt_05_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_01/joint_inHead_piston_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_01/joint_inHead_piston_01/joint_inHead_piston_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_02/joint_inHead_piston_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_02/joint_inHead_piston_02/joint_inHead_piston_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_03/joint_inHead_piston_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_driveshaft_01/joint_in_piston_03/joint_inHead_piston_03/joint_inHead_piston_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01/joint_F_wireLt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01/joint_F_wireLt_02/joint_F_wireLt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01/joint_F_wireLt_02/joint_F_wireLt_03/joint_F_wireLt_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01/joint_F_wireLt_02/joint_F_wireLt_03/joint_F_wireLt_04/joint_F_wireLt_05
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireLt_01/joint_F_wireLt_02/joint_F_wireLt_03/joint_F_wireLt_04/joint_F_wireLt_05/joint_F_wireLt_05_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01/joint_F_wireRt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01/joint_F_wireRt_02/joint_F_wireRt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01/joint_F_wireRt_02/joint_F_wireRt_03/joint_F_wireRt_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01/joint_F_wireRt_02/joint_F_wireRt_03/joint_F_wireRt_04/joint_F_wireRt_05
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_F_wireRt_01/joint_F_wireRt_02/joint_F_wireRt_03/joint_F_wireRt_04/joint_F_wireRt_05/joint_F_wireRt_05_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch01/joint_hatch01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch02/joint_hatch02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_hatch03/joint_hatch03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_01/joint_lever_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_02/joint_lever_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_lever_03/joint_lever_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_01/joint_piston01LT_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_02/joint_piston01LT_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_03/joint_piston01LT_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01LT_04/joint_piston01LT_04_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_01/joint_piston01RT_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_02/joint_piston01RT_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_03/joint_piston01RT_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_04
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_piston01RT_04/joint_piston01RT_04_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_01/joint_valveLt_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_02/joint_valveLt_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveLt_03/joint_valveLt_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_01/joint_valveRt_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_02
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_02/joint_valveRt_02_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_03
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_EngBlock01_01/joint_valveRt_03/joint_valveRt_03_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_HipMaster_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_HipMaster_01/joint_HipMaster_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01/joint_tube03LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01/joint_tube03LT_01/joint_tube04LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01/joint_tube03LT_01/joint_tube04LT_01/joint_tube05LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01/joint_tube03LT_01/joint_tube04LT_01/joint_tube05LT_01/joint_tube06LT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01LT_01/joint_tube02LT_01/joint_tube03LT_01/joint_tube04LT_01/joint_tube05LT_01/joint_tube06LT_01/joint_tube06LT_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01/joint_tube04RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01/joint_tube04RT_01/joint_tube05RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01/joint_tube04RT_01/joint_tube05RT_01/joint_tube06RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01/joint_tube04RT_01/joint_tube05RT_01/joint_tube06RT_01/joint_tube07RT_01
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.ao/joint_Char/joint_Pelvis_01/joint_tube01RT_01/joint_tube02RT_01/joint_tube03RT_01/joint_tube04RT_01/joint_tube05RT_01/joint_tube06RT_01/joint_tube07RT_01/joint_tube07RT_01_end
+    m_Weight: 0
+  - m_Path: SK_Generator01_REF.mo
+    m_Weight: 0
+  - m_Path: SM_LampPole.mo
+    m_Weight: 0
