@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using WebSocketSharp;
 using static SurviverHealth;
@@ -136,7 +137,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
 
     IEnumerator WaitHook()
     {
-        health.rootCameraPosition.position -= new Vector3(0, health.yOffset, 0);
+        health.rootCameraPosition.localPosition = health.rootCameraOriginPos;
         surviverAnimation.Play("BeingRescueEnd");
         while (true)
         {
@@ -168,6 +169,35 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
         else
         {
             Prograss = (float)stream.ReceiveNext(); 
+        }
+    }
+
+    public bool onPhoton = false;
+    public float targetValue;
+
+    IEnumerator PrograssCustomLerp()
+    {
+        float currentTime = 0;
+        while (true)
+        {
+            if (onPhoton)
+            {
+                StartCoroutine(DelayPrograss(currentTime));
+                onPhoton = false;
+                currentTime = 0;
+            }
+            currentTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator DelayPrograss(float time)
+    {
+        while (true)
+        {
+            if(Prograss == targetValue) break;
+            Prograss += time * Time.unscaledDeltaTime * (targetValue - Prograss);
+            yield return null;
         }
     }
 }

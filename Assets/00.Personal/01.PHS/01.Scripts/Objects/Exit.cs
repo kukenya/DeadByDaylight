@@ -83,13 +83,27 @@ public class Exit : MonoBehaviourPun, IPunObservable
     public void ExitActivate()
     {
         if (open == true) return;
+
+        ChangeSound();
+
+        if (activate == false) return;
+        if (prograss >= maxPrograssTime)
+        {
+            photonView.RPC(nameof(OpenDoor), RpcTarget.All);
+        }
+        Prograss += Time.deltaTime;
+        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
+    }
+
+    void ChangeSound()
+    {
         if (maxPrograssTime / 2 > Prograss && Prograss > maxPrograssTime / 3)
         {
             if (soundState == SoundState.Sound2) return;
             soundState = SoundState.Sound2;
             audioSo.PlayOneShot(exitSounds[0]);
         }
-        else if(maxPrograssTime > Prograss && Prograss > maxPrograssTime / 2)
+        else if (maxPrograssTime > Prograss && Prograss > maxPrograssTime / 2)
         {
             if (soundState == SoundState.Sound3) return;
             soundState = SoundState.Sound3;
@@ -101,14 +115,6 @@ public class Exit : MonoBehaviourPun, IPunObservable
             soundState = SoundState.Sound4;
             audioSo.PlayOneShot(exitSounds[2]);
         }
-
-        if (activate == false) return;
-        if (prograss >= maxPrograssTime)
-        {
-            photonView.RPC(nameof(OpenDoor), RpcTarget.All);
-        }
-        Prograss += Time.deltaTime;
-        ui.prograssBar.fillAmount = Prograss / maxPrograssTime;
     }
 
     [PunRPC]

@@ -11,7 +11,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     float prograss = 0;
 
     public float Prograss { get { return  prograss; } set {
-            prograss = Mathf.Clamp(value, 0, maxPrograssTime); UpdateAnim();
+            prograss = Mathf.Clamp(value, 0, maxPrograssTime);
         }
     }
 
@@ -103,6 +103,7 @@ public class Generator : MonoBehaviourPun, IPunObservable
     private void Update()
     {
         GenRepair();
+        UpdateAnim();
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             photonView.RPC(nameof(GenerateBlackHole), RpcTarget.All);
@@ -116,17 +117,17 @@ public class Generator : MonoBehaviourPun, IPunObservable
     public GameObject generatorMesh1;
     public GameObject generatorMesh2;
 
-    public GameObject blackHoleMesh;
-
     [PunRPC]
     void GenerateBlackHole()
     {
         if(Vector3.Distance(Camera.main.transform.position, transform.position) >= blackHoleGenerateDist)
         {
-            blackHoleMesh.layer = 11;
+            generatorMesh1.layer = 11;
+            generatorMesh2.layer = 11;
             GameObject go = Instantiate(blackHoleGO, transform.position, transform.rotation);
             go.GetComponent<BlackHoleEffect>().action = () => { if (SelecterManager.Instance.IsSurvivor == false) 
-                blackHoleMesh.layer = 0; blackHoleMesh.layer = 0; };
+                { generatorMesh1.layer = 9; generatorMesh2.layer = 9; return; } 
+                generatorMesh1.layer = 0; generatorMesh2.layer = 0; };
         }
     }
 
@@ -140,7 +141,6 @@ public class Generator : MonoBehaviourPun, IPunObservable
             Prograss += failValue;
         }
         anim.CrossFadeInFixedTime("Fail", 0.25f);
-        anim.CrossFadeInFixedTime("Fail", 0.25f, 1);
 
         Transform sparkTrans = animPos[0].GetChild(0).transform;
         Instantiate(spark, sparkTrans.position, sparkTrans.rotation);

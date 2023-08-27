@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.15352467, g: 0.16842335, b: 0.19325554, a: 1}
+  m_IndirectSpecularColor: {r: 5.495552, g: 10.792618, b: 24.853119, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6317,6 +6317,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 7538412273656098966, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.518
+      objectReference: {fileID: 0}
     - target: {fileID: 7616548597193889006, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -6389,6 +6393,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 8707427139167226873, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d29ed4c900f42f14faf694410dd13c70, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
 --- !u!1 &597270012 stripped
@@ -10112,7 +10120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &947983882
 Transform:
   m_ObjectHideFlags: 0
@@ -10434,10 +10442,6 @@ PrefabInstance:
     - target: {fileID: 4421730859491384098, guid: c67ebcca7524aca438c0e6dbc781a722, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5370512519652976311, guid: c67ebcca7524aca438c0e6dbc781a722, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6149437950306552783, guid: c67ebcca7524aca438c0e6dbc781a722, type: 3}
       propertyPath: m_IsActive
@@ -11548,7 +11552,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
 --- !u!4 &1058201162 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1594917303487681590, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5425929088495846124, guid: b7ea45df5eabb3843857c400b6cedda3, type: 3}
   m_PrefabInstance: {fileID: 1058201161}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1058201163 stripped
@@ -19473,6 +19477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2010416659}
+  - component: {fileID: 2010416660}
   - component: {fileID: 2010416658}
   m_Layer: 0
   m_Name: CustomPass
@@ -19502,12 +19507,28 @@ MonoBehaviour:
   - rid: 5215255685316476932
   - rid: 5215255685316476933
   - rid: 5215255685316476934
+  - rid: 514885375900778496
   injectionPoint: 1
   m_TargetCamera: {fileID: 0}
   useTargetCamera: 0
   references:
     version: 2
     RefIds:
+    - rid: 514885375900778496
+      type: {class: SeeThrough, ns: , asm: Assembly-CSharp}
+      data:
+        m_Name: HacksOn
+        enabled: 0
+        targetColorBuffer: 0
+        targetDepthBuffer: 0
+        clearFlags: 0
+        passFoldout: 0
+        m_Version: 0
+        seeThroughLayer:
+          serializedVersion: 2
+          m_Bits: 832
+        seeThroughMaterial: {fileID: 2100000, guid: 4511aca5b9d1d164987990d5b105fb10, type: 2}
+        stencilShader: {fileID: 0}
     - rid: 5215255639746936832
       type: {class: DrawRenderersCustomPass, ns: UnityEngine.Rendering.HighDefinition, asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:
@@ -19579,7 +19600,7 @@ MonoBehaviour:
         targetColorBuffer: 0
         targetDepthBuffer: 0
         clearFlags: 0
-        passFoldout: 0
+        passFoldout: 1
         m_Version: 0
         seeThroughLayer:
           serializedVersion: 2
@@ -19594,7 +19615,7 @@ MonoBehaviour:
         targetColorBuffer: 0
         targetDepthBuffer: 0
         clearFlags: 0
-        passFoldout: 1
+        passFoldout: 0
         m_Version: 0
         seeThroughLayer:
           serializedVersion: 2
@@ -19616,6 +19637,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2010416660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010416657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0bf09499f86cf04a8c4c80baecc0149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomPassVolume: {fileID: 2010416658}
 --- !u!1 &2013226991
 GameObject:
   m_ObjectHideFlags: 0

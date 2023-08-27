@@ -7,6 +7,8 @@ public class SurviverLookAt : MonoBehaviourPun
 {
     public Transform rootCamTrans;
 
+    SurviverHealth health;
+
     public bool isLookAt = true;
 
     public bool LookAt { get { return isLookAt; }
@@ -19,6 +21,10 @@ public class SurviverLookAt : MonoBehaviourPun
     [PunRPC]
     void SetLookAt(bool value)
     {
+        if(health.State == SurviverHealth.HealthState.Down ||
+            health.State == SurviverHealth.HealthState.Carrying ||
+            health.State == SurviverHealth.HealthState.Hook) value = false;
+
         if (value == true)
         {
             anim?.SetLayerWeight(1, 0);
@@ -38,6 +44,7 @@ public class SurviverLookAt : MonoBehaviourPun
     private void Start()
     {
         anim = GetComponent<Animator>();
+        health = GetComponent<SurviverHealth>();
         surviverAnimation = GetComponent<SurviverAnimation>();
     }
 
@@ -50,7 +57,7 @@ public class SurviverLookAt : MonoBehaviourPun
     {
         if (isLookAt == false) return;
 
-        if(photonView.IsMine == false) { return; }
+        if (photonView.IsMine == false) { return; }
 
         float angle = rootCamTrans.localRotation.eulerAngles.y;
 

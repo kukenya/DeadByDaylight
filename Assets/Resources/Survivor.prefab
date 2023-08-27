@@ -1148,6 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootCameraPosition: {fileID: 6445668696166776838}
+  rootCameraOriginPos: {x: 0, y: 0, z: 0}
   hook: 0
   survivorRoomIdx: 0
   yOffset: 0.8
@@ -1433,6 +1434,8 @@ MonoBehaviour:
   originRotation: {x: 0, y: 0, z: 0, w: 0}
   escaping: 0
   escaped: 0
+  onPhoton: 0
+  targetValue: 0
 --- !u!1 &7104911752054812998
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class HeartSound : MonoBehaviour
         minHeartBeatTiming = heartSound.length;
         yield return new WaitForSeconds(1);
 
-        if(gameObject.transform.parent.name.Contains("Survivor") == false)
+        if(GetComponentInParent<PhotonView>().IsMine == true)
         {
             yield break;
         }
@@ -105,6 +105,8 @@ public class HeartSound : MonoBehaviour
 
     public ChaseSoundState soundState = ChaseSoundState.None;
 
+    public float a = 1;
+
     IEnumerator BackGroundSound()
     {
         while (true)
@@ -113,7 +115,6 @@ public class HeartSound : MonoBehaviour
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
             if (heartSoundPlaying == false) dist = 100f;
             print(dist);
-            this.dist = dist;
             if(dist < chase2SoundStartDist)
             {
                 if (soundState != ChaseSoundState.Chase1)
@@ -140,11 +141,10 @@ public class HeartSound : MonoBehaviour
     public float singEndPosition = 5;
     public AudioSource singAudio;
 
-
     private void Update()
     {
         if (dist == 0) return;
-        float a = Mathf.InverseLerp(singStartPosition, singEndPosition, dist);
+        float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
         singAudio.volume = a;
     }
 }

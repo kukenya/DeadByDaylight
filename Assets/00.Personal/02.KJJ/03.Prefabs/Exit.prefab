@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2603479284684755431
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8257451001833786052}
-  m_Layer: 7
-  m_Name: BlackHoleTrans
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8257451001833786052
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2603479284684755431}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.115, y: 0.94, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7632732421628635129}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3259727531726789626
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 27700002431934193}
   - {fileID: 5425929088495846124}
-  - {fileID: 8257451001833786052}
   m_Father: {fileID: 8083895650432275247}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,8 +56,8 @@ MonoBehaviour:
   interaction: {fileID: 0}
   doorMesh: {fileID: 7193940381103761964}
   blackHoleGO: {fileID: 4203309697800615128, guid: 6ca2b255ae3a3b64cae817e26e22fd28, type: 3}
-  blackHoleTrans: {fileID: 8257451001833786052}
-  blackHoleGenerateDist: 20
+  blackHoleTrans: {fileID: 7538412273656098966}
+  blackHoleGenerateDist: 10
   activate: 0
   open: 0
   soundState: 0
@@ -742,18 +710,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.018
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.018
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.018
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.521
       objectReference: {fileID: 0}
@@ -792,10 +748,6 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 04e99671742161c4382e1e136c4a9d39, type: 3}
       propertyPath: m_Materials.Array.data[0]

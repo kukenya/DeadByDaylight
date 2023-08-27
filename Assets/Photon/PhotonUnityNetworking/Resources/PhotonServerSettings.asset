@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 
+    AppVersion: 1.09
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -89,10 +89,8 @@ MonoBehaviour:
   - OffEscapingRPC
   - OnEscapingRPC
   - ChangePose2
-  - smallAxeBlood
-  - MakeEffect
-  - SmallAxeBlood
-  - AxeRay
+  - SetActivate
+  - SetBanMove
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
