@@ -1626,6 +1626,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anna: {fileID: 6699578995008591789}
+  box: {fileID: 4512337210443128198}
+  bloodEffectFactory: {fileID: 9016681532666092740, guid: c9aba7ec44ffec948b063306f96fdd2f, type: 3}
+  rayStart: {fileID: 0}
 --- !u!1 &2447361595933930086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,7 +1780,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788427879883519561}
-  m_LocalRotation: {x: -0.000000007462639, y: 0.9771478, z: -0.21256112, w: -0.00000003430591}
+  m_LocalRotation: {x: -0.000000011120046, y: 0.9771478, z: -0.21256112, w: -0.000000051119084}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5831,6 +5834,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 192
+  suvivorLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   foward: {fileID: 4229104218976510584}
   animCam: {fileID: 1940528422018357531}
   trSkeleton: {fileID: 1647404167142061328}
@@ -5843,6 +5849,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: -0.01636999, z: -0.0012}
   gameStartTime: 5
   bigAxeCollider: {fileID: 4512337210443128198}
+  rayPos: {fileID: 0}
   smallAxe: {fileID: 6231883845400492535}
   smallAxeFactory: {fileID: 2083757119902384669, guid: 08b6c0d1989620747b966e83c9324b7b, type: 3}
   throwingSpot: {fileID: 5780588135987252813}
@@ -5876,6 +5883,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   HaxMode: 0
+  bloodEffectFactory: {fileID: 0}
 --- !u!114 &852289717898882860
 MonoBehaviour:
   m_ObjectHideFlags: 0

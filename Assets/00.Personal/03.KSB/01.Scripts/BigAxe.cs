@@ -37,19 +37,19 @@ public class BigAxe : MonoBehaviourPun
 
     private void Update()
     {
-        Ray ray = new Ray(rayStart.position, rayStart.forward);
+        //Ray ray = new Ray(rayStart.position, rayStart.forward);
 
-        RaycastHit hitinfo;
+        //RaycastHit hitinfo;
 
-        if (Physics.Raycast(ray, out hitinfo, 1))
-        {
-            if (hitinfo.collider.gameObject.name.Contains("Hook"))
-            {
-                //GameObject bloodEffect = Instantiate(bloodEffectFactory);
-                //bloodEffect.transform.position = hitinfo.point;
-                //bloodEffect.transform.forward = hitinfo.normal;
-            }
-        }
+        //if (Physics.Raycast(ray, out hitinfo, 1))
+        //{
+        //    if (hitinfo.collider.gameObject.name.Contains("Hook"))
+        //    {
+        //        //GameObject bloodEffect = Instantiate(bloodEffectFactory);
+        //        //bloodEffect.transform.position = hitinfo.point;
+        //        //bloodEffect.transform.forward = hitinfo.normal;
+        //    }
+        //}
 
         if (hit == true)
         {
