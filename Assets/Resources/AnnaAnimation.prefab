@@ -5832,6 +5832,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   foward: {fileID: 4229104218976510584}
+  animCam: {fileID: 1940528422018357531}
+  trSkeleton: {fileID: 1647404167142061328}
+  cameraAnimOffset: {fileID: 4229104218976510584}
   yVelocity: 0
   gravity: -0.5
   rotSpeed: 100

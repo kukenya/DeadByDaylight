@@ -36,6 +36,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     public LayerMask layerMask;                 // OverlapSphere 에서 쓸 LayerMask
     public LayerMask suvivorLayerMask;          // 생존자 레이어 마스크(레이용)
     public Transform foward;                    // 앞방향 확인하기 위한 변수
+    public Transform animCam;
+    public Transform trSkeleton;
+    public Transform cameraAnimOffset;
 
     // 이동 속도
     float currentSpeed;                     // 현재 이동속도
@@ -353,6 +356,8 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         {
             if (canRotate == true)
             {
+                trSkeleton.transform.parent = Camera.main.transform;
+
                 #region 회전
                 // Idle 상태만 아니면 회전 가능
                 if (state != State.Idle)
@@ -435,6 +440,12 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 // 이동한다
                 cc.Move(velocity * Time.deltaTime);
                 #endregion
+            }
+            else
+            {
+                trSkeleton.transform.parent = this.transform;
+                Camera.main.transform.position = cameraAnimOffset.position;
+                Camera.main.transform.eulerAngles = animCam.eulerAngles;
             }
 
             #region 캐비넷 열기
