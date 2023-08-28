@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12727812, g: 0.12442869, b: 0.121822834, a: 1}
+  m_IndirectSpecularColor: {r: 0.12615195, g: 0.123355925, b: 0.12081635, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1622,8 +1622,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 780, y: -490}
-  m_SizeDelta: {x: 25, y: 90}
+  m_AnchoredPosition: {x: 795.4, y: -497.5}
+  m_SizeDelta: {x: 20, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174295804
 MonoBehaviour:
@@ -2669,6 +2669,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: JoinCreateRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 854436405}
+        m_TargetAssemblyTypeName: SelecterManager, Assembly-CSharp
+        m_MethodName: OffSurvivor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5718,8 +5730,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 735, y: -490}
-  m_SizeDelta: {x: 30, y: 90}
+  m_AnchoredPosition: {x: 757.0001, y: -492.80002}
+  m_SizeDelta: {x: 24, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &531224977
 MonoBehaviour:
@@ -6344,6 +6356,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1318087718}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: JoinRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 854436405}
+        m_TargetAssemblyTypeName: SelecterManager, Assembly-CSharp
+        m_MethodName: OnSurvivor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11373,8 +11397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 745, y: -490}
-  m_SizeDelta: {x: 180, y: 65}
+  m_AnchoredPosition: {x: 771.7001, y: -494.2}
+  m_SizeDelta: {x: 144, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1168012715
 MonoBehaviour:
@@ -12467,8 +12491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 755, y: -490}
-  m_SizeDelta: {x: 40, y: 110}
+  m_AnchoredPosition: {x: 775.1001, y: -491.40002}
+  m_SizeDelta: {x: 32, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340428151
 MonoBehaviour:
@@ -16659,8 +16683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 710, y: -495}
-  m_SizeDelta: {x: 25, y: 80}
+  m_AnchoredPosition: {x: 734.8001, y: -498.7}
+  m_SizeDelta: {x: 20, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1838437589
 MonoBehaviour:

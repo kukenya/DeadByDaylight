@@ -21,4 +21,14 @@ public class SelecterManager : MonoBehaviour
     }
 
     public bool IsSurvivor = true;
+
+    public void OnSurvivor()
+    {
+        IsSurvivor = true;
+    }
+
+    public void OffSurvivor()
+    {
+        IsSurvivor = false;
+    }
 }
