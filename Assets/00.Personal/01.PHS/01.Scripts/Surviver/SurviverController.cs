@@ -83,6 +83,8 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     // Update is called once per frame
     void Update()
     {
+        if (banMove == false) controller.enabled = true;
+
         GroundedCheck();
         CameraStopCheck();
         Move();

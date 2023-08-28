@@ -803,7 +803,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     #endregion
 
     #region Ω∫≈œ
-    private void Stunned()
+    public void Stunned()
     {
         SoundManager.instance.PlayHitSounds(5);
 

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class VolumeController : MonoBehaviour
 {
     Volume volume;
+    ScreenSpaceReflections screenSpaceReflections;
 
     private void Start()
     {
         volume = GetComponent<Volume>();
+        screenSpaceReflections = volume.GetComponent<ScreenSpaceReflections>();
     }
 
     private void Update()
@@ -23,6 +26,17 @@ public class VolumeController : MonoBehaviour
             else
             {
                 OnVolume();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            if(screenSpaceReflections.active == true)
+            {
+                screenSpaceReflections.active = false;
+            }
+            else
+            {
+                screenSpaceReflections.active = true;
             }
         }
     }
