@@ -75010,15 +75010,8 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
-    functionName: OffRotate
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1.2916666
-    functionName: 
+    functionName: OnMyReset
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

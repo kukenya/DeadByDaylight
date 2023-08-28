@@ -183,6 +183,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         {
             go.transform.localPosition = cameraOffset;
         }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
         //Vector3 rot = cam.transform.localEulerAngles;
         //rot.z = rotY;
         //cam.transform.localEulerAngles = rot; // new Vector3(rotY, 0.022f, -2.476f);
