@@ -30,12 +30,23 @@ public class Pallet : MonoBehaviourPun
         if (value == PalletState.Ground)
         {
             Play("FallOnGround");
+            StartCoroutine(Stun());
         }
         else if(value == PalletState.Destroy)
         {
             StartCoroutine(DestroyPallet());
         }
         state = value;
+    }
+
+    public float stunTime = 1f;
+    public bool isStun = false;
+
+    IEnumerator Stun()
+    {
+        isStun = true;
+        yield return new WaitForSeconds(stunTime);
+        isStun = false;
     }
 
     IEnumerator DestroyPallet()
@@ -72,6 +83,16 @@ public class Pallet : MonoBehaviourPun
         float dist2 = Vector3.Distance(animPos2.position, player);
 
         return dist < dist2 ? animPos1 : animPos2;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isStun == false) return;
+
+        if (collision.gameObject.name.Contains("Anna"))
+        {
+            collision.gameObject.GetComponent<AnnaMove>().Stunned();
+        }
     }
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

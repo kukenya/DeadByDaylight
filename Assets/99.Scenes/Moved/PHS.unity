@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 5.495552, g: 10.792618, b: 24.853119, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 143860987}
   - component: {fileID: 143860986}
   - component: {fileID: 143860985}
+  - component: {fileID: 143860988}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -953,7 +954,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143860984}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 8, y: 8, z: 1}
@@ -981,6 +982,19 @@ Transform:
   m_Father: {fileID: 682806438}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143860988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143860984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4339687bc8b1a0d45922802521bc29db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeImage: {fileID: 1058942265}
 --- !u!4 &164466939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4460203023778505445, guid: 535d4fe6644814c498b7f27b7d848d62, type: 3}
@@ -5885,6 +5899,7 @@ GameObject:
   - component: {fileID: 666596247}
   - component: {fileID: 666596249}
   - component: {fileID: 666596248}
+  - component: {fileID: 666596250}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -5915,7 +5930,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666596246}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 8, y: 8, z: 1}
@@ -5928,6 +5943,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666596246}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &666596250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666596246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4339687bc8b1a0d45922802521bc29db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeImage: {fileID: 1058942265}
 --- !u!1001 &667451141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7473,6 +7501,7 @@ MonoBehaviour:
   fadeImage: {fileID: 1058942265}
   perks: {fileID: 1370040396}
   LeftDown: {fileID: 1643276981}
+  slasherSpawnPos: {fileID: 0}
 --- !u!4 &808024825
 Transform:
   m_ObjectHideFlags: 0
