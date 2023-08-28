@@ -65,6 +65,7 @@ public class BigAxe : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (photonView.IsMine && other.gameObject.name.Contains("Survivor"))
         {
             hit = true;                                                     // 1초 후에 코루틴 함수를 호출한다.
@@ -78,7 +79,7 @@ public class BigAxe : MonoBehaviourPun
 
             SoundManager.instance.PlayHitSounds(4);                         // 도끼에 맞는 소리를 재생한다.
 
-            photonView.RPC(nameof(MakeEffect), RpcTarget.All);              // 피 튀는 이펙트를 보낸다.
+           // photonView.RPC(nameof(MakeEffect), RpcTarget.All);              // 피 튀는 이펙트를 보낸다.
         }
     }
 

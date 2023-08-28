@@ -50,7 +50,7 @@ public class Axe : MonoBehaviourPun
     {
         Vector3 point = collision.contacts[0].point;
         Vector3 normal = collision.contacts[0].normal;
-      
+
         Destroy(gameObject);
 
         isDestroy = true;
@@ -63,6 +63,7 @@ public class Axe : MonoBehaviourPun
             
             if (photonView2.IsMine)
             {
+                
                 collision.gameObject.GetComponent<SurviverHealth>().NormalHit();
             }
 

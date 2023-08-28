@@ -34,24 +34,22 @@ public class ChaseorLullaby : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Survivor") && isChasing == false)
+        if (other.gameObject.name.Contains("Survivor") && isChasing == false && photonView.IsMine)
         {
-            lullaby.Stop();
-            
-            if (photonView.IsMine)
-            {
-                chase.PlayDelayed(0.5f);
-                chase.volume = 0.8f;
 
-                isChasing = true;
-                isLullaby = false;
-            }
+            lullaby.Stop();
+            chase.PlayDelayed(0.5f);
+            chase.volume = 0.8f;
+
+            isChasing = true;
+            isLullaby = false;
+
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name.Contains("Survivor") && isLullaby == false)
+        if (other.gameObject.name.Contains("Survivor") && isLullaby == false && photonView.IsMine)
         {
             chase.Stop();
             lullaby.PlayDelayed(0.5f);
@@ -60,3 +58,4 @@ public class ChaseorLullaby : MonoBehaviourPun
         }
     }
 }
+
