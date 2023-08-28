@@ -48,16 +48,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Photon/PhotonUnityNetworking/Demos/DemoSlotRacer/SlotCar-Scene.unity
     guid: 711b38c07f2cf904f81b3422c67f1825
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Personal/03.KSB/00.Scene/Murderer.unity
     guid: eea3e1ede01797949b7dc19956f10b8d
   - enabled: 1
-    path: Assets/99.Scenes/Moved/PHS.unity
-    guid: f8cc765e5038490469ffb6d891fc32b1
+    path: Assets/99.Scenes/Moved/KJJ/KJJ_Connection.unity
+    guid: c676f50dde63276468d57544493a22e6
   - enabled: 1
     path: Assets/99.Scenes/Moved/KJJ/KJJ_Lobby.unity
     guid: 763c2ec7f3b57b54d8dc21b966701934
   - enabled: 1
-    path: Assets/99.Scenes/Moved/KJJ/KJJ_Connection.unity
-    guid: c676f50dde63276468d57544493a22e6
+    path: Assets/99.Scenes/Moved/KJJ/KJJ_Loading.unity
+    guid: 25d1d8acf2d426b4cadb81f6d5d40b7d
+  - enabled: 1
+    path: Assets/99.Scenes/Moved/PHS.unity
+    guid: f8cc765e5038490469ffb6d891fc32b1
   m_configObjects: {}

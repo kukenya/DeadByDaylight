@@ -33,6 +33,7 @@ public class ButtonClick : MonoBehaviourPun
             OnclickBack();
             LobbyManager.instance.LeaveRoom();
         }
+
     }
 
     public void OnclickKiller()
