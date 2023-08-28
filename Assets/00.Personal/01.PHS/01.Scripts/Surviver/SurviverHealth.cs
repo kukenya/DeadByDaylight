@@ -50,6 +50,8 @@ public class SurviverHealth : MonoBehaviourPun
         {
             surviverAnimation.Injuerd = true;
             healing.Prograss = 0;
+            hookEscape.Prograss = 0;
+            Prograss = 0;
             healing.healed = false;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
         }
@@ -64,6 +66,7 @@ public class SurviverHealth : MonoBehaviourPun
         else if(State == HealthState.Hook)
         {
             Prograss = 0;
+            hookEscape.Prograss = 0;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Hook;
         }
         
@@ -88,6 +91,8 @@ public class SurviverHealth : MonoBehaviourPun
         {
             surviverAnimation.Injuerd = true;
             healing.Prograss = 0;
+            hookEscape.Prograss = 0;
+            Prograss = 0;
             healing.healed = false;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Injuerd;
         }
@@ -102,6 +107,7 @@ public class SurviverHealth : MonoBehaviourPun
         else if (State == HealthState.Hook)
         {
             Prograss = 0;
+            hookEscape.Prograss = 0;
             WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.Hooked;
             listManager.portraits[survivorRoomIdx].GetComponent<Portrait>().PortraitState = Portrait.State.Hook;
         }
