@@ -84,7 +84,7 @@ MonoBehaviour:
   state: 0
   animPos: {fileID: 5425929088495846124}
   anim: {fileID: 7999945652185481700}
-  maxPrograssTime: 10
+  maxPrograssTime: 20
   interaction: {fileID: 0}
   doorMesh: {fileID: 7193940381103761964}
   blackHoleGO: {fileID: 4203309697800615128, guid: 6ca2b255ae3a3b64cae817e26e22fd28, type: 3}

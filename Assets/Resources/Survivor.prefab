@@ -1299,13 +1299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90195ce49b034794c9d1a39deebefb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPrograssTime: 10
+  maxPrograssTime: 15
   selfHeal: 0
   otherHealing: 0
   healed: 0
-  normalValue: 2
-  hardValue: 5
-  failValue: 5
+  normalValue: 1
+  hardValue: 2
+  failValue: 2
 --- !u!114 &6445668696811590809
 MonoBehaviour:
   m_ObjectHideFlags: 0

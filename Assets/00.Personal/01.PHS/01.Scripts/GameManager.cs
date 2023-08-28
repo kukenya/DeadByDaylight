@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviourPun
     public GameObject perks;
     public GameObject LeftDown;
 
+    public Transform slasherSpawnPos;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviourPun
         if(SelecterManager.Instance.IsSurvivor == false) 
         {
             int idx = Random.Range(0, spawnPos.Count);
-            PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(spawnPos[idx].position.x, 0, spawnPos[idx].position.z), Quaternion.identity);
+            PhotonNetwork.Instantiate("AnnaAnimation", new Vector3(slasherSpawnPos.position.x, 0, slasherSpawnPos.position.z), Quaternion.identity);
             OffCursor();
             survivorCamera1.gameObject.SetActive(false);
             survivorCanvas.SetActive(false);

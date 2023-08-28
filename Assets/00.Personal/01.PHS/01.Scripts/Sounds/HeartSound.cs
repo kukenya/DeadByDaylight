@@ -58,7 +58,6 @@ public class HeartSound : MonoBehaviourPun
 
             if (heartSoundPlaying == false) dist = 100f;
 
-            print(dist);
             float a = Mathf.InverseLerp(heartStartPosition, heartEndPosition, dist);
             heartAudio.volume = a;
             a = 1 - a;
@@ -113,7 +112,6 @@ public class HeartSound : MonoBehaviourPun
             
             float dist = Vector3.Distance(ownerSurvivor.position, slasher.position);
             if (heartSoundPlaying == false) dist = 100f;
-            print(dist);
             this.dist = dist;
             if(dist < chase2SoundStartDist)
             {

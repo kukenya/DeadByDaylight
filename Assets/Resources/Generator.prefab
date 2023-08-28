@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 4457641954915553751}
   - {fileID: 6341484294048395385}
   - {fileID: 1911580279226067654}
-  maxPrograssTime: 40
+  maxPrograssTime: 50
   interaction: {fileID: 0}
   spark: {fileID: 4978226445598443398, guid: 7235f2f24cbe4de41965e7929dcd949d, type: 3}
   sparkParticlePos:
@@ -201,9 +201,9 @@ MonoBehaviour:
   generatorMesh1: {fileID: 118404065861109287}
   generatorMesh2: {fileID: 3308289439900696787}
   blackHoleMesh: {fileID: 2762063514508366703}
-  hardValue: 10
-  normalValue: 5
-  failValue: -10
+  hardValue: 4
+  normalValue: 2
+  failValue: -3
 --- !u!65 &1930286636
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -148,6 +148,7 @@ public class SurviverHealth : MonoBehaviourPun
 
     public void NormalHit()
     {
+        print("흠");
         if (controller.BanMove) { print("코루틴"); StartCoroutine(WaitHit()); }
         else { print("노말"); NormalHit2(); };
     }
@@ -169,10 +170,12 @@ public class SurviverHealth : MonoBehaviourPun
     {
         if (State == HealthState.Healthy)
         {
+            print("1");
             photonView.RPC(nameof(ChangeInjuerd), RpcTarget.All);
         }
         else if (State == HealthState.Injured)
         {
+            print("2");
             photonView.RPC(nameof(ChangeDown), RpcTarget.All);
         }
     }
@@ -181,6 +184,7 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeInjuerd()
     {
         if(photonView.IsMine == false) return;
+        print("3");
         StateNA = HealthState.Injured;
         photonView.RPC("PlayAnimationRPC", RpcTarget.All, "Hit", 0.25f, 2);
         surviverSound.PlayInjSound();
@@ -204,6 +208,7 @@ public class SurviverHealth : MonoBehaviourPun
     void ChangeDown()
     {
         if (photonView.IsMine == false) return;
+        print("4");
         surviverLookAt.LookAt = false;
         shader.RedXray = true;
         WorldShaderManager.Instance.SurvivorShader = WorldShaderManager.Survivor.OwnerDown;

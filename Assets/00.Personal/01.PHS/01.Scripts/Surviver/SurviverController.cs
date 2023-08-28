@@ -50,7 +50,6 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     bool isMoving = false;
     public bool Moving { get { return isMoving; } set { isMoving = value; } }
     bool isSprint = false;
-    //bool isRotating = false;
     bool isCrouching = false;
     bool isCrawl = false;
     public bool isHit = false;
