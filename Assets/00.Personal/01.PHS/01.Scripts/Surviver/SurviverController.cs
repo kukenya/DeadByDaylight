@@ -71,6 +71,8 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
 
     public Animator playerAnimator;
 
+    public CapsuleCollider collider2;
+
     void Start()
     {
         cinemachineTargetYaw = cinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -83,7 +85,8 @@ public class SurviverController : MonoBehaviourPun, IPunObservable
     // Update is called once per frame
     void Update()
     {
-        if (banMove == false) controller.enabled = true;
+        if (controller.enabled == false) collider2.isTrigger = false;
+        else { collider2.isTrigger = true; }
 
         GroundedCheck();
         CameraStopCheck();

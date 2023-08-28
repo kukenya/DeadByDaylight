@@ -29,6 +29,21 @@ public class WorldSound : MonoBehaviour
 
     public void PlayWorldSound(int idx)
     {
+        if(worldAudios == null)
+        {
+            print("00000000000000000000");
+
+        }
+            
+        if(worldAudios.Length <= 0)
+        {
+            print("!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+        if(worldSound == null)
+        {
+            print("2222222222222222222222");
+        }
+        if (worldAudios[idx] == null) return;
         worldSound.PlayOneShot(worldAudios[idx]);
     }
 }

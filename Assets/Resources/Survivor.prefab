@@ -1130,6 +1130,7 @@ MonoBehaviour:
   maxSprintTime: 0.5
   controller: {fileID: 6445668696811590788}
   playerAnimator: {fileID: 6445668696811590791}
+  collider2: {fileID: 7276317201787998082}
   rotationSpeed: 410
   currentSpeed: 0
   lerpSpeed: 50

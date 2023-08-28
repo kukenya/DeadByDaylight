@@ -361,6 +361,17 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         }
         #endregion
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            currentGenCount--;
+            UIManager.instance.genCount.text = Convert.ToString(currentGenCount);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Stunned();
+        }
+
         #region 회전 / 이동 / 상호작용(발전기, 판자, 캐비넷, 갈고리)
         if (photonView.IsMine == true)
         {

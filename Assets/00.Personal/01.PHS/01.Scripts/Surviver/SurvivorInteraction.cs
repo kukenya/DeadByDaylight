@@ -511,7 +511,7 @@ public class SurvivorInteraction : MonoBehaviourPun
         generator.Fail = true;
         surviverAnimation.Play("Generator_Fail_FT", 0.1f, 0, true);
         yield return new WaitForSeconds(3.25f);
-        generator.Fail = false;
+        if(generator != null) generator.Fail = false;
         if(generator.Repair)
         {
             surviverAnimation.Play("Generator_Idle_FT");
