@@ -79,11 +79,13 @@ public class BigAxe : MonoBehaviourPun
 
             SoundManager.instance.PlayHitSounds(4);                         // 도끼에 맞는 소리를 재생한다.
 
+            MakeEffect();
+
            // photonView.RPC(nameof(MakeEffect), RpcTarget.All);              // 피 튀는 이펙트를 보낸다.
         }
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void MakeEffect()
     {
         GameObject bloodEffect = Instantiate(bloodEffectFactory);           // 도끼 생성
