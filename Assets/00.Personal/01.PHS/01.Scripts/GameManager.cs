@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviourPun
         {
             survivorCanvas.SetActive(true);
             mudererCanvas.SetActive(false);
-            GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[0].position, Quaternion.identity);
+            GameObject survivor = PhotonNetwork.Instantiate(survivorName, spawnPos[Random.Range(0, spawnPos.Count)].position, Quaternion.identity);
             survivorCamera1.Follow = survivor.transform.GetChild(0);
             listManager.SurvivorsAdd = survivor;
             photonView.RPC(nameof(UpdateSurvivorList), RpcTarget.All);

@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurvivorFootStepDecal : MonoBehaviour
+public class SurvivorFootStepDecal : MonoBehaviourPun
 {
     public GameObject footStepDecal;
     public Transform generatePos;
@@ -32,10 +33,18 @@ public class SurvivorFootStepDecal : MonoBehaviour
                 currentTime = 0;
                 for (int i = 0; i < Random.Range(0, maxRandomRange); i++)
                 {
-                    GameObject go = Instantiate(footStepDecal, generatePos.position + Random.insideUnitSphere * sphereSize, Quaternion.Euler(0, transform.rotation.y, transform.rotation.z)) ;
-                    Destroy(go, decalRemainTime);
+                    photonView.RPC(nameof(Generate), RpcTarget.All);
                 }
             }
         }
     }
+
+    [PunRPC]
+    public void Generate()
+    {
+        if(photonView.IsMine) return;
+        GameObject go = Instantiate(footStepDecal, generatePos.position + Random.insideUnitSphere * sphereSize, Quaternion.Euler(0, transform.rotation.y, transform.rotation.z));
+        Destroy(go, decalRemainTime);
+    }
+
 }

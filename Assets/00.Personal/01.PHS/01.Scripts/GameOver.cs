@@ -12,6 +12,7 @@ public class GameOver : MonoBehaviour
     {
         if(other.CompareTag("Survivor"))
         {
+            fadeImage.gameObject.SetActive(true);
             fadeImage.DOFade(0, 2f).OnComplete(() => { Time.timeScale = 0; });
         }
     }
