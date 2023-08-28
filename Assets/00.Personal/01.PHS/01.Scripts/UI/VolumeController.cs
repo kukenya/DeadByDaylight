@@ -12,7 +12,7 @@ public class VolumeController : MonoBehaviour
     private void Start()
     {
         volume = GetComponent<Volume>();
-        screenSpaceReflections = volume.GetComponent<ScreenSpaceReflections>();
+        //screenSpaceReflections = volume.GetComponent<ScreenSpaceReflections>();
     }
 
     private void Update()
@@ -28,17 +28,17 @@ public class VolumeController : MonoBehaviour
                 OnVolume();
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            if(screenSpaceReflections.active == true)
-            {
-                screenSpaceReflections.active = false;
-            }
-            else
-            {
-                screenSpaceReflections.active = true;
-            }
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    if(screenSpaceReflections.active == true)
+        //    {
+        //        screenSpaceReflections.active = false;
+        //    }
+        //    else
+        //    {
+        //        screenSpaceReflections.active = true;
+        //    }
+        //}
     }
     public void OnVolume()
     {
