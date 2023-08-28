@@ -8,7 +8,15 @@ public class WorldSound : MonoBehaviour
 
     private void Awake()
     {
-        Instacne = this;
+        if (Instacne == null)
+        {
+            Instacne = this;
+            print("WorldSound Awake!!!");
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     AudioSource worldSound;
@@ -18,9 +26,14 @@ public class WorldSound : MonoBehaviour
     {
         worldSound = GetComponent<AudioSource>();
     }
-
+    bool bCheck;
     private void Update()
     {
+        if (false == bCheck && worldAudios.Length == 0)
+        {
+            bCheck = true;
+            print("worldAudios.Length is 0");
+        }   
         if(Input.GetKeyDown(KeyCode.Alpha5))
         {
           //  WorldSound.Instacne.PlayWorldSound(0);

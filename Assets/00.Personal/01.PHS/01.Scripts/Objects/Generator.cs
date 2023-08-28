@@ -159,8 +159,8 @@ public class Generator : MonoBehaviourPun, IPunObservable
             GenerateBlackHole();
             gameObject.layer = 0;
             GameManager.Instance.Generator--;
-            WorldSound.Instacne.PlayWorldSound(0);
             interaction?.EndInteract(SurvivorInteraction.InteractiveType.Generator);
+            WorldSound.Instacne.PlayWorldSound(0);
         }
 
         if(photonView.IsMine && fail == false)

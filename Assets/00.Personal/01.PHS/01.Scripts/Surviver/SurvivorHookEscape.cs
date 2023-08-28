@@ -152,6 +152,7 @@ public class SurvivorHookEscape : MonoBehaviourPun, IPunObservable
         hookCor = null;
         shader.RedXray = false;
         anim.speed = 1;
+        Prograss = 0;
     }
 
     [PunRPC]

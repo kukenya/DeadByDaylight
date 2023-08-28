@@ -31,5 +31,23 @@ public class CustomPassScript : MonoBehaviour
                 hacksPass.enabled = true;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            a++;
+            CustomPassVolume.injectionPoint = (CustomPassInjectionPoint)a;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            if(CustomPassVolume.enabled == false)
+            {
+                CustomPassVolume.enabled = true;
+            }
+            else
+            {
+                CustomPassVolume.enabled = false;
+            }
+        }
     }
+
+    public float a = 0;
 }
