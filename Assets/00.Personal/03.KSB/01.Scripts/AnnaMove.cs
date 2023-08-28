@@ -147,6 +147,9 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         {
             cc = GetComponent<CharacterController>();   // 안나 Character Controller 컴포넌트 가져온다.
             anim.SetLayerWeight(1, 0);                  // 던지는 애니메이션 레이어를 설정한다.
+
+            SoundManager.instance.gameStart.Play();     // 스타트 사운드를 플레이한다.
+
             playCamera.gameObject.SetActive(true);      // 안나 MainCamera 활성화
             redlight.enabled = false;                   // 안나 redlight 꺼놓는다.
             cineCam.depth = 5;                          // 시네머신 카메라 보이게 한다.
@@ -176,7 +179,10 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     #region 카메라 회전 관련
     private void LateUpdate()
     {
-        go.transform.localPosition = cameraOffset;
+        if (canRotate == true || isanimation == false)
+        {
+            go.transform.localPosition = cameraOffset;
+        }
         //Vector3 rot = cam.transform.localEulerAngles;
         //rot.z = rotY;
         //cam.transform.localEulerAngles = rot; // new Vector3(rotY, 0.022f, -2.476f);
@@ -354,7 +360,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
         #region 회전 / 이동 / 상호작용(발전기, 판자, 캐비넷, 갈고리)
         if (photonView.IsMine == true)
         {
-            if (canRotate == true)
+            if (canRotate == true || isanimation == false)
             {
                 trSkeleton.transform.parent = Camera.main.transform;
 
@@ -441,7 +447,7 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
                 cc.Move(velocity * Time.deltaTime);
                 #endregion
             }
-            else
+            else if (isanimation == true)
             {
                 trSkeleton.transform.parent = this.transform;
                 Camera.main.transform.position = cameraAnimOffset.position;
@@ -1295,13 +1301,13 @@ public class AnnaMove : MonoBehaviourPun, IPunObservable
     [PunRPC]    // Anna 애니메이터 trigger
     void SetTriggerRPC(string parameter)
     {
-        anim.SetTrigger(parameter);
+        anim?.SetTrigger(parameter);
     }
 
     [PunRPC]    // Anna 애니메이터 Bool
     void SetBoolRPC(string parameter, bool boolean)
     {
-        anim.SetBool(parameter, boolean);
+        anim?.SetBool(parameter, boolean);
     }
 
     [PunRPC]    // 도끼 던지기

@@ -10,6 +10,9 @@ public class SoundManager : MonoBehaviour
         instance = this;
     }
 
+    // 시작
+    public AudioSource gameStart;
+
     // 부수기
     public AudioSource destroySource;   //  부수는소리 오디오 소스
     public AudioClip[] destroyClips;    // 클립들
